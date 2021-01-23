@@ -42,4 +42,13 @@ public class PatientServiceImpl implements PatientService {
     public void addPatient(PatientDTO patientDTO) {
         patientRepository.savePatient(patientDTO.getName(),patientDTO.getDateOfBirth(),patientDTO.getGender(),patientDTO.getGuardian(),patientDTO.getPhone(),patientDTO.getAddress(),patientDTO.getEmail());
     }
+
+
+    /**
+     * Phuoc: tạo mới bênh nhân
+     **/
+    @Override
+    public Patient create(Patient patientTemp) {
+      return patientRepository.save(patientTemp);
+    }
 }

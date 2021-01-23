@@ -34,4 +34,12 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
     public void updateVaccinationHistory(Integer vaccinationHistoryId, VaccinationHistorySendFeedbackDTO vaccinationHistorySendFeedbackDTO) {
         this.vaccinationHistoryRepository.updateFeedbackVaccinationHistory(vaccinationHistoryId,vaccinationHistorySendFeedbackDTO.getPreStatus());
     }
+
+    /**
+     * Phuoc: Tạo mới lịch tiêm theo yêu cầu
+     **/
+    @Override
+    public VaccinationHistory registerVaccinationHistory(VaccinationHistory vaccinationHistoryTemp) {
+        return vaccinationHistoryRepository.save(vaccinationHistoryTemp);
+    }
 }
