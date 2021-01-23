@@ -1,0 +1,20 @@
+package com.project.payload.reponse;
+
+public class MessageResponse {
+    /**
+     * Nguyen Van Linh made it
+     */
+    private String message;
+
+    public MessageResponse(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+}
