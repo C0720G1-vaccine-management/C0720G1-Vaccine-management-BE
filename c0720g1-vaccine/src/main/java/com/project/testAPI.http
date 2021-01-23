@@ -1,0 +1,17 @@
+POST http://localhost:8080/Create
+Content-Type: application/json
+
+{
+  "importAndExportId": 7,
+  "action": "export",
+  "quantity": 100,
+  "date": "2021-01-19",
+  "price": 200000,
+  "deleteFlag": null
+}
+
+###
+GET http://localhost:8080/List
+Accept: application/json
+
+###
