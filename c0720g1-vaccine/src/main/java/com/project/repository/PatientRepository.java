@@ -5,8 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Transactional
 public interface PatientRepository extends JpaRepository<Patient, Integer> {
     @Query(value = "select *from patient ;", nativeQuery = true)
     List<Patient> findAllPatient();
@@ -25,4 +27,6 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
 
     @Query(value = "insert into patient(name,date_of_birth,gender,guardian,phone,address,email) values (?1,?2,?3,?4,?5,?6,?7)", nativeQuery = true)
     void savePatient(String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email);
+
+
 }

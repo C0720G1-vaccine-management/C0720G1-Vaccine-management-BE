@@ -18,4 +18,8 @@ public class VaccinationType {
     private String name;
     @OneToMany(mappedBy = "vaccinationType")
     private Set<Vaccination>vaccinationList;
+
+    public VaccinationType(Integer vaccinationTypeId) {
+        this.vaccinationTypeId = vaccinationTypeId;
+    }
 }

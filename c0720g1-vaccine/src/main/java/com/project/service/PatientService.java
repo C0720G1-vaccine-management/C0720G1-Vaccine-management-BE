@@ -12,4 +12,10 @@ public interface PatientService {
     void editPatient(PatientDTO patientDTO);
     void deletePatient(Patient patient);
     void addPatient(PatientDTO patientDTO);
+
+
+    /**
+     * Phuoc: tạo mới bênh nhân
+     **/
+    Patient create(Patient patientTemp);
 }

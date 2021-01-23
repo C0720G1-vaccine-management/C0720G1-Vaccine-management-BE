@@ -18,4 +18,8 @@ public class Location {
     private String name;
     @OneToMany(mappedBy = "location")
     private Set<Vaccination> vaccinationList;
+
+    public Location(Integer locationId) {
+        this.locationId = locationId;
+    }
 }
