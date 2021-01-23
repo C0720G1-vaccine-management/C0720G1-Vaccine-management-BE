@@ -3,6 +3,7 @@ package com.project.service;
 import com.project.dto.PeriodicVaccinationDto;
 import com.project.dto.PeriodicalVaccinationRegisterDTO;
 import com.project.dto.RegistrablePeriodicalVaccinationDTO;
+import com.project.entity.Vaccination;
 
 import java.util.List;
 
@@ -28,4 +29,10 @@ public interface VaccinationService {
      *Find registrable vaccination by Id
      */
     void save(PeriodicalVaccinationRegisterDTO register);
+
+
+    /**
+     * Phuoc: Tạo mới lịch tiêm theo yêu cầu
+     **/
+    Vaccination registerVaccination(Vaccination vaccinationTemp);
 }

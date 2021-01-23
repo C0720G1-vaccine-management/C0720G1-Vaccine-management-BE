@@ -1,12 +1,11 @@
 package com.project.controller;
 
-import com.project.dto.PatientDTO;
 import com.project.dto.VaccinationByRequestDTO;
 import com.project.dto.VaccineDTO;
-import com.project.entity.Patient;
-import com.project.entity.Vaccine;
-import com.project.repository.VaccineRepository;
+import com.project.entity.*;
 import com.project.service.PatientService;
+import com.project.service.VaccinationHistoryService;
+import com.project.service.VaccinationService;
 import com.project.service.VaccineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,7 +27,10 @@ public class VaccinationByRequest {
     private PatientService patientService;
 
     @Autowired
-    private VaccineRepository vaccineRepository;
+    private VaccinationService vaccinationService;
+
+    @Autowired
+    private VaccinationHistoryService vaccinationHistoryService;
 
 
     @GetMapping(value = "/vaccine/list")
@@ -36,9 +38,9 @@ public class VaccinationByRequest {
                                                         @RequestParam(defaultValue = "") String name,
                                                         @RequestParam(defaultValue = "") String vaccineTypeName,
                                                         @RequestParam(defaultValue = "") String origin) {
-//        Page<Vaccine> vaccineList = vaccineService.findAllByNameContainingAndVaccineType_NameContainingAndOriginContaining(name, vaccineTypeName, origin, pageable);
-
-        Page<Vaccine> vaccineList = vaccineRepository.findAll(pageable);
+        Page<Vaccine> vaccineList = vaccineService.findAllByNameContainingAndVaccineType_NameContainingAndOriginContaining(name, vaccineTypeName, origin, pageable);
+//
+//        Page<Vaccine> vaccineList = vaccineRepository.findAll(pageable);
 
         if (vaccineList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -71,7 +73,26 @@ public class VaccinationByRequest {
         patientTemp.setAddress(vaccinationByRequestDTO.getAddress());
         patientTemp.setEmail(vaccinationByRequestDTO.getEmail());
         patientTemp.setDeleteFlag(false);
-        patientService.create(patientTemp);
+
+        patientTemp = patientService.create(patientTemp);
+
+        Vaccination vaccinationTemp = new Vaccination();
+        vaccinationTemp.setVaccine(vaccineService.findById(vaccinationByRequestDTO.getVaccineId()));
+        vaccinationTemp.setDate(vaccinationByRequestDTO.getDateVaccination());
+        vaccinationTemp.setLocation(new Location(1));
+        vaccinationTemp.setVaccinationType(new VaccinationType(2));
+        vaccinationTemp.setStatus(false);
+        vaccinationTemp.setDeleteFlag(false);
+
+        vaccinationTemp = vaccinationService.registerVaccination(vaccinationTemp);
+
+
+        VaccinationHistory vaccinationHistoryTemp = new VaccinationHistory();
+        vaccinationHistoryTemp.setPatient(patientTemp);
+        vaccinationHistoryTemp.setVaccination(vaccinationTemp);
+        vaccinationHistoryTemp.setStatus(false);
+
+        vaccinationHistoryService.registerVaccinationHistory(vaccinationHistoryTemp);
 
 
         return new ResponseEntity<>(vaccinationByRequestDTO, HttpStatus.OK);

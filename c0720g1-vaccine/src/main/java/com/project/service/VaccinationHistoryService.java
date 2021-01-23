@@ -18,4 +18,10 @@ public interface VaccinationHistoryService {
 
     /* tuNH */
     void updateVaccinationHistory(Integer vaccinationHistoryId, VaccinationHistorySendFeedbackDTO vaccinationHistorySendFeedbackDTO);
+
+
+    /**
+     * Phuoc: Tạo mới lịch tiêm theo yêu cầu
+     **/
+    VaccinationHistory registerVaccinationHistory(VaccinationHistory vaccinationHistoryTemp);
 }
