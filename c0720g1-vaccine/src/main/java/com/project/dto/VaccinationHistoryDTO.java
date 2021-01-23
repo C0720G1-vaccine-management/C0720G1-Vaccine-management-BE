@@ -1,20 +1,18 @@
 package com.project.dto;
 
-import com.project.entity.Patient;
-import com.project.entity.Vaccination;
-import com.project.entity.Vaccine;
-import com.project.entity.VaccineType;
-import lombok.Data;
+public interface VaccinationHistoryDTO {
+    String getPatientName();
+    String getPatientDateOfBirth();
+    String getPatientGender();
+    String getPatientAddress();
+    String getVaccineName();
+    String getVaccineTypeName();
+    String getVaccinationDate();
+    String getVaccinationHistoryAfterStatus();
+    Integer getVaccinationHistoryId();
 
-@Data
-public class VaccinationHistoryDTO {
-    private Integer vaccinationHistoryId;
-    private Boolean status;
-    private Double dosage;
-    private String preStatus;
-    private String afterStatus;
-    private Vaccination vaccination;
-    private Patient patient;
-    private VaccineType vaccineType;
-    protected Vaccine vaccine;
+
+
+
+
 }
