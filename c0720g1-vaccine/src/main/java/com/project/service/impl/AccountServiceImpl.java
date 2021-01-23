@@ -6,14 +6,35 @@ import com.project.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AccountServiceImpl implements AccountService {
-
     @Autowired
-    private AccountRepository accountRepository;
+    AccountRepository accountRepository;
 
     @Override
-    public Account findById(Integer id) {
-        return this.accountRepository.findById(id).orElse(null);
+    public Optional<Account> findAccountByUserName(String username) {
+        return accountRepository.findAccountByUserName(username);
+    }
+
+    @Override
+    public Integer findIdUserByUserName(String username) {
+        return accountRepository.findIdUserByUserName(username);
+    }
+
+    @Override
+    public String existsByUserName(String username) {
+        return accountRepository.existsByUserName(username);
+    }
+
+    @Override
+    public String existsByEmail(String email) {
+        return accountRepository.existsByEmail(email);
+    }
+
+    @Override
+    public void addNew(String username, String password) {
+        accountRepository.addNew(username, password);
     }
 }
