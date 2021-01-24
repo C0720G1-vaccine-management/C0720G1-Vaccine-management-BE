@@ -38,6 +38,16 @@ public class VaccineServiceImpl implements VaccineService {
         return vaccineRepository.findAllByNameContainingAndVaccineType_NameContainingAndOriginContaining(name,vaccineTypeName,origin,pageable);
     }
 
+    @Override
+    public Page<Vaccine> findAllByQuantityIsExits(String name, String vaccineType_name, String origin, Pageable pageable) {
+        return vaccineRepository.findAllByNameContainingAndVaccineType_NameContainingAndOriginContainingAndQuantityGreaterThan(name, vaccineType_name, origin, 0L, pageable);
+    }
+
+    @Override
+    public Page<Vaccine> findAllByQuantityIsNotExits(String name, String vaccineType_name, String origin, Pageable pageable) {
+        return vaccineRepository.findAllByNameContainingAndVaccineType_NameContainingAndOriginContainingAndQuantityLessThan(name, vaccineType_name, origin, 1L, pageable);
+    }
+
     /**
      * Phuoc: Tìm kiếm vắc-xin theo ID
      **/

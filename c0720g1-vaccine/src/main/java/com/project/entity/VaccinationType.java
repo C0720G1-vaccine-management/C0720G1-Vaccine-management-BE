@@ -1,5 +1,6 @@
 package com.project.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ public class VaccinationType {
     private Integer vaccinationTypeId;
     private String name;
     @OneToMany(mappedBy = "vaccinationType")
+    @JsonBackReference
     private Set<Vaccination>vaccinationList;
 
     public VaccinationType(Integer vaccinationTypeId) {

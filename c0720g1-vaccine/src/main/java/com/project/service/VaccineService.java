@@ -17,6 +17,17 @@ public interface VaccineService {
     Page<Vaccine> findAllByNameContainingAndVaccineType_NameContainingAndOriginContaining(String name, String vaccineTypeName, String origin, Pageable pageable);
 
     /**
+     * Phuoc: Phần trang + Tìm kiếm vắc-xin
+     **/
+    Page<Vaccine> findAllByQuantityIsExits(String name, String vaccineType_name, String origin, Pageable pageable);
+
+    /**
+     * Phuoc: Phần trang + Tìm kiếm vắc-xin
+     **/
+    Page<Vaccine> findAllByQuantityIsNotExits(String name, String vaccineType_name, String origin, Pageable pageable);
+
+
+    /**
      * Phuoc: Tìm kiếm vắc-xin theo ID
      **/
     VaccineDTO getVaccineById(Integer id);

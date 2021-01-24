@@ -18,4 +18,10 @@ public interface PatientService {
      * Phuoc: tạo mới bênh nhân
      **/
     Patient create(Patient patientTemp);
+
+
+    /**
+     * Phuoc: Tìm kiếm theo Email
+     **/
+    Integer findByEmail(String email);
 }

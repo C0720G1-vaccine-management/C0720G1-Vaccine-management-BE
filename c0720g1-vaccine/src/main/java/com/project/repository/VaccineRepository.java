@@ -26,7 +26,16 @@ public interface VaccineRepository extends JpaRepository<Vaccine,Integer> {
      **/
     Page<Vaccine> findAllByNameContainingAndVaccineType_NameContainingAndOriginContaining(String name, String vaccineType_name, String origin, Pageable pageable);
 
+    /**
+     * Phuoc: Phân trang + tìm kiếm vắc-xin
+     **/
+    Page<Vaccine> findAllByNameContainingAndVaccineType_NameContainingAndOriginContainingAndQuantityGreaterThan(String name, String vaccineType_name, String origin, Long quantity, Pageable pageable);
 
+
+    /**
+     * Phuoc: Phân trang + tìm kiếm vắc-xin
+     **/
+    Page<Vaccine> findAllByNameContainingAndVaccineType_NameContainingAndOriginContainingAndQuantityLessThan(String name, String vaccineType_name, String origin, Long quantity, Pageable pageable);
     /**
      * Phuoc: Tìm kiếm vắc-xin theo ID
      **/

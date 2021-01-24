@@ -1,5 +1,6 @@
 package com.project.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,5 +27,6 @@ public class VaccinationHistory {
     private Patient patient;
 
     @OneToOne(mappedBy = "vaccinationHistory")
+    @JsonBackReference
     private VaccinationTransaction vaccinationTransaction;
 }

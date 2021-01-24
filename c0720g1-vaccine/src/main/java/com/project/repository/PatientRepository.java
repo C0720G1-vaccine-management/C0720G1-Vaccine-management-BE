@@ -29,4 +29,10 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     void savePatient(String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email);
 
 
+    /**
+     * Phuoc: Tìm kiếm theo Email
+     **/
+    @Query(value = "select count(email) from patient where email = ?", nativeQuery = true)
+    Integer findByEmail(String email);
+
 }
