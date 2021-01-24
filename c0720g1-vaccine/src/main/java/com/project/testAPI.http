@@ -1,3 +1,11 @@
+POST http://localhost:8080/api/public/vaccination/create
+Content-Type: application/json
+
+{
+  "dateVaccination": "2021-01-24"
+}
+
+###
 POST http://localhost:8080/Create
 Content-Type: application/json
 
@@ -15,3 +23,5 @@ GET http://localhost:8080/List
 Accept: application/json
 
 ###
+
+

@@ -3,18 +3,17 @@ package com.project.controller;
 import com.project.entity.Vaccine;
 import com.project.service.VaccineService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.project.dto.ImportAndExportDTO;
-import com.project.entity.Account;
-import com.project.entity.ImportAndExport;
-import com.project.service.AccountService;
 import com.project.service.ImportAndExportService;
-import com.project.service.StorageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -23,41 +22,42 @@ public class ImportExportController {
     @Autowired
     private ImportAndExportService importAndExportService;
 
-    @Autowired
-    private AccountService accountService;
-
-    @Autowired
-    private StorageService storageService;
 
     //phuc create
     @Autowired
     private VaccineService vaccineService;
 
-    @GetMapping("/list-vaccine-price")
-    public ResponseEntity<?> listPriceVaccine() {
-        return new ResponseEntity<>(importAndExportService.findAll(), HttpStatus.OK);
+    @GetMapping("/list-vaccine-price/search1={keyword}search2={keyword2}search3={keyword3}")
+    public ResponseEntity<?> listPriceVaccine(@PageableDefault(size = 5) Pageable pageable,
+                                              @PathVariable Optional<String> keyword,
+                                              @PathVariable Optional<String> keyword2,
+                                              @PathVariable Optional<String> keyword3) {
+        String keyWordForSearchVaccineId = "";
+        String keyWordForSearchVaccineType = "";
+        String keyWordForSearchVaccineOrigin = "";
+        if (keyword.isPresent() || keyword2.isPresent() || keyword3.isPresent()) {
+            keyWordForSearchVaccineId = keyword.orElse("0");
+            keyWordForSearchVaccineType = keyword2.get();
+            keyWordForSearchVaccineOrigin = keyword3.get();
+            return new ResponseEntity<>(importAndExportService.search("export", Integer.parseInt(keyWordForSearchVaccineId) ,
+                    keyWordForSearchVaccineType, keyWordForSearchVaccineOrigin, pageable), HttpStatus.OK);
+
+        }
+        return new ResponseEntity<>(importAndExportService.findAll("export",pageable), HttpStatus.OK);
     }
 
     /**
      * Made by Khanh
      */
-
-    @PostMapping("/vaccine-price-edit/{id}")
-    public ResponseEntity<?> createPriceVaccine(@RequestBody ImportAndExportDTO importAndExportDTO, @PathVariable int id) {
-        ImportAndExport importAndExport = importAndExportService.findById(id);
-        importAndExport.setPrice(importAndExportDTO.getPrice());
-        importAndExport.setDate(importAndExportDTO.getDate());
-        importAndExport.setAction(importAndExportDTO.getAction());
-        importAndExport.setDeleteFlag(importAndExportDTO.getDeleteFlag());
-        importAndExport.setQuantity(importAndExportDTO.getQuantity());
-        this.importAndExportService.save(importAndExport);
+    @PutMapping("/vaccine-price-edit")
+    public ResponseEntity<?> createPriceVaccine(@RequestBody ImportAndExportDTO importAndExportDTO) {
+        this.importAndExportService.save(importAndExportDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //phuc create
     @GetMapping("/{id}/exportVaccine")
     public String exportVaccine(@PathVariable Integer id, Model model) {
-
         Vaccine vaccine = vaccineService.findById(id);
         return null;
     }

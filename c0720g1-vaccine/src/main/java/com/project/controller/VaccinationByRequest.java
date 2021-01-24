@@ -7,13 +7,17 @@ import com.project.service.PatientService;
 import com.project.service.VaccinationHistoryService;
 import com.project.service.VaccinationService;
 import com.project.service.VaccineService;
+import com.project.validation.VaccinationByRequestDTOValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @CrossOrigin(value = "*", allowedHeaders = "*")
@@ -32,15 +36,30 @@ public class VaccinationByRequest {
     @Autowired
     private VaccinationHistoryService vaccinationHistoryService;
 
+    @Autowired
+    private VaccinationByRequestDTOValidator vaccinationByRequestDTOValidator;
 
+
+
+
+    /**
+     * Phuoc: Tìm kiếm + Phân trang
+     **/
     @GetMapping(value = "/vaccine/list")
     public ResponseEntity<Page<Vaccine>> getListVaccine(@PageableDefault(size = 5) Pageable pageable,
                                                         @RequestParam(defaultValue = "") String name,
                                                         @RequestParam(defaultValue = "") String vaccineTypeName,
-                                                        @RequestParam(defaultValue = "") String origin) {
-        Page<Vaccine> vaccineList = vaccineService.findAllByNameContainingAndVaccineType_NameContainingAndOriginContaining(name, vaccineTypeName, origin, pageable);
-//
-//        Page<Vaccine> vaccineList = vaccineRepository.findAll(pageable);
+                                                        @RequestParam(defaultValue = "") String origin,
+                                                        @RequestParam(defaultValue = "") String status) {
+        Page<Vaccine> vaccineList;
+
+        if (status.equals("false")) {
+            vaccineList = vaccineService.findAllByQuantityIsNotExits(name, vaccineTypeName, origin, pageable);
+        } else if (status.equals("true")) {
+            vaccineList = vaccineService.findAllByQuantityIsExits(name, vaccineTypeName, origin, pageable);
+        } else {
+            vaccineList = vaccineService.findAllByNameContainingAndVaccineType_NameContainingAndOriginContaining(name, vaccineTypeName, origin, pageable);
+        }
 
         if (vaccineList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -50,7 +69,10 @@ public class VaccinationByRequest {
     }
 
 
-    @GetMapping(value = "/vaccination/create/{id}")
+    /**
+     * Get Vắc-xin theo Id
+     **/
+    @GetMapping(value = "/vaccination/get-vaccine/{id}")
     public ResponseEntity<VaccineDTO> registerVaccination(@PathVariable Integer id) {
         VaccineDTO vaccineDTO = vaccineService.getVaccineById(id);
 
@@ -62,8 +84,20 @@ public class VaccinationByRequest {
     }
 
 
-    @PostMapping(value = "/patient/create")
-    public ResponseEntity<VaccinationByRequestDTO> registerPatient(@RequestBody VaccinationByRequestDTO vaccinationByRequestDTO) {
+    /**
+     * Phuoc: Tạo mới đăng ký tim theo yêu cầu
+     **/
+    @PostMapping(value = "/vaccination/create")
+    public ResponseEntity<?> registerPatient(@Valid @RequestBody VaccinationByRequestDTO vaccinationByRequestDTO,
+                                             BindingResult bindingResult) {
+
+        vaccinationByRequestDTOValidator.validate(vaccinationByRequestDTO, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.OK);
+        }
+
+
         Patient patientTemp = new Patient();
         patientTemp.setName(vaccinationByRequestDTO.getName());
         patientTemp.setDateOfBirth(vaccinationByRequestDTO.getDateOfBirth());

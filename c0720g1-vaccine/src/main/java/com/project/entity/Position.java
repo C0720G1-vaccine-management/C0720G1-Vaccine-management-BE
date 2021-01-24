@@ -1,5 +1,6 @@
 package com.project.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,6 @@ public class Position {
     private Integer positionId;
     private String name;
     @OneToMany(mappedBy = "position")
+    @JsonBackReference
     private Set<Employee>employeeList;
 }

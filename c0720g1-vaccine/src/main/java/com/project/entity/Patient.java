@@ -1,5 +1,6 @@
 package com.project.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class Patient {
     private Boolean deleteFlag;
 
     @OneToMany(mappedBy = "patient")
+    @JsonBackReference
     private Set<VaccinationHistory> vaccinationHistoryList;
     @OneToOne
     @JoinColumn(name = "account_id",unique = true)
