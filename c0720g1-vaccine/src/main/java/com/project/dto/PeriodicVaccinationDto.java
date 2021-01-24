@@ -9,4 +9,5 @@ public interface PeriodicVaccinationDto {
     String getPhone();
     String getAddress();
     String getStatus();
+
 }
