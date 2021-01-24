@@ -51,4 +51,13 @@ public class PatientServiceImpl implements PatientService {
     public Patient create(Patient patientTemp) {
       return patientRepository.save(patientTemp);
     }
+
+
+    /**
+     * Phuoc: Tìm kiếm theo Email
+     **/
+    @Override
+    public Integer findByEmail(String email) {
+        return patientRepository.findByEmail(email);
+    }
 }
