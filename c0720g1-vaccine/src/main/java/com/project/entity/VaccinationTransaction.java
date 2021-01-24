@@ -1,5 +1,6 @@
 package com.project.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class VaccinationTransaction {
 
     @OneToOne
     @JoinColumn(name = "vaccination_history_id")
+    @JsonBackReference
     private VaccinationHistory vaccinationHistory;
 
     private Double price;
