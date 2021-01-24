@@ -48,8 +48,11 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
             " WHERE vaccination_history_id = ?1", nativeQuery = true)
     void updateFeedbackVaccinationHistory(Integer vaccinationHistoryId, String vaccinationHistoryPreStatus);
 
-
-
-
-
+    /*KhoaTA
+     *Save new register for periodical vaccination
+     */
+    @Modifying
+    @Transactional
+    @Query (value = "INSERT INTO vaccination_history (vaccination_id, patient_id) VALUES (?1 , ?2)", nativeQuery = true)
+    void savePeriodicalVaccinationRegister(Integer vaccinationId, int patientId);
 }

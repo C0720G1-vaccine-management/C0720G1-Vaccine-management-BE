@@ -2,6 +2,7 @@ package com.project.repository;
 
 import com.project.entity.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import org.springframework.stereotype.Repository;
@@ -25,8 +26,14 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     @Query(value = "delete from patient where patient_id = ?;", nativeQuery = true)
     void deletePatient(int id);
 
+    @Modifying
+    @Transactional
     @Query(value = "insert into patient(name,date_of_birth,gender,guardian,phone,address,email) values (?1,?2,?3,?4,?5,?6,?7)", nativeQuery = true)
     void savePatient(String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email);
 
-
+    /*KhoaTA
+     * Get the id of latest patient
+     */
+    @Query(value = "select max(patient_id) from patient", nativeQuery = true)
+    int findLatestPatientId();
 }

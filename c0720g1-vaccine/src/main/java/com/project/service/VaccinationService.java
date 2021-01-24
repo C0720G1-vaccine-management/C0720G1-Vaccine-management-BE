@@ -1,8 +1,6 @@
 package com.project.service;
 
-import com.project.dto.PeriodicVaccinationDto;
-import com.project.dto.PeriodicalVaccinationRegisterDTO;
-import com.project.dto.RegistrablePeriodicalVaccinationDTO;
+import com.project.dto.*;
 import com.project.entity.Vaccination;
 
 import java.util.List;
@@ -18,7 +16,7 @@ public interface VaccinationService {
     /*KhoaTA
      *find all periodical vaccination with date > date.now()
      */
-    List<RegistrablePeriodicalVaccinationDTO> findAllRegistrableVaccination();
+//    List<RegistrablePeriodicalVaccinationDTO> findAllRegistrableVaccination();
 
     /*KhoaTA
      *Find registrable vaccination by Id
@@ -28,11 +26,27 @@ public interface VaccinationService {
     /*KhoaTA
      *Find registrable vaccination by Id
      */
-    void save(PeriodicalVaccinationRegisterDTO register);
+    void saveRegister(PeriodicalVaccinationRegisterDTO register);
 
 
     /**
      * Phuoc: Tạo mới lịch tiêm theo yêu cầu
      **/
     Vaccination registerVaccination(Vaccination vaccinationTemp);
+
+    /*KhoaTA
+     *get the list of all vaccine's ages
+     */
+    List<String> findAllVaccineAge();
+
+    /*KhoaTA
+     *get the list of all vaccine's ages
+     */
+    List<TimeDTO> findAllVaccinationTime();
+    /*KhoaTA
+     *get the total page of search data
+     */
+    double getTotalPage(PeriodicalSearchDataDTO searchData);
+
+    List<RegistrablePeriodicalVaccinationDTO> findCustomVaccination(PeriodicalSearchDataDTO searchData);
 }
