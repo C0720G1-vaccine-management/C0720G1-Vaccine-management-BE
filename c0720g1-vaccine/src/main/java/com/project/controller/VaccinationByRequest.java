@@ -40,6 +40,11 @@ public class VaccinationByRequest {
     private VaccinationByRequestDTOValidator vaccinationByRequestDTOValidator;
 
 
+
+
+    /**
+     * Phuoc: Tìm kiếm + Phân trang
+     **/
     @GetMapping(value = "/vaccine/list")
     public ResponseEntity<Page<Vaccine>> getListVaccine(@PageableDefault(size = 5) Pageable pageable,
                                                         @RequestParam(defaultValue = "") String name,
@@ -64,6 +69,9 @@ public class VaccinationByRequest {
     }
 
 
+    /**
+     * Get Vắc-xin theo Id
+     **/
     @GetMapping(value = "/vaccination/get-vaccine/{id}")
     public ResponseEntity<VaccineDTO> registerVaccination(@PathVariable Integer id) {
         VaccineDTO vaccineDTO = vaccineService.getVaccineById(id);
@@ -76,14 +84,17 @@ public class VaccinationByRequest {
     }
 
 
+    /**
+     * Phuoc: Tạo mới đăng ký tim theo yêu cầu
+     **/
     @PostMapping(value = "/vaccination/create")
     public ResponseEntity<?> registerPatient(@Valid @RequestBody VaccinationByRequestDTO vaccinationByRequestDTO,
-                                                                   BindingResult bindingResult) {
+                                             BindingResult bindingResult) {
 
         vaccinationByRequestDTOValidator.validate(vaccinationByRequestDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>( bindingResult.getAllErrors(),HttpStatus.OK);
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.OK);
         }
 
 

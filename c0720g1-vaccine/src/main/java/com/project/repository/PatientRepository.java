@@ -35,4 +35,10 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     @Query(value = "select count(email) from patient where email = ?", nativeQuery = true)
     Integer findByEmail(String email);
 
+    /**
+     * Phuoc: Tìm kiếm theo Phone
+     **/
+    @Query(value = "select count(phone) from patient where phone = ?", nativeQuery = true)
+    Integer findByPhone(String email);
+
 }
