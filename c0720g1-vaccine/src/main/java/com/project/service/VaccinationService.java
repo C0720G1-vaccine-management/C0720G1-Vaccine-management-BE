@@ -7,11 +7,6 @@ import java.util.List;
 
 public interface VaccinationService {
 
-    //luyen code
-    List<PeriodicVaccinationDto> findAllPeriodicVaccinations();
-
-    // luyen code
-    List<PeriodicVaccinationDto> searchPeriodicVaccinations(String name,Boolean status);
 
     /*KhoaTA
      *Find registrable vaccination by Id

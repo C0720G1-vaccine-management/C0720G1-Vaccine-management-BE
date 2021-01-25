@@ -19,17 +19,6 @@ public class VaccinationServiceImpl implements VaccinationService {
     @Autowired
     private VaccinationHistoryRepository vaccinationHistoryRepository;
 
-    //luyen code
-    @Override
-    public List<PeriodicVaccinationDto> findAllPeriodicVaccinations() {
-        return vaccinationRepository.findAllPeriodicVaccinations();
-    }
-
-    // luyen code
-    @Override
-    public List<PeriodicVaccinationDto> searchPeriodicVaccinations(String name, Boolean status) {
-        return vaccinationRepository.searchPeriodicVaccinations(name,status);
-    }
 
     /*KhoaTA
      *find all periodical vaccination with date > date.now()

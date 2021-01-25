@@ -8,6 +8,8 @@ import com.project.entity.VaccinationHistory;
 import com.project.repository.VaccinationHistoryRepository;
 import com.project.service.VaccinationHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,5 +51,29 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
     @Override
     public List<String> getAllEmailToSend() {
         return vaccinationHistoryRepository.getAllEmailToSend();
+    }
+
+    /**
+     * LuyenNT
+     *
+     * @param name
+     * @param status
+     * @return
+     */
+    @Override
+    public Page<VaccinationHistory> searchPeriodicVaccination(String name, Boolean status, Pageable pageable) {
+        return vaccinationHistoryRepository.findAllByPatient_NameContainingAndVaccination_StatusIs(name, status, pageable);
+    }
+
+    /**
+     * LuyenNT code
+     *
+     * @param name
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<VaccinationHistory> finAllPeriodicVaccination(String name, Pageable pageable) {
+        return vaccinationHistoryRepository.findAllByPatient_NameContaining(name, pageable);
     }
 }
