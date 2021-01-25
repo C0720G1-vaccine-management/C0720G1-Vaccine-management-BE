@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VaccinationHistoryServiceImpl implements VaccinationHistoryService {
 
@@ -49,5 +51,20 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
         return this.vaccinationHistoryRepository.getPreStatus(vaccinationHistoryId);
     }
 
+    /**
+     * Phuoc: Tạo mới lịch tiêm theo yêu cầu
+     **/
+    @Override
+    public VaccinationHistory registerVaccinationHistory(VaccinationHistory vaccinationHistoryTemp) {
+        return vaccinationHistoryRepository.save(vaccinationHistoryTemp);
+    }
+
+    /**
+     * Nguyen Van Linh: Get all email of patient to remind vaccination
+     */
+    @Override
+    public List<String> getAllEmailToSend() {
+        return vaccinationHistoryRepository.getAllEmailToSend();
+    }
 
 }

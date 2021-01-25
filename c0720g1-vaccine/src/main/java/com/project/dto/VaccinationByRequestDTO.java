@@ -1,23 +1,9 @@
-package com.project.entity;
+package com.project.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+public class VaccinationByRequestDTO {
 
-import javax.persistence.*;
-import java.util.Set;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity(name = "patient")
-public class Patient {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer patientId;
     private String name;
-    @Column(columnDefinition = "Date")
     private String dateOfBirth;
     private String gender;
     private String guardian;
@@ -25,14 +11,25 @@ public class Patient {
     private String address;
     private String email;
     private Boolean deleteFlag;
+    private String dateVaccination;
+    private Integer vaccineId;
 
-    @OneToMany(mappedBy = "patient")
-    @JsonBackReference
-    private Set<VaccinationHistory> vaccinationHistoryList;
 
-    @OneToOne
-    @JoinColumn(name = "account_id",unique = true)
-    private Account account;
+    public String getDateVaccination() {
+        return dateVaccination;
+    }
+
+    public void setDateVaccination(String dateVaccination) {
+        this.dateVaccination = dateVaccination;
+    }
+
+    public Integer getVaccineId() {
+        return vaccineId;
+    }
+
+    public void setVaccineId(Integer vaccineId) {
+        this.vaccineId = vaccineId;
+    }
 
     public Integer getPatientId() {
         return patientId;
@@ -104,21 +101,5 @@ public class Patient {
 
     public void setDeleteFlag(Boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
-    }
-
-    public Set<VaccinationHistory> getVaccinationHistoryList() {
-        return vaccinationHistoryList;
-    }
-
-    public void setVaccinationHistoryList(Set<VaccinationHistory> vaccinationHistoryList) {
-        this.vaccinationHistoryList = vaccinationHistoryList;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 }

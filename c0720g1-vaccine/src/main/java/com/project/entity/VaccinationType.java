@@ -17,7 +17,12 @@ public class VaccinationType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer vaccinationTypeId;
     private String name;
-    @JsonBackReference
+
     @OneToMany(mappedBy = "vaccinationType")
+    @JsonBackReference
     private Set<Vaccination>vaccinationList;
+
+    public VaccinationType(Integer vaccinationTypeId) {
+        this.vaccinationTypeId = vaccinationTypeId;
+    }
 }

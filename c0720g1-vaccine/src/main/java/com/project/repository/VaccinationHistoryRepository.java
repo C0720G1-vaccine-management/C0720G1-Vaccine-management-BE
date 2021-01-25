@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 public interface VaccinationHistoryRepository extends JpaRepository<VaccinationHistory, Integer> {
 
@@ -51,4 +52,22 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
     @Query(value = "select pre_status as preStatus from vaccine_history where vaccination_history_id = ?1", nativeQuery = true)
     VaccinationHistoryGetPreStatusDTO getPreStatus(Integer vaccinationHistoryId);
 
+
+    /*KhoaTA
+     *Save new register for periodical vaccination
+     */
+    @Modifying
+    @Transactional
+    @Query (value = "INSERT INTO vaccination_history (vaccination_id, patient_id) VALUES (?1 , ?2)", nativeQuery = true)
+    void savePeriodicalVaccinationRegister(Integer vaccinationId, int patientId);
+
+
+    /**
+     *Nguyen Van Linh
+     */
+
+    @Query(value = "select email from vaccination join vaccine_history " +
+            "on vaccination.vaccination_id = vaccine_history.vaccination_id " +
+            "join patient on patient.patient_id = vaccine_history.patient_id WHERE date >= curdate()+7",nativeQuery = true)
+    List<String> getAllEmailToSend();
 }

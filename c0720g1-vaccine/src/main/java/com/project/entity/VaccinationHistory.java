@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "vaccine_history")
+@Entity(name = "vaccination_history")
 public class VaccinationHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

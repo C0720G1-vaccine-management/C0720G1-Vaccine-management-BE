@@ -1,6 +1,7 @@
 package com.project.service.impl;
 
 
+import com.project.entity.Role;
 import com.project.repository.RoleRepository;
 import com.project.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,4 +22,6 @@ public class RoleServiceImpl implements RoleService {
     public void setDefaultRole(int accountId, Integer roleId) {
         roleRepository.setDefaultRole(accountId,roleId);
     }
+
+
 }

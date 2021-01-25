@@ -20,6 +20,7 @@ public class Vaccine {
     private String origin;
     private String age;
     private String maintenance;
+    private String image;
     private Double dosage;
     @Column(columnDefinition = "Date")
     private String expired;

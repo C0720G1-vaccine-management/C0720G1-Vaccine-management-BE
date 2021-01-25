@@ -2,16 +2,12 @@ package com.project.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "account")
@@ -20,12 +16,16 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer accountId;
 
-    @NotBlank(message = "Please provide a userName")
-    private String userName;
+
 
     @NotBlank(message = "Please provide a encryptPw")
     private String encryptPw;
     private String token;
+    @NotBlank(message = "Please provide a userName")
+    private String userName;
+
+    private Boolean isEnabled;
+    private String verificationCode;
 
     @OneToOne(mappedBy = "account")
     @JsonBackReference
@@ -46,5 +46,77 @@ public class Account {
     public Account(String userName, String encryptPw) {
         this.userName = userName;
         this.encryptPw = encryptPw;
+    }
+
+    public Integer getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getEncryptPw() {
+        return encryptPw;
+    }
+
+    public void setEncryptPw(String encryptPw) {
+        this.encryptPw = encryptPw;
+    }
+
+    public Boolean getEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        isEnabled = enabled;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Set<AccountRole> getAccountRoleList() {
+        return accountRoleList;
+    }
+
+    public void setAccountRoleList(Set<AccountRole> accountRoleList) {
+        this.accountRoleList = accountRoleList;
+    }
+
+    public Set<ImportAndExport> getImportAndExportList() {
+        return importAndExportList;
+    }
+
+    public void setImportAndExportList(Set<ImportAndExport> importAndExportList) {
+        this.importAndExportList = importAndExportList;
     }
 }
