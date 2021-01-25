@@ -1,7 +1,7 @@
 package com.project.service;
 
 import com.project.dto.VaccinationHistoryFeedbackDTO;
-import com.project.dto.VaccinationHistoryGetPreStatusDTO;
+import com.project.dto.VaccinationHistoryGetAfterStatusDTO;
 import com.project.dto.VaccinationHistorySendFeedbackDTO;
 import com.project.entity.VaccinationHistory;
 import org.springframework.data.domain.Page;
@@ -28,7 +28,7 @@ public interface VaccinationHistoryService {
     /**
      * tuNH
      **/
-    VaccinationHistoryGetPreStatusDTO getPreStatusVaccinationHistory(Integer vaccinationHistoryId);
+    VaccinationHistoryGetAfterStatusDTO getAfterStatusVaccinationHistory(Integer vaccinationHistoryId);
 
     /**
      * Phuoc: Tạo mới lịch tiêm theo yêu cầu

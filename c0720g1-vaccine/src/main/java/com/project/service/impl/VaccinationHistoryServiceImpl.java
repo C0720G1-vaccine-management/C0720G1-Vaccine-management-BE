@@ -1,7 +1,7 @@
 package com.project.service.impl;
 
 import com.project.dto.VaccinationHistoryFeedbackDTO;
-import com.project.dto.VaccinationHistoryGetPreStatusDTO;
+import com.project.dto.VaccinationHistoryGetAfterStatusDTO;
 import com.project.dto.VaccinationHistorySendFeedbackDTO;
 import com.project.entity.VaccinationHistory;
 import com.project.repository.VaccinationHistoryRepository;
@@ -40,15 +40,15 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
      **/
     @Override
     public void updateVaccinationHistory(Integer vaccinationHistoryId, VaccinationHistorySendFeedbackDTO vaccinationHistorySendFeedbackDTO) {
-        this.vaccinationHistoryRepository.updateFeedbackVaccinationHistory(vaccinationHistoryId, vaccinationHistorySendFeedbackDTO.getPreStatus());
+        this.vaccinationHistoryRepository.updateFeedbackVaccinationHistory(vaccinationHistoryId, vaccinationHistorySendFeedbackDTO.getAfterStatus());
     }
 
     /**
      * tuNH
      **/
     @Override
-    public VaccinationHistoryGetPreStatusDTO getPreStatusVaccinationHistory(Integer vaccinationHistoryId) {
-        return this.vaccinationHistoryRepository.getPreStatus(vaccinationHistoryId);
+    public VaccinationHistoryGetAfterStatusDTO getAfterStatusVaccinationHistory(Integer vaccinationHistoryId) {
+        return this.vaccinationHistoryRepository.getAfterStatus(vaccinationHistoryId);
     }
 
     /**

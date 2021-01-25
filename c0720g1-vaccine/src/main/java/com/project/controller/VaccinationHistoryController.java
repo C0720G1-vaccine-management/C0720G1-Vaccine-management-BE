@@ -1,7 +1,7 @@
 package com.project.controller;
 
 import com.project.dto.VaccinationHistoryFeedbackDTO;
-import com.project.dto.VaccinationHistoryGetPreStatusDTO;
+import com.project.dto.VaccinationHistoryGetAfterStatusDTO;
 import com.project.dto.VaccinationHistorySendFeedbackDTO;
 import com.project.entity.VaccinationHistory;
 import com.project.service.VaccinationHistoryService;
@@ -40,7 +40,6 @@ public class VaccinationHistoryController {
             return new ResponseEntity<Page<VaccinationHistory>>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Page<VaccinationHistory>>(vaccinationHistories, HttpStatus.OK);
-
     }
 
     /**
@@ -60,13 +59,13 @@ public class VaccinationHistoryController {
      * tuNH
      * lấy trạng thái sau khi tiêm chủng lịch sử tiêm chủng
      **/
-    @RequestMapping(value = "/vaccination-history/feedback/getPreStatus/{vaccinationHistoryId}", method = RequestMethod.GET)
-    public ResponseEntity<VaccinationHistoryGetPreStatusDTO> getPreStatusVaccinationHistory(@PathVariable Integer vaccinationHistoryId) {
-        VaccinationHistoryGetPreStatusDTO list = this.vaccinationHistoryService.getPreStatusVaccinationHistory(vaccinationHistoryId);
-        if (list == null) {
-            return new ResponseEntity<VaccinationHistoryGetPreStatusDTO>(HttpStatus.NO_CONTENT);
+    @RequestMapping(value = "/vaccination-history/feedback/getAfterStatus/{vaccinationHistoryId}", method = RequestMethod.GET)
+    public ResponseEntity<VaccinationHistoryGetAfterStatusDTO> getAfterStatusVaccinationHistory(@PathVariable Integer vaccinationHistoryId) {
+        VaccinationHistoryGetAfterStatusDTO afterStatus = this.vaccinationHistoryService.getAfterStatusVaccinationHistory(vaccinationHistoryId);
+        if (afterStatus == null) {
+            return new ResponseEntity<VaccinationHistoryGetAfterStatusDTO>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<VaccinationHistoryGetPreStatusDTO>(list, HttpStatus.OK);
+        return new ResponseEntity<VaccinationHistoryGetAfterStatusDTO>(afterStatus, HttpStatus.OK);
     }
 
     /**
@@ -76,7 +75,8 @@ public class VaccinationHistoryController {
     @RequestMapping(value = "/vaccination-history/feedback/sendFeedback/{vaccinationHistoryId}", method = RequestMethod.PUT)
     public ResponseEntity<Void> feedbackVaccinationHistory(
             @RequestBody VaccinationHistorySendFeedbackDTO vaccinationHistorySendFeedbackDTO,
-            @PathVariable Integer vaccinationHistoryId) {
+            @PathVariable Integer vaccinationHistoryId
+    ) {
         this.vaccinationHistoryService.updateVaccinationHistory(vaccinationHistoryId, vaccinationHistorySendFeedbackDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
