@@ -31,21 +31,22 @@ public class VaccinationServiceImpl implements VaccinationService {
         return vaccinationRepository.searchPeriodicVaccinations(name,status);
     }
 
-    /*KhoaTA
+    /**KhoaTA
      *find all periodical vaccination with date > date.now()
+     * Test NativeQuery
      */
 //    @Override
 //    public List<RegistrablePeriodicalVaccinationDTO> findAllRegistrableVaccination() {
 //        return this.vaccinationRepository.findAllRegistrableVaccination();
 //    }
-    /*KhoaTA
+    /**KhoaTA
      *find a periodical vaccination by Id
      */
     @Override
     public RegistrablePeriodicalVaccinationDTO findRegistrableVaccinationById(Integer id) {
         return this.vaccinationRepository.findRegistrableVaccinationById(id);
     }
-    /*KhoaTA
+    /**KhoaTA
      *save patient and register for periodical vaccination
      */
     @Override
@@ -64,7 +65,7 @@ public class VaccinationServiceImpl implements VaccinationService {
         return vaccinationRepository.save(vaccinationTemp);
     }
 
-    /*KhoaTA
+    /**KhoaTA
      *get the list of all vaccine's ages
      */
     @Override
@@ -72,7 +73,7 @@ public class VaccinationServiceImpl implements VaccinationService {
         return this.vaccinationRepository.findAllAge();
     }
 
-    /*KhoaTA
+    /**KhoaTA
      *find all available vaccination time stamps
      */
     @Override
@@ -80,20 +81,20 @@ public class VaccinationServiceImpl implements VaccinationService {
         return this.vaccinationRepository.findAllTimeStamp();
     }
 
-    /*KhoaTA
+    /**KhoaTA
      *get the total page of search data
      */
     @Override
     public double getTotalPage(PeriodicalSearchDataDTO searchData) {
         if (searchData.getDate().equals("")) {
             return Math.ceil((double) this.vaccinationRepository.findTotalPage('%'+searchData.getAge()+'%', '%'+searchData.getStartTime()+'%', '%'+searchData.getEndTime()+'%',
-                    '%'+searchData.getVaccineName()+'%').size()/5);
+                    '%'+searchData.getVaccineName()+'%')/5);
         }
         return Math.ceil( (double) this.vaccinationRepository.findTotalPage('%'+searchData.getAge()+'%', searchData.getDate(), '%'+searchData.getStartTime()+'%', '%'+searchData.getEndTime()+'%',
-                '%'+searchData.getVaccineName()+'%').size()/5);
+                '%'+searchData.getVaccineName()+'%')/5);
     }
 
-    /*KhoaTA
+    /**KhoaTA
      *get list of periodical vaccination with custom search and page
      */
     @Override

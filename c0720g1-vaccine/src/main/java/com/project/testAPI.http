@@ -7,6 +7,9 @@ Accept: application/json
 
 ###
 GET http://localhost:8080/api/public/list
+
+###
+GET http://localhost:8080/api/public/registered-for-vaccination/list
 Accept: application/json
 
 ###

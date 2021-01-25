@@ -38,7 +38,15 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
 
     /**
      * Duy NP
+     */
      **/
+     * KhoaTA
+     * Save Patient after register for the periodical vaccination
+     */
+    @Modifying
+    @Transactional
+    @Query(value = "insert into patient(name,date_of_birth,gender,guardian,phone,address,email) values (?1,?2,?3,?4,?5,?6,?7)", nativeQuery = true)
+    void savePatient(String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email);
 
     @Query(value = "select * from patient where delete_flag = 0 and patient.name like %?1% and patient.patient_id like %?2%", nativeQuery = true)
     List<Patient> search(String name, String id);
@@ -54,7 +62,7 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     @Query(value = "select count(phone) from patient where phone = ?", nativeQuery = true)
     Integer findByPhone(String email);
 
-    /*KhoaTA
+    /**KhoaTA
      * Get the id of latest patient
      */
     @Query(value = "select max(patient_id) from patient", nativeQuery = true)

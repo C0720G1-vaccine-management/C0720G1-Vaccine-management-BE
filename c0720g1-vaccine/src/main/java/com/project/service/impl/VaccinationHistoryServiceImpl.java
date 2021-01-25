@@ -3,11 +3,14 @@ package com.project.service.impl;
 
 import com.project.dto.VaccinationHistoryDTO;
 import com.project.dto.VaccinationHistoryFeedbackDTO;
+import com.project.dto.VaccinationHistoryRegisteredDTO;
 import com.project.dto.VaccinationHistorySendFeedbackDTO;
 import com.project.entity.VaccinationHistory;
 import com.project.repository.VaccinationHistoryRepository;
 import com.project.service.VaccinationHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,5 +52,29 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
     @Override
     public List<String> getAllEmailToSend() {
         return vaccinationHistoryRepository.getAllEmailToSend();
+    }
+
+    /**
+     list:  create by LongBP
+     **/
+    @Override
+    public Page<VaccinationHistory> getAllRegisteredRequired(String name, Pageable pageable) {
+        return this.vaccinationHistoryRepository.findAllByPatient_NameContaining(name, pageable);
+    }
+
+    /**
+     search and paging:  create by LongBP
+     **/
+    @Override
+    public Page<VaccinationHistory> searchNameAndInjected(String name, Boolean status, Pageable pageable) {
+        return this.vaccinationHistoryRepository.findAllByPatient_NameContainingAndStatusIs(name, status, pageable);
+    }
+
+    /**
+     find by id:  create by LongBP
+     **/
+    @Override
+    public VaccinationHistoryRegisteredDTO findId(Integer id) {
+        return this.vaccinationHistoryRepository.findId(id);
     }
 }

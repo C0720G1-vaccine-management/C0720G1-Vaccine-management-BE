@@ -63,14 +63,14 @@ public class VaccinationByRequestDTOValidator implements Validator {
             errors.rejectValue("dateOfBirth", "dateOfBirth.format", "Ngày sinh phải từ 90 ngày tuổi đến 100 tuổi");
         }
 
-
-        if (vaccination.getAddress() == null) {
-            errors.rejectValue("address", "address.null", "Địa chỉ không được để trống");
-        }
-
-        if (vaccination.getGuardian() == null) {
-            errors.rejectValue("guardian", "guardian.null", "Người bảo hộ không được để trống");
-        }
+//
+//        if (vaccination.getAddress() == null) {
+//            errors.rejectValue("address", "address.null", "Địa chỉ không được để trống");
+//        }
+//
+//        if (vaccination.getGuardian() == null) {
+//            errors.rejectValue("guardian", "guardian.null", "Người bảo hộ không được để trống");
+//        }
 
         if (vaccination.getEmail() == null) {
             errors.rejectValue("email", "email.null", "Email không được để trống");
@@ -83,7 +83,7 @@ public class VaccinationByRequestDTOValidator implements Validator {
 
         if (vaccination.getPhone() == null) {
             errors.rejectValue("phone", "phone.null", "Số điện thoại không được để trống");
-        } else if (!Pattern.compile("^(090|091|\\(\\+84\\)90|\\(\\+84\\)91)\\d{7}$").matcher(vaccination.getPhone()).find()) {
+        } else if (!Pattern.compile("^(0|\\(\\+84\\))\\d{9}$").matcher(vaccination.getPhone()).find()) {
             errors.rejectValue("phone", "phone.format", "Số điện thoại không đúng định dạng");
         } else if (patientService.findByPhone(vaccination.getPhone()) > 0) {
             errors.rejectValue("phone","phone.duplicate","Số điện thoại đã tồn tại");
