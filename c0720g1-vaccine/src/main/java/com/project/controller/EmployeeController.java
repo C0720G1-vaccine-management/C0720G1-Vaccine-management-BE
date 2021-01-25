@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -36,12 +37,18 @@ public class EmployeeController {
   * HungDH - Hien thi danh sach nhan vien
    */
     @GetMapping("/list-employee")
-    public ResponseEntity<List<EmployeeListDTO>> getAllEmployee(){
+    public ResponseEntity<List<EmployeeListDTO>> getAllEmployee(@RequestParam Optional<String> nameSearch){
+        String afterCheck = "";
         List<EmployeeListDTO> employeeList = employeeService.getAllEmployee();
         if (employeeList.isEmpty()){
             return new ResponseEntity<List<EmployeeListDTO>>(HttpStatus.NO_CONTENT);
+        } else {
+            if (nameSearch.isPresent()){
+                afterCheck = nameSearch.get();
+                return new ResponseEntity<List<EmployeeListDTO>>(employeeService.findEmployeeByName("%"+afterCheck+"%"), HttpStatus.OK);
+            }
+            return new ResponseEntity<List<EmployeeListDTO>>(employeeList, HttpStatus.OK);
         }
-        return new ResponseEntity<List<EmployeeListDTO>>(employeeList, HttpStatus.OK);
     }
     /*
      * Hung DH - hien thi position list

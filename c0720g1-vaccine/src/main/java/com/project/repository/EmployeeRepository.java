@@ -34,6 +34,29 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 //    @Query(value = "select * from employee", nativeQuery = true)
 //    Page<Employee> findAllByNameContainingAndDateOfBirthContainingAndIdCardContaining(String name, String dateOfBirth, String idCard, Pageable pageable);
 
+    /*
+     * Hung DH - tim kiem id nhan vien theo ten
+     */
+    @Query(value = "select employee.employee_id as employeeId, employee.name, employee.date_of_birth as dateOfBirth, \n" +
+            "employee.id_card as idCard, employee.address, employee.phone, position.name as position, role.name \n" +
+            "as account from employee \n" +
+            "join position on position.position_id = employee.position_id \n" +
+            "join account on account.account_id = employee.account_id \n" +
+            "join account_role on account_role.account_id = account.account_id \n" +
+            "join role on role.role_id = account_role.role_id where employee.name like ?1 and employee.delete_flag = false", nativeQuery = true)
+    List<EmployeeListDTO> findEmployeeByName(String nameSearch);
+
+    /*
+     * Hung DH - tim kiem id nhan vien theo CMND
+     */
+    @Query(value = "select employee.employee_id as employeeId, employee.name, employee.date_of_birth as dateOfBirth, \n" +
+            "employee.id_card as idCard, employee.address, employee.phone, position.name as position, role.name \n" +
+            "as account from employee \n" +
+            "join position on position.position_id = employee.position_id \n" +
+            "join account on account.account_id = employee.account_id \n" +
+            "join account_role on account_role.account_id = account.account_id \n" +
+            "join role on role.role_id = account_role.role_id where employee.id_card like ?1", nativeQuery = true)
+    List<EmployeeListDTO> findEmployeeByIdCard(String idCardSearch);
 
     /*
      * Hung DH - tim kiem id nhan vien theo id
