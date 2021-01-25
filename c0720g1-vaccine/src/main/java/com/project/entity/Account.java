@@ -19,18 +19,26 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer accountId;
+
     @NotBlank(message = "Please provide a userName")
     private String userName;
+
     @NotBlank(message = "Please provide a encryptPw")
     private String encryptPw;
     private String token;
+
     @OneToOne(mappedBy = "account")
+    @JsonBackReference
     private Patient patient;
+
     @OneToOne(mappedBy = "account")
+    @JsonBackReference
     private Employee employee;
+
     @OneToMany(mappedBy = "account")
     @JsonBackReference
     private Set<AccountRole> accountRoleList;
+
     @OneToMany(mappedBy = "account")
     @JsonBackReference
     private Set<ImportAndExport> importAndExportList;
