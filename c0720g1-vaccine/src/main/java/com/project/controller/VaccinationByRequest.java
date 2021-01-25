@@ -93,6 +93,7 @@ public class VaccinationByRequest {
 
         vaccinationByRequestDTOValidator.validate(vaccinationByRequestDTO, bindingResult);
 
+        
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.OK);
         }
