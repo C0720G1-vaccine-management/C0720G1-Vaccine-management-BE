@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -27,4 +28,10 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
     @Modifying
     @Query(value = "insert into account(user_name,encrypt_pw) values (?1,?2)", nativeQuery = true)
     void addNew(String username, String password);
+
+    /*
+    * HungDH
+     */
+    @Query(value = "select * from account", nativeQuery = true)
+    List<Account> getAllAccount();
 }

@@ -1,5 +1,8 @@
 package com.project.service.impl;
 import com.project.dto.EmployeeDto;
+import com.project.dto.EmployeeEditDTO;
+import com.project.dto.EmployeeFindIdDTO;
+import com.project.dto.EmployeeListDTO;
 import com.project.entity.Account;
 import com.project.entity.Employee;
 import com.project.entity.Position;
@@ -11,30 +14,34 @@ import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    
+
     @Autowired
     private EmployeeRepository employeeRepository;
-      
+    /*
+    * HungDH
+     */
     @Override
-    public List<Employee> getAllEmployee() {
+    public List<EmployeeListDTO> getAllEmployee() {
         return employeeRepository.getAllEmployee();
     }
 
     @Override
-    public Employee findById(int id) {
+    public EmployeeFindIdDTO findById(int id) {
         return employeeRepository.findById(id);
     }
 
     @Override
-    public void editEmployee(String name, String dateOfBirth, String idCard, String phone, String address, Position position, Account account, int id) {
-        employeeRepository.editEmployee(name, dateOfBirth, idCard, phone, address, position, account, id);
+    public void editEmployee(EmployeeEditDTO employeeEditDTO, int roleId, int accountId) {
+        employeeRepository.editAccountRole(roleId, accountId);
+        employeeRepository.editEmployee(employeeEditDTO.getName(), employeeEditDTO.getDateOfBirth(), employeeEditDTO.getIdCard(), employeeEditDTO.getAddress(),
+                employeeEditDTO.getPhone(), Integer.parseInt(employeeEditDTO.getPosition()), Integer.parseInt(employeeEditDTO.getAccount()), employeeEditDTO.getEmployeeId());
     }
 
     @Override
     public void deleteEmployee(int id) {
         employeeRepository.deleteEmployee(id);
     }
-  
+
   //luyen code
     @Override
     public void createNewEmployee(EmployeeDto employeeDto) {

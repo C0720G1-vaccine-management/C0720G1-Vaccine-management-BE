@@ -6,6 +6,7 @@ import com.project.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,5 +37,12 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void addNew(String username, String password) {
         accountRepository.addNew(username, password);
+    }
+/*
+* HungDH - hien thi list
+ */
+    @Override
+    public List<Account> getAllAccount() {
+        return accountRepository.getAllAccount();
     }
 }
