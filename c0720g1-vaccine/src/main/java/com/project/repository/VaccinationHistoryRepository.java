@@ -55,4 +55,14 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
     @Transactional
     @Query (value = "INSERT INTO vaccination_history (vaccination_id, patient_id) VALUES (?1 , ?2)", nativeQuery = true)
     void savePeriodicalVaccinationRegister(Integer vaccinationId, int patientId);
+
+
+    /**
+     *Nguyen Van Linh
+     */
+
+    @Query(value = "select email from vaccination join vaccine_history " +
+            "on vaccination.vaccination_id = vaccine_history.vaccination_id " +
+            "join patient on patient.patient_id = vaccine_history.patient_id WHERE date >= curdate()+7",nativeQuery = true)
+    List<String> getAllEmailToSend();
 }

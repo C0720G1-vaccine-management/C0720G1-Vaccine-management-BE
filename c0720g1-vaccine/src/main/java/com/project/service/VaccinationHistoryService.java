@@ -24,4 +24,9 @@ public interface VaccinationHistoryService {
      * Phuoc: Tạo mới lịch tiêm theo yêu cầu
      **/
     VaccinationHistory registerVaccinationHistory(VaccinationHistory vaccinationHistoryTemp);
+
+    /**
+     * Nguyen Van Linh: Get all email of patient to remind vaccination
+     */
+    List<String>getAllEmailToSend();
 }
