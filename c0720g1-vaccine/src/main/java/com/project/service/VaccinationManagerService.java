@@ -1,17 +1,43 @@
 package com.project.service;
 
 import com.project.entity.Vaccination;
-import com.project.dto.VaccinationDto;
+import com.project.dto.VaccinationManagerDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-
-//Trung
 public interface VaccinationManagerService {
-    List<Vaccination> findAllVaccinationManager();
+    /**
+     * TrungTQ Code: lấy danh sách + phân trang + tìm kiếm
+     */
+    Page<Vaccination> searchAllVaccinationManager(String startDate, String endDate, String name, String status, int pageable, int type);
 
-    Vaccination findById(Integer id);
+    /**
+     * TrungTQ Code: lấy danh sách + phân trang
+     */
+    Page<Vaccination> findAllVaccination(Pageable pageable, int type);
 
-    void save(VaccinationDto vaccinationDto);
+    /**
+     * TrungTQ Code: tìm id
+     */
+    Vaccination findByIdVaccinationManager(Integer id);
 
-    void remove(Integer id);
+    /**
+     * TrungTQ Code: thêm mới
+     */
+    void saveVaccinationManager(VaccinationManagerDto vaccinationManagerDto);
+
+    /**
+     * TrungTQ code: Cập nhật lịch tiêm chủng định kỳ
+     */
+    void updateVaccinationManager(VaccinationManagerDto vaccinationManagerDto);
+
+    /**
+     * TrungTQ code: Cập nhật trạng thái đã tiêm hay chưa
+     */
+    void updateStatusVaccinationManager(Integer id);
+
+    /**
+     * TrungTQ code: Xóa lịch tiêm chủng định kỳ
+     */
+    void removeVaccinationManager(Integer id);
 }
