@@ -14,11 +14,6 @@ public interface VaccinationService {
     List<PeriodicVaccinationDto> searchPeriodicVaccinations(String name,Boolean status);
 
     /*KhoaTA
-     *find all periodical vaccination with date > date.now()
-     */
-//    List<RegistrablePeriodicalVaccinationDTO> findAllRegistrableVaccination();
-
-    /*KhoaTA
      *Find registrable vaccination by Id
      */
     RegistrablePeriodicalVaccinationDTO findRegistrableVaccinationById(Integer id);
@@ -48,5 +43,8 @@ public interface VaccinationService {
      */
     double getTotalPage(PeriodicalSearchDataDTO searchData);
 
+    /*KhoaTA
+     *get the search periodical vaccination result
+     */
     List<RegistrablePeriodicalVaccinationDTO> findCustomVaccination(PeriodicalSearchDataDTO searchData);
 }

@@ -97,12 +97,16 @@ public class VaccinationController {
         List<TimeDTO> timeList = this.vaccinationService.findAllVaccinationTime();
         return new ResponseEntity<>(timeList, HttpStatus.OK);
     }
-
+    /*KhoaTA
+     *get the total page of search
+     */
     @PostMapping("/get-total-page")
     public ResponseEntity<Integer> findTotalPage(@RequestBody PeriodicalSearchDataDTO searchData) {
         return new ResponseEntity<>((int) this.vaccinationService.getTotalPage(searchData), HttpStatus.OK);
     }
-
+    /*KhoaTA
+     *get the search periodical vaccination result
+     */
     @PostMapping("/get-custom-list")
     public ResponseEntity<List<RegistrablePeriodicalVaccinationDTO>> findCustomList(@RequestBody PeriodicalSearchDataDTO searchData) {
         List<RegistrablePeriodicalVaccinationDTO> registrableVaccinationList = this.vaccinationService.findCustomVaccination(searchData);
