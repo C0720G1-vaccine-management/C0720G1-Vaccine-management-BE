@@ -26,9 +26,11 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     @Query(value = "delete from patient where patient_id = ?;", nativeQuery = true)
     void deletePatient(int id);
 
+    /**
+     * NhiTTY
+     **/
     @Modifying
-    @Transactional
-    @Query(value = "insert into patient(name,date_of_birth,gender,guardian,phone,address,email) values (?1,?2,?3,?4,?5,?6,?7)", nativeQuery = true)
+    @Query(value = "insert into patient(name,date_of_birth,gender,guardian,phone,address,email,delete_flag) values (?1,?2,?3,?4,?5,?6,?7,b'0')", nativeQuery = true)
     void savePatient(String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email);
 
     /**

@@ -1,24 +1,30 @@
 package com.project.controller;
+
 import com.project.dto.PatientDTO;
 import com.project.entity.Patient;
 import com.project.service.PatientService;
+import com.project.validation.PatientByRequestDTOValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import java.text.DateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
+import javax.validation.Valid;
 import java.util.List;
 
 
 @RestController
-@RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api/public/")
+@CrossOrigin(origins = "*")
 
 public class PatientController {
     @Autowired
     private PatientService patientService;
+
+    @Autowired
+    private PatientByRequestDTOValidator patientByRequestDTOValidator;
 
     @GetMapping("/list")
     public ResponseEntity<List<Patient>> getListPatient() {
@@ -41,16 +47,23 @@ public class PatientController {
             patient1.setAddress(patientDTO.getAddress());
             patient1.setEmail(patientDTO.getEmail());
             patientService.editPatient(patient1);
-            return  new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
 
     }
 
-    @PostMapping("/patient/add")
-    public ResponseEntity<Void> createPatient(@RequestBody PatientDTO patientDTO) {
+    /**
+     * NhiTTY
+     **/
+    @PostMapping(value = "/patient/create")
+    public ResponseEntity<?> createPatient(@Valid @RequestBody PatientDTO patientDTO, BindingResult bindingResult) {
+        patientByRequestDTOValidator.validate(patientDTO, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.OK);
+        }
         patientService.addPatient(patientDTO);
-//        System.out.println(patientDTO.getEmail());
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        HttpHeaders headers = new HttpHeaders();
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
 }

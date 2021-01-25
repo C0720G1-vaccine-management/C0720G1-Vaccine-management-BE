@@ -38,6 +38,9 @@ public class PatientServiceImpl implements PatientService {
     public void deletePatient(Patient patient) {}
 
 
+    /**
+     *NhiTTY
+     **/
     @Override
     public void addPatient(PatientDTO patientDTO) {
         patientRepository.savePatient(patientDTO.getName(),patientDTO.getDateOfBirth(),patientDTO.getGender(),patientDTO.getGuardian(),patientDTO.getPhone(),patientDTO.getAddress(),patientDTO.getEmail());

@@ -11,6 +11,10 @@ public interface PatientService {
     void editPatient(Patient patient);
     void editPatient(PatientDTO patientDTO);
     void deletePatient(Patient patient);
+
+    /**
+     *NhiTTY
+     **/
     void addPatient(PatientDTO patientDTO);
 
 
