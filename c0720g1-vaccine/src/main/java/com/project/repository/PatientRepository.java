@@ -26,6 +26,10 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     @Query(value = "delete from patient where patient_id = ?;", nativeQuery = true)
     void deletePatient(int id);
 
+    /**
+     * KhoaTA
+     * Save Patient after register for the periodical vaccination
+     */
     @Modifying
     @Transactional
     @Query(value = "insert into patient(name,date_of_birth,gender,guardian,phone,address,email) values (?1,?2,?3,?4,?5,?6,?7)", nativeQuery = true)
@@ -43,7 +47,7 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     @Query(value = "select count(phone) from patient where phone = ?", nativeQuery = true)
     Integer findByPhone(String email);
 
-    /*KhoaTA
+    /**KhoaTA
      * Get the id of latest patient
      */
     @Query(value = "select max(patient_id) from patient", nativeQuery = true)
