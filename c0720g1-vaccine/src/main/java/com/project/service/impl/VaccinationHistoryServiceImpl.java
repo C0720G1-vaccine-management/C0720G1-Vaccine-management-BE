@@ -42,4 +42,12 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
     public VaccinationHistory registerVaccinationHistory(VaccinationHistory vaccinationHistoryTemp) {
         return vaccinationHistoryRepository.save(vaccinationHistoryTemp);
     }
+
+    /**
+     * Nguyen Van Linh: Get all email of patient to remind vaccination
+     */
+    @Override
+    public List<String> getAllEmailToSend() {
+        return vaccinationHistoryRepository.getAllEmailToSend();
+    }
 }

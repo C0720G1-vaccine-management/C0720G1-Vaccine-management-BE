@@ -11,26 +11,29 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * Nguyen Van Linh made it
+ */
 public class AccountDetailsImpl implements UserDetails {
-    /**
-     * Nguyen Van Linh made it
-     */
+
     private static final long serialVersionUID = 1L;
     private Integer id;
     private String username;
+    private Boolean enabled;
 
     @JsonIgnore
     private String password;
     List<GrantedAuthority> authorities = null;
 
     public AccountDetailsImpl(Integer id, String username, String password,
-                              List<GrantedAuthority> authorities) {
+                              List<GrantedAuthority> authorities,Boolean enabled) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.authorities = authorities;
+        this.enabled = enabled;
     }
-
+// This func help you guys get account information to AccountDetailService
     public static AccountDetailsImpl build(Account account) {
         List<GrantedAuthority> authorities = account.getAccountRoleList().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRole().getName()))
@@ -39,7 +42,8 @@ public class AccountDetailsImpl implements UserDetails {
                 account.getAccountId(),
                 account.getUserName(),
                 account.getEncryptPw(),
-                authorities);
+                authorities,
+                account.getEnabled());
     }
 
     @Override
@@ -79,7 +83,7 @@ public class AccountDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
     @Override
