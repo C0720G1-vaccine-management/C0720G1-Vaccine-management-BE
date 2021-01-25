@@ -1,27 +1,29 @@
-POST http://localhost:8080/api/public/vaccination/create
-Content-Type: application/json
-
-{
-  "dateVaccination": "2021-01-24"
-}
+GET http://localhost:8080/api/searchFullName/3
+Accept: application/json
 
 ###
-POST http://localhost:8080/Create
-Content-Type: application/json
+GET http://localhost:8080/api/delete/8
+Accept: application/json
 
-{
-  "importAndExportId": 7,
-  "action": "export",
-  "quantity": 100,
-  "date": "2021-01-19",
-  "price": 200000,
-  "deleteFlag": null
-}
+###
+GET http://localhost:8080/api/public/list
 
 ###
 GET http://localhost:8080/api/public/registered-for-vaccination/list
 Accept: application/json
 
 ###
+PUT http://localhost:8080/api/editPatient/1
+Content-Type: application/json
 
+{
+  "name": "duy phuc Duy duy",
+  "dateOfBirth": "1999-12-12",
+  "gender": "Nam",
+  "guardian": "",
+  "phone": "0912345678",
+  "address": "qng",
+  "email": "nguyenphucduy@gamil.com"
+}
 
+###

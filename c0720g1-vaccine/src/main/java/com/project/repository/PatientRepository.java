@@ -1,6 +1,8 @@
 package com.project.repository;
 
 import com.project.entity.Patient;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,22 +13,33 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public interface PatientRepository extends JpaRepository<Patient, Integer> {
-    @Query(value = "select *from patient ;", nativeQuery = true)
-    List<Patient> findAllPatient();
+    /**
+     * Duy NP
+     **/
+
+    Page<Patient> findAllByDeleteFlagIsFalse(Pageable pageable);
+    /**
+     * Duy NP
+     **/
 
 
     @Query(value = "select * from patient where patient_id = ?", nativeQuery = true)
     Patient findById(int id);
 
+    /**
+     * Duy NP
+     **/
+    @javax.transaction.Transactional
+    @Modifying
     @Query(value = "update patient as p set p.name =?1,p.date_of_birth =?2,p.gender =?3" +
-            ",p.guardian =?4,p.phone =?5,p.address =?6,p.email =?7 where patient_id = ?8", nativeQuery = true)
+            ",p.guardian =?4,p.phone =?5,p.address =?6,p.email =?7 where patient_id =?8", nativeQuery = true)
     void editPatient(String name, String date_of_birth, String gender, String guardian, String phone,
-                     String address, String email);
-
-    @Query(value = "delete from patient where patient_id = ?;", nativeQuery = true)
-    void deletePatient(int id);
+                     String address, String email, Integer id);
 
     /**
+     * Duy NP
+     */
+     **/
      * KhoaTA
      * Save Patient after register for the periodical vaccination
      */
@@ -35,6 +48,8 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     @Query(value = "insert into patient(name,date_of_birth,gender,guardian,phone,address,email) values (?1,?2,?3,?4,?5,?6,?7)", nativeQuery = true)
     void savePatient(String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email);
 
+    @Query(value = "select * from patient where delete_flag = 0 and patient.name like %?1% and patient.patient_id like %?2%", nativeQuery = true)
+    List<Patient> search(String name, String id);
     /**
      * Phuoc: Tìm kiếm theo Email
      **/
@@ -52,5 +67,11 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
      */
     @Query(value = "select max(patient_id) from patient", nativeQuery = true)
     int findLatestPatientId();
+
+
+    @Modifying
+    @Transactional
+    @Query(value = "insert into patient(name,date_of_birth,gender,guardian,phone,address,email) values (?1,?2,?3,?4,?5,?6,?7)", nativeQuery = true)
+    void savePatient(String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email);
 
 }
