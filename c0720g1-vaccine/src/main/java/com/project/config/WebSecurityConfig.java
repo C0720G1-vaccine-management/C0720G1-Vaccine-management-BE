@@ -15,12 +15,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Nguyen Van Linh made it
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    /**
-     * Nguyen Van Linh made it
-     */
+
     @Autowired
     private AccountDetailServiceImpl accountService;
     @Autowired
