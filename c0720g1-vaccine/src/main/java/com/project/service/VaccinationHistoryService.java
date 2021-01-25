@@ -24,4 +24,9 @@ public interface VaccinationHistoryService {
      * Phuoc: Tạo mới lịch tiêm theo yêu cầu
      **/
     VaccinationHistory registerVaccinationHistory(VaccinationHistory vaccinationHistoryTemp);
+
+    /**
+     * Made by Khanh lấy list history
+     */
+    List<VaccinationHistory> findAll();
 }

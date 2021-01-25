@@ -25,8 +25,10 @@ public class Account {
     private String encryptPw;
     private String token;
     @OneToOne(mappedBy = "account")
+    @JsonBackReference
     private Patient patient;
     @OneToOne(mappedBy = "account")
+    @JsonBackReference
     private Employee employee;
     @OneToMany(mappedBy = "account")
     @JsonBackReference

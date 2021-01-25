@@ -4,6 +4,7 @@ package com.project.controller;
 import com.project.dto.VaccinationHistoryDTO;
 import com.project.dto.VaccinationHistoryFeedbackDTO;
 import com.project.dto.VaccinationHistorySendFeedbackDTO;
+import com.project.entity.VaccinationHistory;
 import com.project.service.VaccinationHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*")
 //@EnableAutoConfiguration
-@RequestMapping("/api")
+@RequestMapping("/api/public")
 public class VaccinationHistoryController {
 
     @Autowired
@@ -52,5 +53,12 @@ public class VaccinationHistoryController {
         this.vaccinationHistoryService.updateVaccinationHistory(vaccinationHistoryId, vaccinationHistorySendFeedbackDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+    @RequestMapping(value = "/vaccination-history-list", method = RequestMethod.GET)
+    public ResponseEntity<?> getListVaccinationHistory (){
+        List<VaccinationHistory> list = this.vaccinationHistoryService.findAll();
+        if (list==null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(list,HttpStatus.OK);
+    }
 }

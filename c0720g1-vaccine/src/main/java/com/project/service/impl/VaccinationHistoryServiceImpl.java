@@ -42,4 +42,12 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
     public VaccinationHistory registerVaccinationHistory(VaccinationHistory vaccinationHistoryTemp) {
         return vaccinationHistoryRepository.save(vaccinationHistoryTemp);
     }
+
+    /**
+     * Made by Khanh lay list history
+     */
+    @Override
+    public List<VaccinationHistory> findAll() {
+        return this.vaccinationHistoryRepository.findAll();
+    }
 }
