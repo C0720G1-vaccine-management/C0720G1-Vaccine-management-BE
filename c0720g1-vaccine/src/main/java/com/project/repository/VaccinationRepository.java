@@ -12,20 +12,6 @@ import java.util.List;
 public interface VaccinationRepository extends JpaRepository<Vaccination,Integer> {
 
 
-
-    //luyen code
-    @Query(value = "select patient.patient_id as patientId ,name as name,date_of_birth as dateOfBirth,gender as gender,guardian as guardian,phone as phone,address as address,vaccination.status as status from patient" +
-            " join vaccine_history on patient.patient_id = vaccine_history.patient_id" +
-            " join vaccination on vaccine_history.vaccination_id = vaccination.vaccination_id",
-            nativeQuery = true)
-    List<PeriodicVaccinationDto> findAllPeriodicVaccinations();
-
-    // luyen code
-    @Query(value = "select patient.patient_id as patientId ,name as name,date_of_birth as dateOfBirth,gender as gender,guardian as guardian,phone as phone,address as address,vaccination.status as status from patient" +
-            " join vaccine_history on patient.patient_id = vaccine_history.patient_id" +
-                    " join vaccination on vaccine_history.vaccination_id = vaccination.vaccination_id where vaccination.status = b'0'",nativeQuery = true)
-    List<PeriodicVaccinationDto> searchPeriodicVaccinations(String name,Boolean statusCm);
-
     /**KhoaTA
      * find all periodical vaccination with date > date.now()
      * Test NativeQuery

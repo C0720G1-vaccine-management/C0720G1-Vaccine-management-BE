@@ -18,26 +18,6 @@ public class VaccinationController {
     @Autowired
     private VaccinationService vaccinationService;
 
-    // luyen code
-    @RequestMapping(value = "/periodic-vaccination", method = RequestMethod.GET)
-    public ResponseEntity<List<PeriodicVaccinationDto>> createVaccinations() {
-        List<PeriodicVaccinationDto> list = vaccinationService.findAllPeriodicVaccinations();
-        if (list.isEmpty()) {
-            return new ResponseEntity<List<PeriodicVaccinationDto>>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<List<PeriodicVaccinationDto>>(list, HttpStatus.OK);
-    }
-
-    // luyen code
-    @RequestMapping(value = "/periodic-vaccination/search",method = RequestMethod.GET)
-    public ResponseEntity<List<PeriodicVaccinationDto>> searchVaccination(@PathVariable String name,Boolean status){
-        List<PeriodicVaccinationDto> list = vaccinationService.searchPeriodicVaccinations(name,status);
-        if (list.isEmpty()) {
-            return new ResponseEntity<List<PeriodicVaccinationDto>>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<List<PeriodicVaccinationDto>>(list,HttpStatus.OK);
-    }
-
     /**KhoaTA
      *display list of registrable periodical vaccinations
      * Test Native Query

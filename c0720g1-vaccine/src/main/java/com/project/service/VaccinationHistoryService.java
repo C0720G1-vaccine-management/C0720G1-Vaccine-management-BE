@@ -33,6 +33,22 @@ public interface VaccinationHistoryService {
      */
     List<String>getAllEmailToSend();
 
+
+    /** LuyenNT code
+     *
+     * @param name
+     * @param status
+     * @return
+     */
+    Page<VaccinationHistory> searchPeriodicVaccination(String name, Boolean status, Pageable pageable);
+
+    /** LuyenNT code
+     * @param name
+     * @param pageable
+     * @return
+     */
+    Page<VaccinationHistory> finAllPeriodicVaccination(String name, Pageable pageable);
+
     /**
      list:  create by LongBP
      **/
@@ -47,4 +63,5 @@ public interface VaccinationHistoryService {
      find by id:  create by LongBP
      **/
     VaccinationHistoryRegisteredDTO findId(Integer id);
+
 }

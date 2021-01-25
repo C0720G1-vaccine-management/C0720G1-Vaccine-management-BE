@@ -55,8 +55,31 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
     }
 
     /**
-     list:  create by LongBP
-     **/
+     * LuyenNT
+     *
+     * @param name
+     * @param status
+     * @return
+     */
+    @Override
+    public Page<VaccinationHistory> searchPeriodicVaccination(String name, Boolean status, Pageable pageable) {
+        return vaccinationHistoryRepository.findAllByPatient_NameContainingAndVaccination_StatusIs(name, status, pageable);
+    }
+
+    /**
+     * LuyenNT code
+     *
+     * @param name
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<VaccinationHistory> finAllPeriodicVaccination(String name, Pageable pageable) {
+        return vaccinationHistoryRepository.findAllByPatient_NameContaining(name, pageable);
+
+    /**
+     *list:  create by LongBP
+     */
     @Override
     public Page<VaccinationHistory> getAllRegisteredRequired(String name, Pageable pageable) {
         return this.vaccinationHistoryRepository.findAllByPatient_NameContaining(name, pageable);
