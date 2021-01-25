@@ -8,12 +8,12 @@ import java.util.List;
 public interface VaccinationService {
 
 
-    /*KhoaTA
+    /**KhoaTA
      *Find registrable vaccination by Id
      */
     RegistrablePeriodicalVaccinationDTO findRegistrableVaccinationById(Integer id);
 
-    /*KhoaTA
+    /**KhoaTA
      *Find registrable vaccination by Id
      */
     void saveRegister(PeriodicalVaccinationRegisterDTO register);
@@ -24,21 +24,21 @@ public interface VaccinationService {
      **/
     Vaccination registerVaccination(Vaccination vaccinationTemp);
 
-    /*KhoaTA
+    /**KhoaTA
      *get the list of all vaccine's ages
      */
     List<String> findAllVaccineAge();
 
-    /*KhoaTA
+    /**KhoaTA
      *get the list of all vaccine's ages
      */
     List<TimeDTO> findAllVaccinationTime();
-    /*KhoaTA
+    /**KhoaTA
      *get the total page of search data
      */
     double getTotalPage(PeriodicalSearchDataDTO searchData);
 
-    /*KhoaTA
+    /**KhoaTA
      *get the search periodical vaccination result
      */
     List<RegistrablePeriodicalVaccinationDTO> findCustomVaccination(PeriodicalSearchDataDTO searchData);

@@ -3,6 +3,7 @@ package com.project.controller;
 
 import com.project.dto.VaccinationHistoryDTO;
 import com.project.dto.VaccinationHistoryFeedbackDTO;
+import com.project.dto.VaccinationHistoryRegisteredDTO;
 import com.project.dto.VaccinationHistorySendFeedbackDTO;
 import com.project.entity.VaccinationHistory;
 import com.project.service.VaccinationHistoryService;
@@ -91,5 +92,55 @@ public class VaccinationHistoryController {
         this.vaccinationHistoryService.updateVaccinationHistory(vaccinationHistoryId, vaccinationHistorySendFeedbackDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    /**
+     list:  create by LongBP
+     **/
+    @RequestMapping(value = "/public/registered-for-vaccination/list", method = RequestMethod.GET)
+    public ResponseEntity<Page<VaccinationHistory>> getAllRegisteredVaccination(@PageableDefault(size = 3) Pageable pageable,
+                                                                                @RequestParam(defaultValue = "") String name) {
+        Page<VaccinationHistory> list = vaccinationHistoryService.getAllRegisteredRequired(name, pageable);
+        if (list.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    /**
+     search and paging:  create by LongBP
+     **/
+    @RequestMapping(value = "/public/registered-for-vaccination/search", method = RequestMethod.GET)
+    public ResponseEntity<Page<VaccinationHistory>> searchRegisteredVaccination(@PageableDefault(size = 3) Pageable pageable,
+                                                                                @RequestParam(defaultValue = "") String name,
+                                                                                @RequestParam(defaultValue = "") String status) {
+        Page<VaccinationHistory> list = null;
+        Boolean statusNew;
+        if (status.equals("")) {
+            list = vaccinationHistoryService.getAllRegisteredRequired(name, pageable);
+        } else if (status.equals("true")) {
+            statusNew = true;
+            list = vaccinationHistoryService.searchNameAndInjected(name, statusNew, pageable);
+        } else if (status.equals("false")) {
+            statusNew = false;
+            list = vaccinationHistoryService.searchNameAndInjected(name, statusNew, pageable);
+        }
+        if (list.isEmpty()) {
+            return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    /**
+     find by id:  create by LongBP
+     **/
+    @GetMapping("/public/registered-for-vaccination/view/{id}")
+    public ResponseEntity<VaccinationHistoryRegisteredDTO> viewEmployee(@PathVariable Integer id) {
+        VaccinationHistoryRegisteredDTO vaccinationHistoryRegisteredDTO = vaccinationHistoryService.findId(id);
+        if (vaccinationHistoryRegisteredDTO == null) {
+            return new ResponseEntity<VaccinationHistoryRegisteredDTO>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<VaccinationHistoryRegisteredDTO>(vaccinationHistoryRegisteredDTO, HttpStatus.OK);
+    }
+
 
 }
