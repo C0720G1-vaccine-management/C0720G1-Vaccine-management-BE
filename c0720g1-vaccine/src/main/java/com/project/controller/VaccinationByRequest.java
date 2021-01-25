@@ -19,6 +19,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+/**
+ * PhuocTC
+ **/
+
 @RestController
 @CrossOrigin(value = "*", allowedHeaders = "*")
 @RequestMapping(value = "/api/public")
@@ -40,10 +44,8 @@ public class VaccinationByRequest {
     private VaccinationByRequestDTOValidator vaccinationByRequestDTOValidator;
 
 
-
-
     /**
-     * Phuoc: Tìm kiếm + Phân trang
+     * PhuocTC: Tìm kiếm + Phân trang
      **/
     @GetMapping(value = "/vaccine/list")
     public ResponseEntity<Page<Vaccine>> getListVaccine(@PageableDefault(size = 5) Pageable pageable,
@@ -63,14 +65,16 @@ public class VaccinationByRequest {
 
         if (vaccineList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(vaccineList, HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(vaccineList, HttpStatus.OK);
+
     }
 
 
     /**
-     * Get Vắc-xin theo Id
+     * PhuocTC: Get Vắc-xin theo Id
      **/
     @GetMapping(value = "/vaccination/get-vaccine/{id}")
     public ResponseEntity<VaccineDTO> registerVaccination(@PathVariable Integer id) {
@@ -78,14 +82,14 @@ public class VaccinationByRequest {
 
         if (vaccineDTO == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(vaccineDTO, HttpStatus.OK);
         }
-
-        return new ResponseEntity<>(vaccineDTO, HttpStatus.OK);
     }
 
 
     /**
-     * Phuoc: Tạo mới đăng ký tim theo yêu cầu
+     * PhuocTC: Tạo mới đăng ký tim theo yêu cầu
      **/
     @PostMapping(value = "/vaccination/create")
     public ResponseEntity<?> registerPatient(@Valid @RequestBody VaccinationByRequestDTO vaccinationByRequestDTO,
@@ -93,7 +97,6 @@ public class VaccinationByRequest {
 
         vaccinationByRequestDTOValidator.validate(vaccinationByRequestDTO, bindingResult);
 
-        
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.OK);
         }
@@ -130,7 +133,7 @@ public class VaccinationByRequest {
         vaccinationHistoryService.registerVaccinationHistory(vaccinationHistoryTemp);
 
 
-        return new ResponseEntity<>(vaccinationByRequestDTO, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 
