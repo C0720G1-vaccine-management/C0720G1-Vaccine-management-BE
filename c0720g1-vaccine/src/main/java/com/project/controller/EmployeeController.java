@@ -33,7 +33,7 @@ public class EmployeeController {
     @Autowired
     private RoleService roleService;
   /*
-  * HungDH
+  * HungDH - Hien thi danh sach nhan vien
    */
     @GetMapping("/list-employee")
     public ResponseEntity<List<EmployeeListDTO>> getAllEmployee(){
@@ -43,6 +43,9 @@ public class EmployeeController {
         }
         return new ResponseEntity<List<EmployeeListDTO>>(employeeList, HttpStatus.OK);
     }
+    /*
+     * Hung DH - hien thi position list
+     */
     @GetMapping("/position")
     public ResponseEntity<List<Position>> getAllPosition() {
         List<Position> positionList = positionService.getAllPosition();
@@ -51,7 +54,9 @@ public class EmployeeController {
         }
         return new ResponseEntity<List<Position>>(positionList, HttpStatus.OK);
     }
-
+    /*
+     * Hung DH - hien thi account list
+     */
     @GetMapping("/account")
     public ResponseEntity<List<Account>> getAllAccount() {
         List<Account> accountList = accountService.getAllAccount();
@@ -60,6 +65,9 @@ public class EmployeeController {
         }
         return new ResponseEntity<List<Account>>(accountList, HttpStatus.OK);
     }
+    /*
+     * Hung DH - hien thi role list
+     */
     @RequestMapping(value = "/role", method = RequestMethod.GET)
     public ResponseEntity<List<Role>> getAllRole(){
         List<Role> roleList = this.roleService.findAllRole();
@@ -68,17 +76,25 @@ public class EmployeeController {
         }
         return new ResponseEntity<List<Role>>(roleList, HttpStatus.OK);
     }
+    /*
+     * Hung DH - chinh sua thong tin nhan vien
+     */
     @PutMapping("/edit-employee")
     public ResponseEntity<?> editEmployee(@RequestBody EmployeeEditDTO employeeEditDTO) {
         employeeService.editEmployee(employeeEditDTO, Integer.parseInt(employeeEditDTO.getRole()), Integer.parseInt(employeeEditDTO.getAccount()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    /*
+     * Hung DH - xoa nhan vien theo id
+     */
     @PatchMapping("/delete-employee/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Integer id){
         employeeService.deleteEmployee(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+    /*
+     * Hung DH - tim kiem nhan vien theo id
+     */
     @GetMapping("/find-id/{id}")
     public ResponseEntity<EmployeeFindIdDTO> findById(@PathVariable Integer id) {
         System.out.println(id);

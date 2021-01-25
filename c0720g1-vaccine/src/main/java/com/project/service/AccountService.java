@@ -3,6 +3,7 @@ package com.project.service;
 import com.project.entity.Account;
 
 import java.util.List;
+import javax.mail.MessagingException;
 import java.util.Optional;
 
 
@@ -15,10 +16,15 @@ public interface AccountService {
 
     String existsByEmail(String email);
 
-    void addNew(String username, String password);
+//    void addNew(String username, String password);
 
     /*
     * Hung DH - hien thi list
      */
     List<Account> getAllAccount();
+
+
+    void addNew(String username, String password, String email) throws MessagingException;
+
+    Boolean findAccountByVerificationCode(String code);
 }
