@@ -1,21 +1,31 @@
 package com.project.service;
 
-
-
-import com.project.dto.VaccinationHistoryDTO;
 import com.project.dto.VaccinationHistoryFeedbackDTO;
+import com.project.dto.VaccinationHistoryGetPreStatusDTO;
 import com.project.dto.VaccinationHistorySendFeedbackDTO;
 import com.project.entity.VaccinationHistory;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface VaccinationHistoryService {
-    /* tuNH */
-    List<VaccinationHistoryDTO> getAllVaccinationHistory(Integer patientId);
+    /**
+     * tuNH
+     **/
+    Page<VaccinationHistory> getAllVaccinationHistory(String vaccineName, String vaccinationDate, Integer patientId, Pageable pageable);
 
-    /* tuNH */
+    /**
+     * tuNH
+     **/
     VaccinationHistoryFeedbackDTO findByIdVaccinationHistory(Integer vaccinationHistoryId);
 
-    /* tuNH */
+    /**
+     * tuNH
+     **/
     void updateVaccinationHistory(Integer vaccinationHistoryId, VaccinationHistorySendFeedbackDTO vaccinationHistorySendFeedbackDTO);
+
+    /**
+     * tuNH
+     **/
+    VaccinationHistoryGetPreStatusDTO getPreStatusVaccinationHistory(Integer vaccinationHistoryId);
+
 }
