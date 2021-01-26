@@ -15,11 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public interface VaccineRepository extends JpaRepository<Vaccine,Integer> {
-  
 
-  
-    //Phuc create
-    @Query(value = "select * from vaccine where vaccine_id = ?1", nativeQuery = true)
+
+
+    /**
+     * Phuc NB
+     * lấy ra id của vắc-xin cần xuất
+     */
+    @Query(value = "select * from vaccine where vaccine_id = ?", nativeQuery = true)
     Vaccine findByVaccineId(Integer id);
 
 
@@ -63,7 +66,7 @@ public interface VaccineRepository extends JpaRepository<Vaccine,Integer> {
 
     /**
      * TinVT
-     * Find All VaccnineDTO not pagination
+     * Find All VaccnineDTO not pagination 
      * @return
      */
     @Query(value = "SELECT vaccine.vaccine_id as id,vaccine.name as name, vaccine_type.name as vaccineType,invoice.transaction_date as dateRecive, " +

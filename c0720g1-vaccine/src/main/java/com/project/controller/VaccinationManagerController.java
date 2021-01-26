@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * TrungTQ Code: Dùng tạo địa chỉ api và mở khóa chặn để truy cập dữ liệu
  */
-@RequestMapping("/api/vaccination-manager")
+@RequestMapping("/api/public/vaccination-manager")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class VaccinationManagerController {
 

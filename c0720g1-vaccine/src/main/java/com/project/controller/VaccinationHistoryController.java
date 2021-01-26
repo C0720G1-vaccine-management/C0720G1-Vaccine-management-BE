@@ -5,6 +5,7 @@ import com.project.dto.VaccinationHistoryGetAfterStatusDTO;
 import com.project.dto.VaccinationHistoryRegisteredDTO;
 import com.project.dto.VaccinationHistorySendFeedbackDTO;
 import com.project.entity.VaccinationHistory;
+import com.project.service.PatientService;
 import com.project.service.VaccinationHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,7 +25,7 @@ public class VaccinationHistoryController {
 
     @Autowired
     private VaccinationHistoryService vaccinationHistoryService;
-
+    
     /**
      * tuNH
      * lấy danh lịch sử tiêm chủng, phân trang , tìm kiếm
@@ -33,12 +34,12 @@ public class VaccinationHistoryController {
     public ResponseEntity<Page<VaccinationHistory>> findAllVaccinationHistory(@PageableDefault(size = 5) Pageable pageable,
                                                                               @RequestParam(defaultValue = "") String vaccineName,
                                                                               @RequestParam(defaultValue = "") String vaccinationDate,
-                                                                              @RequestParam(defaultValue = "") Integer patientId) {
+                                                                              @RequestParam(defaultValue = "") String accountEmail) {
         Page<VaccinationHistory> vaccinationHistories;
         if (vaccineName.isEmpty() && vaccinationDate.isEmpty()) {
-            vaccinationHistories = this.vaccinationHistoryService.getAllVaccinationHistory(vaccineName, vaccinationDate, patientId, pageable);
+            vaccinationHistories = this.vaccinationHistoryService.getAllVaccinationHistory(vaccineName, vaccinationDate, accountEmail, pageable);
         }
-        vaccinationHistories = this.vaccinationHistoryService.getAllVaccinationHistory(vaccineName, vaccinationDate, patientId, pageable);
+        vaccinationHistories = this.vaccinationHistoryService.getAllVaccinationHistory(vaccineName, vaccinationDate, accountEmail, pageable);
         if (vaccinationHistories == null) {
             return new ResponseEntity<Page<VaccinationHistory>>(HttpStatus.NOT_FOUND);
         }

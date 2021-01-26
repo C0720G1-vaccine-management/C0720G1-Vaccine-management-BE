@@ -55,7 +55,7 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public void addNew(String username, String password) {
-        accountRepository.addNew(username,password,true,null);
+        accountRepository.addNewAccount(username,password);
     }
 
     @Override

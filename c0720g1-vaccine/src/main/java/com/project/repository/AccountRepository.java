@@ -27,7 +27,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     @Modifying
     @Query(value = "insert into account(user_name,encrypt_pw) values (?1,?2)", nativeQuery = true)
-    void addNew(String username, String password);
+    void addNewAccount(String username, String password);
 
     /*
     * HungDH
