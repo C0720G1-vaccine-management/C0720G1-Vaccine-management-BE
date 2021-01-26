@@ -11,8 +11,6 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
 import java.util.List;
-import org.springframework.transaction.annotation.Transactional;
-import java.util.List;
 
 @Transactional
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {

@@ -30,7 +30,6 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
      */
     Page<VaccinationHistory> findAllByPatient_NameContaining(String name,Pageable pageable);
 
-    
 
     /**
      * tuNH
@@ -87,7 +86,6 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
             "on vaccination.vaccination_id = vaccination_history.vaccination_id " +
             "join patient on patient.patient_id = vaccination_history.patient_id WHERE date >= curdate()+7",nativeQuery = true)
     List<String> getAllEmailToSend();
-
 
 
     /**

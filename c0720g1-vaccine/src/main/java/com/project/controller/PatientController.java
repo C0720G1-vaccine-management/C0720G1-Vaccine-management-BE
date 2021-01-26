@@ -1,9 +1,11 @@
 package com.project.controller;
+
 import com.project.dto.PatientDTO;
 import com.project.entity.Patient;
 import com.project.service.PatientService;
 import com.project.validation.PatientByRequestDTOValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -14,16 +16,20 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.util.List;
+
 
 @RestController
-@RequestMapping("/api/public")
-@CrossOrigin("*")
+@RequestMapping("/api/public/")
+@CrossOrigin(origins = "*")
+
 
 public class PatientController {
     @Autowired
     private PatientService patientService;
     @Autowired
     private PatientByRequestDTOValidator patientByRequestDTOValidator;
+
 
     /**
      * Duy NP
@@ -46,7 +52,6 @@ public class PatientController {
     /**
      * Duy NP
      **/
-
 
     @PutMapping("/editPatient/{id}")
     public ResponseEntity<?> editPatient(@Valid @RequestBody PatientDTO patientDTO, BindingResult bindingResult, @PathVariable int id) {
@@ -76,9 +81,22 @@ public class PatientController {
     }
 
     /**
+     * NhiTTY
+     **/
+    @PostMapping(value = "/patient/create")
+    public ResponseEntity<?> createPatient(@Valid @RequestBody PatientDTO patientDTO, BindingResult bindingResult) {
+        patientByRequestDTOValidator.validate(patientDTO, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.OK);
+        }
+        patientService.addPatient(patientDTO);
+        HttpHeaders headers = new HttpHeaders();
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    }
+
+    /**
      * Duy NP
      **/
-
     @GetMapping("/delete/{id}")
     public ResponseEntity deleteById(@PathVariable Integer id) {
 
@@ -96,7 +114,6 @@ public class PatientController {
     /**
      * Duy NP
      **/
-
     @GetMapping("/searchFullName")
     public ResponseEntity<Page<Patient>> searchFullNamePatient(@RequestParam String name,
                                                                @RequestParam String patientId,
@@ -107,14 +124,4 @@ public class PatientController {
         }
         return new ResponseEntity<>(patientList, HttpStatus.OK);
     }
-
-//    @PostMapping("/patient/add")
-//    public ResponseEntity<Void> createPatient(@RequestBody PatientDTO patientDTO) {
-//        patientService.addPatient(patientDTO);
-////        System.out.println(patientDTO.getEmail());
-//        return new ResponseEntity<>(HttpStatus.CREATED);
-//    }
-
-
-
 }

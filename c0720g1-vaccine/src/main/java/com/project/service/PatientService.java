@@ -1,4 +1,5 @@
 package com.project.service;
+import com.project.dto.PatientDTO;
 import com.project.entity.Patient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,13 @@ public interface PatientService {
      **/
     Page<Patient> search(String name, String id, int pageable);
     void editPatient(Patient patient);
+
+
+    /**
+     *NhiTTY
+     **/
+    void addPatient(PatientDTO patientDTO);
+
 
 
     /**
