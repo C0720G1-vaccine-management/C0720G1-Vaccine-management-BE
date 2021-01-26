@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "*")
 
@@ -35,8 +37,14 @@ public class VaccinationHistoryController {
         Page<VaccinationHistory> vaccinationHistories;
         if (vaccineName.isEmpty() && vaccinationDate.isEmpty()) {
             vaccinationHistories = this.vaccinationHistoryService.getAllVaccinationHistory(vaccineName, vaccinationDate, patientId, pageable);
-          
-     * LuyenNT code
+        }
+        vaccinationHistories = this.vaccinationHistoryService.getAllVaccinationHistory(vaccineName, vaccinationDate, patientId, pageable);
+        if (vaccinationHistories == null) {
+            return new ResponseEntity<Page<VaccinationHistory>>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Page<VaccinationHistory>>(vaccinationHistories, HttpStatus.OK);
+    }
+     /** LuyenNT code
      *
      * @return
      */
@@ -71,13 +79,7 @@ public class VaccinationHistoryController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-        }
-        vaccinationHistories = this.vaccinationHistoryService.getAllVaccinationHistory(vaccineName, vaccinationDate, patientId, pageable);
-        if (vaccinationHistories == null) {
-            return new ResponseEntity<Page<VaccinationHistory>>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<Page<VaccinationHistory>>(vaccinationHistories, HttpStatus.OK);
-    }
+
 
     /**
      * tuNH

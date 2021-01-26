@@ -97,7 +97,7 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
     @Override
     public Page<VaccinationHistory> finAllPeriodicVaccination(String name, Pageable pageable) {
         return vaccinationHistoryRepository.findAllByPatient_NameContaining(name, pageable);
-
+    }
     /**
      *list:  create by LongBP
      */

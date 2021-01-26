@@ -7,6 +7,7 @@ import com.project.entity.Account;
 import com.project.entity.Employee;
 import com.project.entity.Position;
 import com.project.entity.Role;
+import com.project.service.AccountService;
 import com.project.service.EmployeeService;
 import com.project.service.PositionService;
 import com.project.service.RoleService;
@@ -37,24 +38,22 @@ public class EmployeeController {
     private AccountService accountService;
     @Autowired
     private RoleService roleService;
-   @Autowired
+    @Autowired
     private EmployeeCreateByRequestDtoValidator employeeCreateByRequestDtoValidator;
   
   /*
   * HungDH - Hien thi danh sach nhan vien
    */
+
+    /*
+     * HungDH - Hien thi danh sach nhan vien
+     */
     @GetMapping("/list-employee")
     public ResponseEntity<List<EmployeeListDTO>> getAllEmployee(@RequestParam Optional<String> nameSearch){
         String afterCheck = "";
-        List<EmployeeListDTO> employeeList = employeeService.getAllEmployee
-          
-   
-  
-    @GetMapping("/")
-    public ResponseEntity<List<Employee>> getAllEmployee(){
-        List<Employee> employeeList = employeeService.getAllEmployee();
+        List<EmployeeListDTO> employeeList = employeeService.getAllEmployee();
         if (employeeList.isEmpty()){
-            return new ResponseEntity<List<EmployeeListDTO>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             if (nameSearch.isPresent()){
                 afterCheck = nameSearch.get();
@@ -63,6 +62,8 @@ public class EmployeeController {
             return new ResponseEntity<List<EmployeeListDTO>>(employeeList, HttpStatus.OK);
         }
     }
+
+    
     /*
      * Hung DH - hien thi position list
      */
@@ -74,7 +75,6 @@ public class EmployeeController {
         }
         return new ResponseEntity<List<Position>>(positionList, HttpStatus.OK);
     }
-    
     /*
      * Hung DH - hien thi account list
      */
