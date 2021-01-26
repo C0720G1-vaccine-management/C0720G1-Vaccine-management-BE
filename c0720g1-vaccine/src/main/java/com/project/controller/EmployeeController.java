@@ -1,5 +1,9 @@
 package com.project.controller;
 
+import com.project.dto.EmployeeEditDTO;
+import com.project.dto.EmployeeFindIdDTO;
+import com.project.dto.EmployeeListDTO;
+import com.project.entity.Account;
 import com.project.entity.Employee;
 import com.project.entity.Position;
 import com.project.entity.Role;
@@ -18,45 +22,107 @@ import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
-@RequestMapping("/api/public/employee")
+@RequestMapping("/api/public")
 public class EmployeeController {
   
     @Autowired
     private EmployeeService employeeService;
-
     @Autowired
     private PositionService positionService;
     @Autowired
-    private RoleService roleService;
+    private AccountService accountService;
     @Autowired
+    private RoleService roleService;
+   @Autowired
     private EmployeeCreateByRequestDtoValidator employeeCreateByRequestDtoValidator;
+  
+  /*
+  * HungDH - Hien thi danh sach nhan vien
+   */
+    @GetMapping("/list-employee")
+    public ResponseEntity<List<EmployeeListDTO>> getAllEmployee(@RequestParam Optional<String> nameSearch){
+        String afterCheck = "";
+        List<EmployeeListDTO> employeeList = employeeService.getAllEmployee
+          
+   
   
     @GetMapping("/")
     public ResponseEntity<List<Employee>> getAllEmployee(){
         List<Employee> employeeList = employeeService.getAllEmployee();
         if (employeeList.isEmpty()){
-            return new ResponseEntity<List<Employee>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<EmployeeListDTO>>(HttpStatus.NO_CONTENT);
+        } else {
+            if (nameSearch.isPresent()){
+                afterCheck = nameSearch.get();
+                return new ResponseEntity<List<EmployeeListDTO>>(employeeService.findEmployeeByName("%"+afterCheck+"%"), HttpStatus.OK);
+            }
+            return new ResponseEntity<List<EmployeeListDTO>>(employeeList, HttpStatus.OK);
         }
-        return new ResponseEntity<List<Employee>>(employeeList, HttpStatus.OK);
     }
-  
-    @GetMapping("/edit-employee/{id}")
-    public ResponseEntity<Employee> editEmployee(@PathVariable int id){
-        Employee employee1 = employeeService.findById(id);
-        if (employee1 == null){
-            return new ResponseEntity<Employee>(HttpStatus.NOT_FOUND);
+    /*
+     * Hung DH - hien thi position list
+     */
+    @GetMapping("/position")
+    public ResponseEntity<List<Position>> getAllPosition() {
+        List<Position> positionList = positionService.getAllPosition();
+        if (positionList.isEmpty()) {
+            return new ResponseEntity<List<Position>>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<Employee>(employee1, HttpStatus.OK);
+        return new ResponseEntity<List<Position>>(positionList, HttpStatus.OK);
     }
-  
-    @PatchMapping("/save-employee")
-    public ResponseEntity<Employee> saveEmployee(@RequestBody Employee employee){
-        employeeService.editEmployee(employee.getName(), employee.getDateOfBirth(), employee.getIdCard(), employee.getPhone(),
-                employee.getAddress(), employee.getPosition(), employee.getAccount(), employee.getEmployeeId());
-        return new ResponseEntity<Employee>(employee, HttpStatus.OK);
+    /*
+     * Hung DH - hien thi account list
+     */
+    @GetMapping("/account")
+    public ResponseEntity<List<Account>> getAllAccount() {
+        List<Account> accountList = accountService.getAllAccount();
+        if (accountList.isEmpty()) {
+            return new ResponseEntity<List<Account>>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List<Account>>(accountList, HttpStatus.OK);
+    }
+    /*
+     * Hung DH - hien thi role list
+     */
+    @RequestMapping(value = "/role", method = RequestMethod.GET)
+    public ResponseEntity<List<Role>> getAllRole(){
+        List<Role> roleList = this.roleService.findAllRole();
+        if (roleList.isEmpty()){
+            return new ResponseEntity<List<Role>>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Role>>(roleList, HttpStatus.OK);
+    }
+    /*
+     * Hung DH - chinh sua thong tin nhan vien
+     */
+    @PutMapping("/edit-employee")
+    public ResponseEntity<?> editEmployee(@RequestBody EmployeeEditDTO employeeEditDTO) {
+        employeeService.editEmployee(employeeEditDTO, Integer.parseInt(employeeEditDTO.getRole()), Integer.parseInt(employeeEditDTO.getAccount()));
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    /*
+     * Hung DH - xoa nhan vien theo id
+     */
+    @PatchMapping("/delete-employee/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Integer id){
+        employeeService.deleteEmployee(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    /*
+     * Hung DH - tim kiem nhan vien theo id
+     */
+    @GetMapping("/find-id/{id}")
+    public ResponseEntity<EmployeeFindIdDTO> findById(@PathVariable Integer id) {
+        System.out.println(id);
+        EmployeeFindIdDTO employee = employeeService.findById(id);
+        if (employee == null) {
+            return new ResponseEntity<EmployeeFindIdDTO>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<EmployeeFindIdDTO>(employee, HttpStatus.OK);
     }
     /** LuyenNT code
      *

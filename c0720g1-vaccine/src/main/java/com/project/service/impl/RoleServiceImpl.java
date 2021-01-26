@@ -23,11 +23,20 @@ public class RoleServiceImpl implements RoleService {
         roleRepository.setDefaultRole(accountId,roleId);
     }
 
+
+    /*
+    * HungDH
+     */
+    @Override
+    public List<Role> findAllRole() {
+        return roleRepository.findAll();
+
     /** LuyenNT code
      * @return
      */
     @Override
     public List<Role> getAllRoles() {
         return roleRepository.finAllRole();
+
     }
 }

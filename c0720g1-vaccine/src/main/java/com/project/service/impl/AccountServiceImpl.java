@@ -9,6 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Optional;
@@ -85,5 +86,12 @@ public class AccountServiceImpl implements AccountService {
         helper.setSubject(subject);
         helper.setText(mailContent, true);
         javaMailSender.send(message);
+    }
+/*
+* HungDH - hien thi list
+ */
+    @Override
+    public List<Account> getAllAccount() {
+        return accountRepository.getAllAccount();
     }
 }
