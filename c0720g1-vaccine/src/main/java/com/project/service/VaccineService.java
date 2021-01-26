@@ -7,8 +7,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface VaccineService {
-        //Phuc create
+    /**Phuc NB
+     * lấy id của vắc-xin cần xuất
+     **/
     Vaccine findById(Integer id);
+    /**Phuc NB
+     * lưu lại số lượng vắc xin sau khi xuất
+     **/
+    void saveVaccine(Vaccine vaccine);
 
     /**
      * Phuoc: Phần trang + Tìm kiếm vắc-xin
