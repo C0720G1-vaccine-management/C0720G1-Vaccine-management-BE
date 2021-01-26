@@ -15,11 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public interface VaccineRepository extends JpaRepository<Vaccine,Integer> {
-  
 
-  
-    //Phuc create
-    @Query(value = "select * from vaccine where vaccine_id = ?1", nativeQuery = true)
+
+
+    /**
+     * Phuc NB
+     * lấy ra id của vắc-xin cần xuất
+     */
+    @Query(value = "select * from vaccine where vaccine_id = ?", nativeQuery = true)
     Vaccine findByVaccineId(Integer id);
 
 
