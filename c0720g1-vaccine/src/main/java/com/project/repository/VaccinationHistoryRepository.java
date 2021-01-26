@@ -29,19 +29,7 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
      * @return
      */
     Page<VaccinationHistory> findAllByPatient_NameContaining(String name,Pageable pageable);
-    /* tuNH */
-    @Query(value = "select patient.name as patientName, patient.date_of_birth as patientDateOfBirth, \n" +
-            "patient.gender as patientGender, patient.address as patientAddress, \n" +
-            "vaccine.name as vaccineName , vaccine_type.name as vaccineTypeName , \n" +
-            "vaccination.date as vaccinationDate, vaccine_history.pre_status as vaccinationHistoryAfterStatus, \n" +
-            "vaccine_history.vaccination_history_id as vaccinationHistoryId \n" +
-            "from vaccine_history \n" +
-            "inner join patient on vaccine_history.patient_id = patient.patient_id \n" +
-            "inner join vaccination on vaccine_history.vaccination_id = vaccination.vaccination_id \n" +
-            "inner join vaccine on vaccination.vaccine_id = vaccine.vaccine_id \n" +
-            "inner join vaccine_type on vaccine.vaccine_type_id = vaccine_type.vaccine_type_id \n" +
-            "where patient.patient_id = ?1", nativeQuery = true)
-    List<VaccinationHistoryDTO> getAllVaccinationHistory(Integer patientId);
+
 
     /**
      * tuNH
@@ -99,10 +87,6 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
             "join patient on patient.patient_id = vaccination_history.patient_id WHERE date >= curdate()+7",nativeQuery = true)
     List<String> getAllEmailToSend();
 
-    /**
-     list:  create by LongBP
-     **/
-    Page<VaccinationHistory> findAllByPatient_NameContaining(String name, Pageable pageable);
 
     /**
      search and paging:  create by LongBP

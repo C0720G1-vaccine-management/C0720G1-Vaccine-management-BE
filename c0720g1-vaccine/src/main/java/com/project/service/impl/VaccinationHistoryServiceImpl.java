@@ -90,28 +90,28 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
     @Override
     public Page<VaccinationHistory> finAllPeriodicVaccination(String name, Pageable pageable) {
         return vaccinationHistoryRepository.findAllByPatient_NameContaining(name, pageable);
-
-    /**
-     *list:  create by LongBP
-     */
-    @Override
-    public Page<VaccinationHistory> getAllRegisteredRequired(String name, Pageable pageable) {
-        return this.vaccinationHistoryRepository.findAllByPatient_NameContaining(name, pageable);
     }
+        /**
+         *list:  create by LongBP
+         */
+        @Override
+        public Page<VaccinationHistory> getAllRegisteredRequired (String name, Pageable pageable){
+            return this.vaccinationHistoryRepository.findAllByPatient_NameContaining(name, pageable);
+        }
 
-    /**
-     search and paging:  create by LongBP
-     **/
-    @Override
-    public Page<VaccinationHistory> searchNameAndInjected(String name, Boolean status, Pageable pageable) {
-        return this.vaccinationHistoryRepository.findAllByPatient_NameContainingAndStatusIs(name, status, pageable);
-    }
+        /**
+         search and paging:  create by LongBP
+         **/
+        @Override
+        public Page<VaccinationHistory> searchNameAndInjected (String name, Boolean status, Pageable pageable){
+            return this.vaccinationHistoryRepository.findAllByPatient_NameContainingAndStatusIs(name, status, pageable);
+        }
 
-    /**
-     find by id:  create by LongBP
-     **/
-    @Override
-    public VaccinationHistoryRegisteredDTO findId(Integer id) {
-        return this.vaccinationHistoryRepository.findId(id);
-    }
+        /**
+         find by id:  create by LongBP
+         **/
+        @Override
+        public VaccinationHistoryRegisteredDTO findId (Integer id){
+            return this.vaccinationHistoryRepository.findId(id);
+        }
 }

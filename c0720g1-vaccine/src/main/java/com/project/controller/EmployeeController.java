@@ -7,6 +7,7 @@ import com.project.entity.Account;
 import com.project.entity.Employee;
 import com.project.entity.Position;
 import com.project.entity.Role;
+import com.project.service.AccountService;
 import com.project.service.EmployeeService;
 import com.project.service.PositionService;
 import com.project.service.RoleService;
@@ -28,7 +29,7 @@ import java.util.Optional;
 @CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/public")
 public class EmployeeController {
-  
+
     @Autowired
     private EmployeeService employeeService;
     @Autowired
@@ -37,32 +38,29 @@ public class EmployeeController {
     private AccountService accountService;
     @Autowired
     private RoleService roleService;
-   @Autowired
+    @Autowired
     private EmployeeCreateByRequestDtoValidator employeeCreateByRequestDtoValidator;
-  
-  /*
-  * HungDH - Hien thi danh sach nhan vien
-   */
-    @GetMapping("/list-employee")
-    public ResponseEntity<List<EmployeeListDTO>> getAllEmployee(@RequestParam Optional<String> nameSearch){
-        String afterCheck = "";
-        List<EmployeeListDTO> employeeList = employeeService.getAllEmployee
-          
-   
-  
+
+    /*
+     * HungDH - Hien thi danh sach nhan vien
+     */
+
+
     @GetMapping("/")
-    public ResponseEntity<List<Employee>> getAllEmployee(){
-        List<Employee> employeeList = employeeService.getAllEmployee();
-        if (employeeList.isEmpty()){
+    public ResponseEntity<List<EmployeeListDTO>> getAllEmployee(@RequestParam Optional<String> nameSearch) {
+        String afterCheck = "";
+        List<EmployeeListDTO> employeeList = employeeService.getAllEmployee();
+        if (employeeList.isEmpty()) {
             return new ResponseEntity<List<EmployeeListDTO>>(HttpStatus.NO_CONTENT);
         } else {
-            if (nameSearch.isPresent()){
+            if (nameSearch.isPresent()) {
                 afterCheck = nameSearch.get();
-                return new ResponseEntity<List<EmployeeListDTO>>(employeeService.findEmployeeByName("%"+afterCheck+"%"), HttpStatus.OK);
+                return new ResponseEntity<List<EmployeeListDTO>>(employeeService.findEmployeeByName("%" + afterCheck + "%"), HttpStatus.OK);
             }
             return new ResponseEntity<List<EmployeeListDTO>>(employeeList, HttpStatus.OK);
         }
     }
+
     /*
      * Hung DH - hien thi position list
      */
@@ -74,6 +72,7 @@ public class EmployeeController {
         }
         return new ResponseEntity<List<Position>>(positionList, HttpStatus.OK);
     }
+
     /*
      * Hung DH - hien thi account list
      */
@@ -85,17 +84,19 @@ public class EmployeeController {
         }
         return new ResponseEntity<List<Account>>(accountList, HttpStatus.OK);
     }
+
     /*
      * Hung DH - hien thi role list
      */
     @RequestMapping(value = "/role", method = RequestMethod.GET)
-    public ResponseEntity<List<Role>> getAllRole(){
+    public ResponseEntity<List<Role>> getAllRole() {
         List<Role> roleList = this.roleService.findAllRole();
-        if (roleList.isEmpty()){
+        if (roleList.isEmpty()) {
             return new ResponseEntity<List<Role>>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<List<Role>>(roleList, HttpStatus.OK);
     }
+
     /*
      * Hung DH - chinh sua thong tin nhan vien
      */
@@ -104,14 +105,16 @@ public class EmployeeController {
         employeeService.editEmployee(employeeEditDTO, Integer.parseInt(employeeEditDTO.getRole()), Integer.parseInt(employeeEditDTO.getAccount()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     /*
      * Hung DH - xoa nhan vien theo id
      */
     @PatchMapping("/delete-employee/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Integer id){
+    public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
         employeeService.deleteEmployee(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     /*
      * Hung DH - tim kiem nhan vien theo id
      */
@@ -124,20 +127,25 @@ public class EmployeeController {
         }
         return new ResponseEntity<EmployeeFindIdDTO>(employee, HttpStatus.OK);
     }
-    /** LuyenNT code
+
+    /**
+     * LuyenNT code
      *
      * @return
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity<?> createVaccinations(@Valid @RequestBody EmployeeDto employeeDto, BindingResult bindingResult) throws MessagingException {
-        employeeCreateByRequestDtoValidator.validate(employeeDto,bindingResult);
-        if (bindingResult.hasErrors()){
-            return new ResponseEntity<>(bindingResult.getAllErrors(),HttpStatus.OK);
+    public ResponseEntity<?> createVaccinations(@Valid @RequestBody EmployeeDto employeeDto, BindingResult
+            bindingResult) throws MessagingException {
+        employeeCreateByRequestDtoValidator.validate(employeeDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.OK);
         }
         employeeService.createNewEmployee(employeeDto);
-        return new ResponseEntity<Void>( HttpStatus.CREATED);
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
-    /** LuyenNT code
+
+    /**
+     * LuyenNT code
      *
      * @return
      */
@@ -145,7 +153,7 @@ public class EmployeeController {
     public ResponseEntity<List<Object>> createVaccinations() {
         List<Position> positionList = positionService.getAllPosition();
         List<Role> roleList = roleService.getAllRoles();
-        List<Object> list = Arrays.asList(positionList,roleList);
-        return new ResponseEntity<List<Object>>(list,HttpStatus.OK);
+        List<Object> list = Arrays.asList(positionList, roleList);
+        return new ResponseEntity<List<Object>>(list, HttpStatus.OK);
     }
 }

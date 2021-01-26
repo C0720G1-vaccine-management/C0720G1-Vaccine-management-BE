@@ -34,23 +34,33 @@ public class VaccinationHistoryController {
         Page<VaccinationHistory> vaccinationHistories;
         if (vaccineName.isEmpty() && vaccinationDate.isEmpty()) {
             vaccinationHistories = this.vaccinationHistoryService.getAllVaccinationHistory(vaccineName, vaccinationDate, patientId, pageable);
-          
+        }
+        vaccinationHistories = this.vaccinationHistoryService.getAllVaccinationHistory(vaccineName, vaccinationDate, patientId, pageable);
+        if (vaccinationHistories == null) {
+            return new ResponseEntity<Page<VaccinationHistory>>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Page<VaccinationHistory>>(vaccinationHistories, HttpStatus.OK);
+    }
+
+    /**
      * LuyenNT code
      *
      * @return
      */
     @RequestMapping(value = "/periodic-vaccination/list", method = RequestMethod.GET)
-    public ResponseEntity<Page<VaccinationHistory>> findAllPeriodicVaccination(@PageableDefault(size = 2) Pageable pageable,
+    public ResponseEntity<Page<VaccinationHistory>> findAllPeriodicVaccination(@PageableDefault(size = 2) Pageable
+                                                                                       pageable,
                                                                                @RequestParam(defaultValue = "") String name) {
         Page<VaccinationHistory> list = vaccinationHistoryService.finAllPeriodicVaccination(name, pageable);
-        if (list.isEmpty()){
+        if (list.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/periodic-vaccination/search", method = RequestMethod.GET)
-    public ResponseEntity<Page<VaccinationHistory>> searchPeriodicVaccination(@PageableDefault(size = 2) Pageable pageable,
+    public ResponseEntity<Page<VaccinationHistory>> searchPeriodicVaccination(@PageableDefault(size = 2) Pageable
+                                                                                      pageable,
                                                                               @RequestParam(defaultValue = "") String name,
                                                                               @RequestParam(defaultValue = "") String status) {
         Page<VaccinationHistory> list = null;
@@ -70,13 +80,6 @@ public class VaccinationHistoryController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-        }
-        vaccinationHistories = this.vaccinationHistoryService.getAllVaccinationHistory(vaccineName, vaccinationDate, patientId, pageable);
-        if (vaccinationHistories == null) {
-            return new ResponseEntity<Page<VaccinationHistory>>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<Page<VaccinationHistory>>(vaccinationHistories, HttpStatus.OK);
-    }
 
     /**
      * tuNH
@@ -118,20 +121,20 @@ public class VaccinationHistoryController {
     }
 
     /**
-     list:  create by LongBP
+     * list:  create by LongBP
      **/
     @RequestMapping(value = "/public/registered-for-vaccination/list", method = RequestMethod.GET)
     public ResponseEntity<Page<VaccinationHistory>> getAllRegisteredVaccination(@PageableDefault(size = 3) Pageable pageable,
                                                                                 @RequestParam(defaultValue = "") String name) {
         Page<VaccinationHistory> list = vaccinationHistoryService.getAllRegisteredRequired(name, pageable);
-        if (list.isEmpty()){
+        if (list.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     /**
-     search and paging:  create by LongBP
+     * search and paging:  create by LongBP
      **/
     @RequestMapping(value = "/public/registered-for-vaccination/search", method = RequestMethod.GET)
     public ResponseEntity<Page<VaccinationHistory>> searchRegisteredVaccination(@PageableDefault(size = 3) Pageable pageable,
@@ -155,7 +158,7 @@ public class VaccinationHistoryController {
     }
 
     /**
-     find by id:  create by LongBP
+     * find by id:  create by LongBP
      **/
     @GetMapping("/public/registered-for-vaccination/view/{id}")
     public ResponseEntity<VaccinationHistoryRegisteredDTO> viewEmployee(@PathVariable Integer id) {
