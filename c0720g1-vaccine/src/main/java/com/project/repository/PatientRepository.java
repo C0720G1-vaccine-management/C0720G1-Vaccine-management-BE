@@ -31,7 +31,7 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
      **/
     @Modifying
     @Query(value = "insert into patient(name,date_of_birth,gender,guardian,phone,address,email,delete_flag) values (?1,?2,?3,?4,?5,?6,?7,b'0')", nativeQuery = true)
-    void savePatient(String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email);
+    void addPatient(String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email);
 
     /**
      * Phuoc: Tìm kiếm theo Email

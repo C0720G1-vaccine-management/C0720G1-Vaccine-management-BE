@@ -43,7 +43,7 @@ public class PatientServiceImpl implements PatientService {
      **/
     @Override
     public void addPatient(PatientDTO patientDTO) {
-        patientRepository.savePatient(patientDTO.getName(),patientDTO.getDateOfBirth(),patientDTO.getGender(),patientDTO.getGuardian(),patientDTO.getPhone(),patientDTO.getAddress(),patientDTO.getEmail());
+        patientRepository.addPatient(patientDTO.getName(),patientDTO.getDateOfBirth(),patientDTO.getGender(),patientDTO.getGuardian(),patientDTO.getPhone(),patientDTO.getAddress(),patientDTO.getEmail());
     }
 
 
