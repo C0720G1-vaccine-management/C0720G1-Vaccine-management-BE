@@ -49,9 +49,4 @@ public interface PatientService {
      **/
     Integer findByPhone(String phone);
 
-
-    /**
-     * TuNH:Lấy id khách hàng
-     **/
-    Integer getPatientId(Integer accountId);
 }

@@ -91,11 +91,4 @@ public class PatientServiceImpl implements PatientService {
     }
 
 
-    /**
-     * TuNH:Lấy id khách hàng
-     **/
-    @Override
-    public Integer getPatientId(Integer accountId) {
-        return this.patientRepository.getPatientId(accountId);
-    }
 }

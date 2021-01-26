@@ -76,11 +76,4 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     void savePatient(String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email);
 
 
-    /**
-     * TuNH:Lấy id khách hàng
-     **/
-    @Query(value = "select patient.patient_id from patient \n" +
-            "join account on patient.account_id = account.account_id\n" +
-            "where account.account_id = ?1", nativeQuery = true)
-    Integer getPatientId(Integer accountId);
 }

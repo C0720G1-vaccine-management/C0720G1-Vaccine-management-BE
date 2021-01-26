@@ -24,8 +24,8 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
      * tuNH
      **/
     @Override
-    public Page<VaccinationHistory> getAllVaccinationHistory(String vaccineName, String vaccinationDate, Integer patientId, Pageable pageable) {
-        return this.vaccinationHistoryRepository.findAllByVaccination_Vaccine_NameContainingAndVaccination_DateContainingAndPatient_PatientId(vaccineName, vaccinationDate, patientId, pageable);
+    public Page<VaccinationHistory> getAllVaccinationHistory(String vaccineName, String vaccinationDate, String accountEmail, Pageable pageable) {
+        return this.vaccinationHistoryRepository.findAllByVaccination_Vaccine_NameContainingAndVaccination_DateContainingAndPatient_Email(vaccineName, vaccinationDate, accountEmail, pageable);
     }
 
     /**
