@@ -33,7 +33,7 @@ public class VaccinationTransactionServiceImpl implements VaccinationTransaction
      */
     @Override
     public Page<VaccinationTransaction> search(String patientName, String vaccineType, Pageable pageable) {
-        return vaccinationTransactionRepository.findAllByVaccinationHistory_PatientNameContainingAndVaccinationHistory_Vaccination_Vaccine_VaccineTypeName(patientName, vaccineType, pageable);
+        return vaccinationTransactionRepository.findAllByVaccinationHistory_PatientNameContainingAndVaccinationHistory_Vaccination_Vaccine_VaccineTypeNameContaining(patientName, vaccineType, pageable);
     }
 
     /**
@@ -71,4 +71,5 @@ public class VaccinationTransactionServiceImpl implements VaccinationTransaction
     public void delete(Integer id) {
         this.vaccinationTransactionRepository.deleteById(id);
     }
+
 }

@@ -1,9 +1,11 @@
 package com.project.controller;
 
+import com.project.dto.SearchCriteria;
 import com.project.entity.VaccinationTransaction;
 import com.project.service.VaccinationTransactionService;
 import com.project.service.impl.VaccinationTransactionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -24,22 +26,21 @@ public class VaccinationTransactionController {
     /**
      * Made by Khanh phân trang, tìm kiếm , hiển thị list giao dịch
      */
-    @GetMapping({"/vaccine-transaction-list/name={keyword}type={keyword2}", "/vaccine-transaction-list"})
-    public ResponseEntity<?> listVaccineTransaction(@PageableDefault(size = 5) Pageable pageable,
-                                                    @PathVariable Optional<String> keyword,
-                                                    @PathVariable Optional<String> keyword2) {
+    @GetMapping({"/vaccine-transaction-list"})
+    public ResponseEntity<?> listVaccineTransaction(@PageableDefault(size = 5) Pageable pageable) {
+        return new ResponseEntity<>(vaccinationTransactionService.findAll(pageable), HttpStatus.OK);
+    }
+
+    @PostMapping("/vaccine-transaction-search")
+    public ResponseEntity<?> searchVaccineTransaction(@PageableDefault(size = 5) Pageable pageable,
+                                                      @RequestBody SearchCriteria searchCriteria) {
         String keyWordForSearchNamePatient = "";
         String keyWordForSearchVaccineType = "";
-
-        if (keyword.isPresent() || keyword2.isPresent()) {
-            keyWordForSearchNamePatient = keyword.get();
-            keyWordForSearchVaccineType = keyword2.get();
-
-            return new ResponseEntity<>(vaccinationTransactionService.search(
-                    keyWordForSearchNamePatient, keyWordForSearchVaccineType, pageable), HttpStatus.OK);
-
-        }
-        return new ResponseEntity<>(vaccinationTransactionService.findAll(pageable), HttpStatus.OK);
+        keyWordForSearchNamePatient = searchCriteria.getKeyword2();
+        keyWordForSearchVaccineType = searchCriteria.getKeyword3();
+        Page<VaccinationTransaction> vaccinationTransactions;
+        vaccinationTransactions = vaccinationTransactionService.search(keyWordForSearchNamePatient, keyWordForSearchVaccineType, pageable);
+        return new ResponseEntity<>(vaccinationTransactions, HttpStatus.OK);
     }
 
     @PostMapping("/vaccine-transaction-create")

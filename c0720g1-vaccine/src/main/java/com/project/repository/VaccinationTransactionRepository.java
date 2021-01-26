@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface VaccinationTransactionRepository extends JpaRepository<VaccinationTransaction,Integer> {
+public interface VaccinationTransactionRepository extends JpaRepository<VaccinationTransaction, Integer> {
     /**
      * Made by Khanh lấy list giao dịch
      */
@@ -17,8 +17,7 @@ public interface VaccinationTransactionRepository extends JpaRepository<Vaccinat
     /**
      * Made by Khanh tìm kiếm các trường trong danh sách giao dịch
      */
-    Page<VaccinationTransaction> findAllByVaccinationHistory_PatientNameContainingAndVaccinationHistory_Vaccination_Vaccine_VaccineTypeName(
+    Page<VaccinationTransaction> findAllByVaccinationHistory_PatientNameContainingAndVaccinationHistory_Vaccination_Vaccine_VaccineTypeNameContaining(
             String vaccinationHistory_patient_name, String vaccinationHistory_vaccination_vaccine_vaccineType_name, Pageable pageable);
-
 
 }
