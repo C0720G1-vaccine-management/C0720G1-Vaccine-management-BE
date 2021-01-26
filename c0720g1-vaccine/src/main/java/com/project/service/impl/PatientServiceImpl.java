@@ -84,4 +84,12 @@ public class PatientServiceImpl implements PatientService {
     public Integer findByPhone(String phone) {
         return patientRepository.findByPhone(phone);
     }
+
+//    /**
+//     * TuNH:Lấy id khách hàng
+//     **/
+//    @Override
+//    public Integer getPatientId(Integer accountId) {
+//        return this.patientRepository.getPatientId(accountId);
+//    }
 }
