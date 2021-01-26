@@ -23,5 +23,11 @@ public class RoleServiceImpl implements RoleService {
         roleRepository.setDefaultRole(accountId,roleId);
     }
 
-
+    /** LuyenNT code
+     * @return
+     */
+    @Override
+    public List<Role> getAllRoles() {
+        return roleRepository.finAllRole();
+    }
 }

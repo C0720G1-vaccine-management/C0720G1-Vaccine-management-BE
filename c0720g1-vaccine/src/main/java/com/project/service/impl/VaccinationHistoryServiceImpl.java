@@ -2,6 +2,7 @@ package com.project.service.impl;
 
 import com.project.dto.VaccinationHistoryFeedbackDTO;
 import com.project.dto.VaccinationHistoryGetAfterStatusDTO;
+import com.project.dto.VaccinationHistoryRegisteredDTO;
 import com.project.dto.VaccinationHistorySendFeedbackDTO;
 import com.project.entity.VaccinationHistory;
 import com.project.repository.VaccinationHistoryRepository;
@@ -67,4 +68,50 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
         return vaccinationHistoryRepository.getAllEmailToSend();
     }
 
+    /**
+     * LuyenNT
+     *
+     * @param name
+     * @param status
+     * @return
+     */
+    @Override
+    public Page<VaccinationHistory> searchPeriodicVaccination(String name, Boolean status, Pageable pageable) {
+        return vaccinationHistoryRepository.findAllByPatient_NameContainingAndVaccination_StatusIs(name, status, pageable);
+    }
+
+    /**
+     * LuyenNT code
+     *
+     * @param name
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<VaccinationHistory> finAllPeriodicVaccination(String name, Pageable pageable) {
+        return vaccinationHistoryRepository.findAllByPatient_NameContaining(name, pageable);
+
+    /**
+     *list:  create by LongBP
+     */
+    @Override
+    public Page<VaccinationHistory> getAllRegisteredRequired(String name, Pageable pageable) {
+        return this.vaccinationHistoryRepository.findAllByPatient_NameContaining(name, pageable);
+    }
+
+    /**
+     search and paging:  create by LongBP
+     **/
+    @Override
+    public Page<VaccinationHistory> searchNameAndInjected(String name, Boolean status, Pageable pageable) {
+        return this.vaccinationHistoryRepository.findAllByPatient_NameContainingAndStatusIs(name, status, pageable);
+    }
+
+    /**
+     find by id:  create by LongBP
+     **/
+    @Override
+    public VaccinationHistoryRegisteredDTO findId(Integer id) {
+        return this.vaccinationHistoryRepository.findId(id);
+    }
 }

@@ -1,22 +1,38 @@
 package com.project.controller;
 
 import com.project.entity.Employee;
+import com.project.entity.Position;
+import com.project.entity.Role;
 import com.project.service.EmployeeService;
+import com.project.service.PositionService;
+import com.project.service.RoleService;
+import com.project.validation.EmployeeCreateByRequestDtoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.project.dto.EmployeeDto;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.mail.MessagingException;
+import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
-@RequestMapping("/api-employee")
+@RequestMapping("/api/public/employee")
 public class EmployeeController {
   
     @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    private PositionService positionService;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private EmployeeCreateByRequestDtoValidator employeeCreateByRequestDtoValidator;
   
     @GetMapping("/")
     public ResponseEntity<List<Employee>> getAllEmployee(){
@@ -42,13 +58,28 @@ public class EmployeeController {
                 employee.getAddress(), employee.getPosition(), employee.getAccount(), employee.getEmployeeId());
         return new ResponseEntity<Employee>(employee, HttpStatus.OK);
     }
-  
-      // luyen code
-//     Xem lại tên method, chú ý RequestMapping ở trên để có đường dẫn đúng
-    @RequestMapping(value = "/employee", method = RequestMethod.POST)
-    public ResponseEntity<Void> createVaccinations(@RequestBody EmployeeDto employeeDto) {
+    /** LuyenNT code
+     *
+     * @return
+     */
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public ResponseEntity<?> createVaccinations(@Valid @RequestBody EmployeeDto employeeDto, BindingResult bindingResult) throws MessagingException {
+        employeeCreateByRequestDtoValidator.validate(employeeDto,bindingResult);
+        if (bindingResult.hasErrors()){
+            return new ResponseEntity<>(bindingResult.getAllErrors(),HttpStatus.OK);
+        }
         employeeService.createNewEmployee(employeeDto);
-        HttpHeaders headers = new HttpHeaders();
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<Void>( HttpStatus.CREATED);
+    }
+    /** LuyenNT code
+     *
+     * @return
+     */
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ResponseEntity<List<Object>> createVaccinations() {
+        List<Position> positionList = positionService.getAllPosition();
+        List<Role> roleList = roleService.getAllRoles();
+        List<Object> list = Arrays.asList(positionList,roleList);
+        return new ResponseEntity<List<Object>>(list,HttpStatus.OK);
     }
 }

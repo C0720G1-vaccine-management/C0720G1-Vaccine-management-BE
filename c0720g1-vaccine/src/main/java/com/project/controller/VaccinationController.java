@@ -18,28 +18,9 @@ public class VaccinationController {
     @Autowired
     private VaccinationService vaccinationService;
 
-    // luyen code
-    @RequestMapping(value = "/periodic-vaccination", method = RequestMethod.GET)
-    public ResponseEntity<List<PeriodicVaccinationDto>> createVaccinations() {
-        List<PeriodicVaccinationDto> list = vaccinationService.findAllPeriodicVaccinations();
-        if (list.isEmpty()) {
-            return new ResponseEntity<List<PeriodicVaccinationDto>>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<List<PeriodicVaccinationDto>>(list, HttpStatus.OK);
-    }
-
-    // luyen code
-    @RequestMapping(value = "/periodic-vaccination/search",method = RequestMethod.GET)
-    public ResponseEntity<List<PeriodicVaccinationDto>> searchVaccination(@PathVariable String name,Boolean status){
-        List<PeriodicVaccinationDto> list = vaccinationService.searchPeriodicVaccinations(name,status);
-        if (list.isEmpty()) {
-            return new ResponseEntity<List<PeriodicVaccinationDto>>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<List<PeriodicVaccinationDto>>(list,HttpStatus.OK);
-    }
-
-    /*KhoaTA
+    /**KhoaTA
      *display list of registrable periodical vaccinations
+     * Test Native Query
      */
 //    @GetMapping("/register-list")
 //    public ResponseEntity<List<RegistrablePeriodicalVaccinationDTO>> findAllRegistrablePeriodicalVaccination() {
@@ -51,7 +32,7 @@ public class VaccinationController {
 //
 //        return new ResponseEntity<>(registrableVaccinationList, HttpStatus.OK);
 //    }
-    /*KhoaTA
+    /**KhoaTA
      *display list of registrable periodical vaccinations
      */
     @GetMapping("/register-list/{id}")
@@ -63,7 +44,7 @@ public class VaccinationController {
 
         return new ResponseEntity<>(registrableVaccination, HttpStatus.OK);
     }
-    /* KhoaTA
+    /** KhoaTA
      * Method for saving patient and register for periodical vaccination
      */
     @PostMapping("/register-patient")
@@ -80,7 +61,7 @@ public class VaccinationController {
             }
         }
     }
-    /*KhoaTA
+    /**KhoaTA
      *get the list of all vaccine's ages
      */
     @GetMapping("/age-list")
@@ -89,7 +70,7 @@ public class VaccinationController {
         return new ResponseEntity<>(ageList, HttpStatus.OK);
     }
 
-    /*KhoaTA
+    /**KhoaTA
      *get the list of all vaccination's time
      */
     @GetMapping("/time-list")
@@ -97,14 +78,14 @@ public class VaccinationController {
         List<TimeDTO> timeList = this.vaccinationService.findAllVaccinationTime();
         return new ResponseEntity<>(timeList, HttpStatus.OK);
     }
-    /*KhoaTA
+    /**KhoaTA
      *get the total page of search
      */
     @PostMapping("/get-total-page")
     public ResponseEntity<Integer> findTotalPage(@RequestBody PeriodicalSearchDataDTO searchData) {
         return new ResponseEntity<>((int) this.vaccinationService.getTotalPage(searchData), HttpStatus.OK);
     }
-    /*KhoaTA
+    /**KhoaTA
      *get the search periodical vaccination result
      */
     @PostMapping("/get-custom-list")
