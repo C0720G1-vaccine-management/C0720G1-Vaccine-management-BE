@@ -1,6 +1,9 @@
 package com.project.dto;
 
-
+/**
+ *KhoaTA
+ * DTO Class for getting needed data and send to FE to display list
+ */
 public interface RegistrablePeriodicalVaccinationDTO {
     Integer getVaccinationId();
     String getDate();
@@ -12,4 +15,5 @@ public interface RegistrablePeriodicalVaccinationDTO {
     String getDescription();
     String getLocation();
     String getCountry();
+    String getImage();
 }

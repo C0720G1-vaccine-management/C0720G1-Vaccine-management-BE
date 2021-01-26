@@ -30,7 +30,7 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void editPatient(PatientDTO patientDTO) {
         patientRepository.editPatient(patientDTO.getName(),patientDTO.getDateOfBirth(),patientDTO.getGender(),patientDTO.getGuardian()
-        ,patientDTO.getPhone(),patientDTO.getAddress(),patientDTO.getEmail());
+                ,patientDTO.getPhone(),patientDTO.getAddress(),patientDTO.getEmail());
     }
 
 
@@ -49,7 +49,7 @@ public class PatientServiceImpl implements PatientService {
      **/
     @Override
     public Patient create(Patient patientTemp) {
-      return patientRepository.save(patientTemp);
+        return patientRepository.save(patientTemp);
     }
 
 
@@ -59,5 +59,10 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Integer findByEmail(String email) {
         return patientRepository.findByEmail(email);
+    }
+
+    @Override
+    public Integer findByPhone(String phone) {
+        return patientRepository.findByPhone(phone);
     }
 }

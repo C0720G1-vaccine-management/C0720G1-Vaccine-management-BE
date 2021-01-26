@@ -1,5 +1,8 @@
 package com.project.dto;
-
+/**
+ *KhoaTA
+ * Class DTO for sending data to register form
+ */
 public interface PeriodicVaccinationDto {
     Integer getPatientId();
     String getName();
@@ -9,4 +12,5 @@ public interface PeriodicVaccinationDto {
     String getPhone();
     String getAddress();
     String getStatus();
+
 }

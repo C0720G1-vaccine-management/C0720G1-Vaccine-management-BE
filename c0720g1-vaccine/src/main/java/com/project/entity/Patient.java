@@ -29,6 +29,7 @@ public class Patient {
     @OneToMany(mappedBy = "patient")
     @JsonBackReference
     private Set<VaccinationHistory> vaccinationHistoryList;
+
     @OneToOne
     @JoinColumn(name = "account_id",unique = true)
     private Account account;
