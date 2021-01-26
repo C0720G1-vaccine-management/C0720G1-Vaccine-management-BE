@@ -19,7 +19,6 @@ public class VaccinationTransaction {
 
     @OneToOne
     @JoinColumn(name = "vaccination_history_id")
-    @JsonBackReference
     private VaccinationHistory vaccinationHistory;
 
     private Double price;

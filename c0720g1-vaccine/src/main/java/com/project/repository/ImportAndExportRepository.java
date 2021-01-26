@@ -11,11 +11,16 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ImportAndExportRepository extends JpaRepository<ImportAndExport, Integer> {
 
-    @Query(value = "select import_and_export_id from import_and_export where import_and_export_id = ?;", nativeQuery = true)
-    ImportAndExport findById(int id);
-
+//    @Query(value = "select import_and_export_id from import_and_export where import_and_export_id = ?;", nativeQuery = true)
+//    ImportAndExport findById(int id);
+    /**
+     * Made by Khanh lấy list vaccine có action là export
+     */
     Page<ImportAndExport> findAllByAction(String action, Pageable pageable);
 
+    /**
+     * Made by Khanh tìm kiếm các trường trong list
+     */
     Page<ImportAndExport> findAllByActionAndStorage_Vaccine_VaccineIdAndStorage_Vaccine_OriginContainingAndStorage_Vaccine_VaccineTypeName(String action, Integer storage_vaccineId, String storage_vaccine_origin, String storage_vaccine_vaccineType_name, Pageable pageable);
 
 

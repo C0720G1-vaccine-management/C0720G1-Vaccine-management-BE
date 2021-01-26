@@ -61,6 +61,13 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
     }
 
     /**
+     * Made by Khanh lay list history
+     */
+    @Override
+    public List<VaccinationHistory> findAll() {
+        return this.vaccinationHistoryRepository.findAll();
+    }
+     /**
      * Nguyen Van Linh: Get all email of patient to remind vaccination
      */
     @Override

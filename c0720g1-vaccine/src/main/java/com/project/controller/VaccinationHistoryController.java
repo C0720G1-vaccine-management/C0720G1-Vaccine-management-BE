@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "*")
+
 @RequestMapping("/api/public")
 public class VaccinationHistoryController {
 
@@ -117,6 +118,20 @@ public class VaccinationHistoryController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+  
+    /**
+    * Khanh
+    */
+    @RequestMapping(value = "/vaccination-history-list", method = RequestMethod.GET)
+    public ResponseEntity<?> getListVaccinationHistory (){
+        List<VaccinationHistory> list = this.vaccinationHistoryService.findAll();
+        if (list==null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(list,HttpStatus.OK);
+    }
+
+
     /**
      list:  create by LongBP
      **/
@@ -165,6 +180,7 @@ public class VaccinationHistoryController {
         }
         return new ResponseEntity<VaccinationHistoryRegisteredDTO>(vaccinationHistoryRegisteredDTO, HttpStatus.OK);
     }
+
 
 
 }
