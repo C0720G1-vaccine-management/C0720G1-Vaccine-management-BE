@@ -1,4 +1,5 @@
 package com.project.service;
+import com.project.dto.PatientDTO;
 import com.project.entity.Patient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,12 @@ public interface PatientService {
     Page<Patient> search(String name, String id, int pageable);
     void editPatient(Patient patient);
 
+    /**
+     *NhiTTY
+     **/
+    void addPatient(PatientDTO patientDTO);
+
+
 
     /**
      * Phuoc: tạo mới bênh nhân
@@ -41,4 +48,10 @@ public interface PatientService {
      * Phuoc: Tìm kiếm theo Phone
      **/
     Integer findByPhone(String phone);
+
+
+    /**
+     * TuNH:Lấy id khách hàng
+     **/
+    Integer getPatientId(Integer accountId);
 }

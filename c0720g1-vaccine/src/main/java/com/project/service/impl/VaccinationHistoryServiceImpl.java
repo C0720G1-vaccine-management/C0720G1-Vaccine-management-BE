@@ -67,7 +67,8 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
     public List<VaccinationHistory> findAll() {
         return this.vaccinationHistoryRepository.findAll();
     }
-     /**
+
+    /**
      * Nguyen Van Linh: Get all email of patient to remind vaccination
      */
     @Override
@@ -98,16 +99,18 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
     public Page<VaccinationHistory> finAllPeriodicVaccination(String name, Pageable pageable) {
         return vaccinationHistoryRepository.findAllByPatient_NameContaining(name, pageable);
     }
+
     /**
-     *list:  create by LongBP
+     * list:  create by LongBP
      */
     @Override
     public Page<VaccinationHistory> getAllRegisteredRequired(String name, Pageable pageable) {
         return this.vaccinationHistoryRepository.findAllByPatient_NameContaining(name, pageable);
     }
 
+
     /**
-     search and paging:  create by LongBP
+     * search and paging:  create by LongBP
      **/
     @Override
     public Page<VaccinationHistory> searchNameAndInjected(String name, Boolean status, Pageable pageable) {
@@ -115,7 +118,7 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
     }
 
     /**
-     find by id:  create by LongBP
+     * find by id:  create by LongBP
      **/
     @Override
     public VaccinationHistoryRegisteredDTO findId(Integer id) {

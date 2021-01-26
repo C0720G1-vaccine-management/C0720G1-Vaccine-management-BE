@@ -7,11 +7,10 @@ import com.project.entity.Employee;
 import com.project.entity.Position;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Date;
-import java.util.List;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Transactional

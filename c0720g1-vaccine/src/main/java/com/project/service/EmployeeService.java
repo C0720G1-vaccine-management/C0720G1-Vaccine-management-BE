@@ -11,33 +11,32 @@ import javax.mail.MessagingException;
 import java.util.List;
 
 public interface EmployeeService {
-    /*
+    /**
     * HungDH - Hien thi danh sach nhan vien
      */
     List<EmployeeListDTO> getAllEmployee();
-    /*
+    /**
      * HungDH - tim kiem nhan vien theo id
      */
     EmployeeFindIdDTO findById(int id);
-    /*
+    /**
      * HungDH - chinh sua thong tin nhan vien
      */
     void editEmployee(EmployeeEditDTO employeeEditDTO, int roleId, int accountId);
-    /*
+    /**
      * HungDH - xoa nhan vien
      */
     void deleteEmployee(int id);
 
-    /*
+    /**
      * HungDH - tim kiem nhan vien theo ten
      */
     List<EmployeeListDTO> findEmployeeByName(String nameSearch);
 
-    /*
+    /**
      * HungDH - tim kiem nhan vien theo CMND
      */
     List<EmployeeListDTO> findEmployeeByIdCard(String idCardSearch);
-
 
     /** LuyenNT code
      * @param employeeDto
@@ -52,6 +51,7 @@ public interface EmployeeService {
     Integer findByPhone(String phone);
   
      /** LuyenNT code
+     * @param
      * @paramphone
      * @return
      */

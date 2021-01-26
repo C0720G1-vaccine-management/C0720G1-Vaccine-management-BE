@@ -1,17 +1,16 @@
 package com.project.dto;
 
 public interface VaccineDTO {
-
-    Integer getVaccineId();
+    String getId();
     String getName();
+    String getVaccineType();
+    String getDateRecive();
     String getLicenseCode();
     String getOrigin();
-    String getAge();
-    String getMaintenance();
     Double getDosage();
+    Integer getShipmentNumber();
     String getExpired();
-    Long getQuantity();
-    Boolean getDeleteFlag();
-    String getVaccineTypeName();
-
+    String getMantenance();
+    String getAge();
+    Integer getQuantity();
 }

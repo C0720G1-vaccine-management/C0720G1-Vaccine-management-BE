@@ -66,7 +66,7 @@ public interface VaccineRepository extends JpaRepository<Vaccine,Integer> {
 
     /**
      * TinVT
-     * Find All VaccnineDTO not pagination
+     * Find All VaccnineDTO not pagination 
      * @return
      */
     @Query(value = "SELECT vaccine.vaccine_id as id,vaccine.name as name, vaccine_type.name as vaccineType,invoice.transaction_date as dateRecive, " +

@@ -13,19 +13,16 @@ import java.util.List;
 public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleRepository roleRepository;
-    @Override
-    public List<String> getAllRoles(int id) {
-        return roleRepository.getAllRoleName(id);
-    }
+
 
     @Override
     public void setDefaultRole(int accountId, Integer roleId) {
-        roleRepository.setDefaultRole(accountId,roleId);
+        roleRepository.setDefaultRole(accountId, roleId);
     }
 
 
     /*
-    * HungDH
+     * HungDH
      */
     @Override
     public List<Role> findAllRole() {
@@ -33,7 +30,9 @@ public class RoleServiceImpl implements RoleService {
     }
 
 
-    /** LuyenNT code
+    /**
+     * LuyenNT code
+     *
      * @return
      */
     @Override
@@ -42,3 +41,4 @@ public class RoleServiceImpl implements RoleService {
 
     }
 }
+

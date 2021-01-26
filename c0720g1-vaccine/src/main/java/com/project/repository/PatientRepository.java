@@ -37,18 +37,15 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
                      String address, String email, Integer id);
 
     /**
+     * NhiTTY
+     **/
+    @Modifying
+    @Query(value = "insert into patient(name,date_of_birth,gender,guardian,phone,address,email,delete_flag) values (?1,?2,?3,?4,?5,?6,?7,b'0')", nativeQuery = true)
+    void addPatient(String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email);
+
+    /**
      * Duy NP
      */
-     /**
-     * KhoaTA
-     * Save Patient after register for the periodical vaccination
-     */
-    @Modifying
-    @Transactional
-    @Query(value = "insert into patient(name,date_of_birth,gender,guardian,phone,address,email) values (?1,?2,?3,?4,?5,?6,?7)", nativeQuery = true)
-    void savePatient(String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email);
-
-
     @Query(value = "select * from patient where delete_flag = 0 and patient.name like %?1% and patient.patient_id like %?2%", nativeQuery = true)
     List<Patient> search(String name, String id);
     /**
@@ -69,7 +66,21 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     @Query(value = "select max(patient_id) from patient", nativeQuery = true)
     int findLatestPatientId();
 
+     /**
+      * KhoaTA
+     * Save Patient after register for the periodical vaccination
+     */
+    @Modifying
+    @Transactional
+    @Query(value = "insert into patient(name,date_of_birth,gender,guardian,phone,address,email) values (?1,?2,?3,?4,?5,?6,?7)", nativeQuery = true)
+    void savePatient(String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email);
 
 
-
+    /**
+     * TuNH:Lấy id khách hàng
+     **/
+    @Query(value = "select patient.patient_id from patient \n" +
+            "join account on patient.account_id = account.account_id\n" +
+            "where account.account_id = ?1", nativeQuery = true)
+    Integer getPatientId(Integer accountId);
 }

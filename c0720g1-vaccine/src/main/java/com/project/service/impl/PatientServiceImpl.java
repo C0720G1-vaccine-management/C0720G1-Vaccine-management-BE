@@ -16,11 +16,11 @@ public class PatientServiceImpl implements PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
-    //--------CRUD-----
 
     /**
      * Duy NP
      **/
+
     @Override
     public Page<Patient> findAllPatient2(Pageable pageable) {
         return patientRepository.findAllByDeleteFlagIsFalse(pageable);
@@ -32,6 +32,7 @@ public class PatientServiceImpl implements PatientService {
     public Patient findPatientById(int id) {
         return this.patientRepository.findById(id);
     }
+
     /**
      * Duy NP
      **/
@@ -50,9 +51,20 @@ public class PatientServiceImpl implements PatientService {
     /**
      * Duy NP
      **/
+
     @Override
     public void editPatient(Patient patient) {
         this.patientRepository.editPatient(patient.getName(),patient.getDateOfBirth(),patient.getGender(),patient.getGuardian(),patient.getPhone(),patient.getAddress(),patient.getEmail(), patient.getPatientId());
+    }
+
+
+
+    /**
+     *NhiTTY
+     **/
+    @Override
+    public void addPatient(PatientDTO patientDTO) {
+        patientRepository.addPatient(patientDTO.getName(), patientDTO.getDateOfBirth(), patientDTO.getGender(), patientDTO.getGuardian(), patientDTO.getPhone(), patientDTO.getAddress(), patientDTO.getEmail());
     }
 
 
@@ -76,5 +88,14 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Integer findByPhone(String phone) {
         return patientRepository.findByPhone(phone);
+    }
+
+
+    /**
+     * TuNH:Lấy id khách hàng
+     **/
+    @Override
+    public Integer getPatientId(Integer accountId) {
+        return this.patientRepository.getPatientId(accountId);
     }
 }
