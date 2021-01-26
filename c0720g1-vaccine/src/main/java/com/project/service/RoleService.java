@@ -12,4 +12,6 @@ public interface RoleService {
  List<Role> getAllRoles();
 
  void setDefaultRole(int accountId, Integer roleId);
+
+
 }

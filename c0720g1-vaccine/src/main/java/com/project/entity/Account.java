@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -14,17 +15,30 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer accountId;
-    private String userName;
+
+
+
+    @NotBlank(message = "Please provide a encryptPw")
     private String encryptPw;
+    private String token;
+    @NotBlank(message = "Please provide a userName")
+    private String userName;
+
     private Boolean isEnabled;
     private String verificationCode;
+
     @OneToOne(mappedBy = "account")
+    @JsonBackReference
     private Patient patient;
+
     @OneToOne(mappedBy = "account")
+    @JsonBackReference
     private Employee employee;
+
     @OneToMany(mappedBy = "account")
     @JsonBackReference
     private Set<AccountRole> accountRoleList;
+
     @OneToMany(mappedBy = "account")
     @JsonBackReference
     private Set<ImportAndExport> importAndExportList;

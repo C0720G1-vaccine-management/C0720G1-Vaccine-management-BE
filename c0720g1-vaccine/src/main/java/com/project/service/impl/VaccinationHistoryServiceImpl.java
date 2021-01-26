@@ -1,8 +1,7 @@
 package com.project.service.impl;
 
-
-import com.project.dto.VaccinationHistoryDTO;
 import com.project.dto.VaccinationHistoryFeedbackDTO;
+import com.project.dto.VaccinationHistoryGetAfterStatusDTO;
 import com.project.dto.VaccinationHistoryRegisteredDTO;
 import com.project.dto.VaccinationHistorySendFeedbackDTO;
 import com.project.entity.VaccinationHistory;
@@ -17,25 +16,40 @@ import java.util.List;
 
 @Service
 public class VaccinationHistoryServiceImpl implements VaccinationHistoryService {
+
     @Autowired
     private VaccinationHistoryRepository vaccinationHistoryRepository;
 
-    /* tuNH */
+    /**
+     * tuNH
+     **/
     @Override
-    public List<VaccinationHistoryDTO> getAllVaccinationHistory(Integer patientId) {
-        return this.vaccinationHistoryRepository.getAllVaccinationHistory(patientId);
+    public Page<VaccinationHistory> getAllVaccinationHistory(String vaccineName, String vaccinationDate, Integer patientId, Pageable pageable) {
+        return this.vaccinationHistoryRepository.findAllByVaccination_Vaccine_NameContainingAndVaccination_DateContainingAndPatient_PatientId(vaccineName, vaccinationDate, patientId, pageable);
     }
 
-    /* tuNH */
+    /**
+     * tuNH
+     **/
     @Override
     public VaccinationHistoryFeedbackDTO findByIdVaccinationHistory(Integer vaccinationHistoryId) {
         return this.vaccinationHistoryRepository.findByIdVaccinationHistory(vaccinationHistoryId);
     }
 
-    /* tuNH */
+    /**
+     * tuNH
+     **/
     @Override
     public void updateVaccinationHistory(Integer vaccinationHistoryId, VaccinationHistorySendFeedbackDTO vaccinationHistorySendFeedbackDTO) {
-        this.vaccinationHistoryRepository.updateFeedbackVaccinationHistory(vaccinationHistoryId,vaccinationHistorySendFeedbackDTO.getPreStatus());
+        this.vaccinationHistoryRepository.updateFeedbackVaccinationHistory(vaccinationHistoryId, vaccinationHistorySendFeedbackDTO.getAfterStatus());
+    }
+
+    /**
+     * tuNH
+     **/
+    @Override
+    public VaccinationHistoryGetAfterStatusDTO getAfterStatusVaccinationHistory(Integer vaccinationHistoryId) {
+        return this.vaccinationHistoryRepository.getAfterStatus(vaccinationHistoryId);
     }
 
     /**

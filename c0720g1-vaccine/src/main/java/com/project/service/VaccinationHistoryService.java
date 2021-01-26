@@ -1,9 +1,7 @@
 package com.project.service;
 
-
-
-import com.project.dto.VaccinationHistoryDTO;
 import com.project.dto.VaccinationHistoryFeedbackDTO;
+import com.project.dto.VaccinationHistoryGetAfterStatusDTO;
 import com.project.dto.VaccinationHistoryRegisteredDTO;
 import com.project.dto.VaccinationHistorySendFeedbackDTO;
 import com.project.entity.VaccinationHistory;
@@ -13,15 +11,25 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface VaccinationHistoryService {
-    /* tuNH */
-    List<VaccinationHistoryDTO> getAllVaccinationHistory(Integer patientId);
+    /**
+     * tuNH
+     **/
+    Page<VaccinationHistory> getAllVaccinationHistory(String vaccineName, String vaccinationDate, Integer patientId, Pageable pageable);
 
-    /* tuNH */
+    /**
+     * tuNH
+     **/
     VaccinationHistoryFeedbackDTO findByIdVaccinationHistory(Integer vaccinationHistoryId);
 
-    /* tuNH */
+    /**
+     * tuNH
+     **/
     void updateVaccinationHistory(Integer vaccinationHistoryId, VaccinationHistorySendFeedbackDTO vaccinationHistorySendFeedbackDTO);
 
+    /**
+     * tuNH
+     **/
+    VaccinationHistoryGetAfterStatusDTO getAfterStatusVaccinationHistory(Integer vaccinationHistoryId);
 
     /**
      * Phuoc: Tạo mới lịch tiêm theo yêu cầu
@@ -31,7 +39,9 @@ public interface VaccinationHistoryService {
     /**
      * Nguyen Van Linh: Get all email of patient to remind vaccination
      */
-    List<String>getAllEmailToSend();
+
+    List<String> getAllEmailToSend();
+
 
 
     /** LuyenNT code
