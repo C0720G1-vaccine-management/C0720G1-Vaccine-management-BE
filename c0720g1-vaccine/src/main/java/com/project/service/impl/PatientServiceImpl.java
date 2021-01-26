@@ -89,4 +89,6 @@ public class PatientServiceImpl implements PatientService {
     public Integer findByPhone(String phone) {
         return patientRepository.findByPhone(phone);
     }
+
+
 }

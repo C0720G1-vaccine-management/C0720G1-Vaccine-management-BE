@@ -34,7 +34,7 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
     /**
      * tuNH
      **/
-    Page<VaccinationHistory> findAllByVaccination_Vaccine_NameContainingAndVaccination_DateContainingAndPatient_PatientId(String vaccination_vaccine_name, String vaccination_date, Integer patient_patientId, Pageable pageable);
+    Page<VaccinationHistory> findAllByVaccination_Vaccine_NameContainingAndVaccination_DateContainingAndPatient_Email(String vaccination_vaccine_name, String vaccination_date, String patient_email, Pageable pageable);
 
     /**
      * tuNH

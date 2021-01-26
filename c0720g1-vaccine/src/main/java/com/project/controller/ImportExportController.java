@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.project.service.ImportAndExportService;
 import org.springframework.http.HttpStatus;
@@ -21,10 +22,12 @@ public class ImportExportController {
     @Autowired
     private ImportAndExportService importAndExportService;
 
-
-    //phuc create
+    /**Phuc NB
+     *
+     */
     @Autowired
     private VaccineService vaccineService;
+
     /**
      * Made by Khanh tìm kiếm , phân trang, hiển thị list vaccine
      */
@@ -62,10 +65,32 @@ public class ImportExportController {
         return new ResponseEntity<>(this.importAndExportService.findById(id), HttpStatus.OK);
     }
 
-    //phuc create
+    /**
+     * Phuc NB
+     * xử lý nghiệp vụ trừ số lượng khi xuất kho
+     */
     @GetMapping("/{id}/exportVaccine")
-    public String exportVaccine(@PathVariable Integer id, Model model) {
+    public ResponseEntity<?> exportVaccine(@Validated @PathVariable Integer id, @RequestParam("input") Long input) {
+
         Vaccine vaccine = vaccineService.findById(id);
-        return null;
+        if (vaccine == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        vaccine.setQuantity(vaccine.getQuantity() - input);
+        vaccineService.saveVaccine(vaccine);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    /**Phuc NB
+     * lấy ra id của vắc-xin cần xuất kho
+     **/
+    @GetMapping("/getVaccine/{idVaccine}")
+    public ResponseEntity<Vaccine> findVaccineById(@PathVariable Integer idVaccine) {
+        Vaccine vaccine;
+        vaccine = vaccineService.findById(idVaccine);
+        if (vaccine == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(vaccine, HttpStatus.OK);
+        }
     }
 }

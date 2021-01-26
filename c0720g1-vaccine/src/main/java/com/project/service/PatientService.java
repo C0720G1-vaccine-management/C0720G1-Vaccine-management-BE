@@ -48,4 +48,5 @@ public interface PatientService {
      * Phuoc: Tìm kiếm theo Phone
      **/
     Integer findByPhone(String phone);
+
 }

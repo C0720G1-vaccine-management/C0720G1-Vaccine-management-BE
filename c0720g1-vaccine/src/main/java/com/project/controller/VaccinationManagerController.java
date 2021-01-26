@@ -3,8 +3,10 @@ package com.project.controller;
 import com.project.entity.Location;
 import com.project.entity.Vaccination;
 import com.project.dto.VaccinationManagerDto;
+import com.project.entity.Vaccine;
 import com.project.service.LocationService;
 import com.project.service.VaccinationManagerService;
+import com.project.service.VaccineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +26,7 @@ import java.util.List;
 /**
  * TrungTQ Code: Dùng tạo địa chỉ api và mở khóa chặn để truy cập dữ liệu
  */
-@RequestMapping("/api/vaccination-manager")
+@RequestMapping("/api/public/vaccination-manager")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class VaccinationManagerController {
 
@@ -32,6 +34,8 @@ public class VaccinationManagerController {
     private VaccinationManagerService vaccinationManagerService;
     @Autowired
     private LocationService locationService;
+    @Autowired
+    private VaccineService vaccineService;
 
     /**
      * TrungTQ Code: Dùng để lấy danh sách vs phân trang sự kiện tiêm chủng định kỳ
@@ -145,4 +149,15 @@ public class VaccinationManagerController {
         return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
     }
 
+    /**
+     * TrungTQ Code: Lấy danh sách vắc-xin xảy ra sự kiện tiêm chủng định kỳ
+     */
+    @RequestMapping(value = "/vaccines", method = RequestMethod.GET)
+    public ResponseEntity<List<Vaccine>> listAllVaccine() {
+        List<Vaccine> locations = vaccineService.getAllVaccine();
+        if (locations.isEmpty()) {
+            return new ResponseEntity<List<Vaccine>>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List<Vaccine>>(locations, HttpStatus.OK);
+    }
 }
