@@ -5,13 +5,20 @@ import com.project.entity.Role;
 import java.util.List;
 
 public interface RoleService {
-
     /**
      * HungDH
      */
     List<Role> findAllRole();
 
-    List<String> getAllRoles(int id);
+
+    /**
+     * LuyenNT
+     *
+     * @return
+     */
+    void setDefaultRole(int accountId, Integer roleId);
+
+
 
     /**
      * LuyenNT
@@ -20,6 +27,5 @@ public interface RoleService {
      */
     List<Role> getAllRoles();
 
-    void setDefaultRole(int accountId, Integer roleId);
 
 }

@@ -15,6 +15,7 @@ import java.util.List;
 public class PatientServiceImpl implements PatientService {
     @Autowired
     private PatientRepository patientRepository;
+
     /**
      * Duy NP
      **/
@@ -52,12 +53,13 @@ public class PatientServiceImpl implements PatientService {
         this.patientRepository.editPatient(patient.getName(),patient.getDateOfBirth(),patient.getGender(),patient.getGuardian(),patient.getPhone(),patient.getAddress(),patient.getEmail(), patient.getPatientId());
     }
 
+
     /**
      *NhiTTY
      **/
     @Override
     public void addPatient(PatientDTO patientDTO) {
-        patientRepository.addPatient(patientDTO.getName(),patientDTO.getDateOfBirth(),patientDTO.getGender(),patientDTO.getGuardian(),patientDTO.getPhone(),patientDTO.getAddress(),patientDTO.getEmail());
+        patientRepository.addPatient(patientDTO.getName(), patientDTO.getDateOfBirth(), patientDTO.getGender(), patientDTO.getGuardian(), patientDTO.getPhone(), patientDTO.getAddress(), patientDTO.getEmail());
     }
 
 

@@ -24,8 +24,8 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
     Page<VaccinationHistory> findAllByPatient_NameContainingAndVaccination_StatusIs(String name, Boolean status, Pageable pageable);
 
     /** LuyenNT
-     * @param name
-     * @param pageable
+     * @paramame
+     * @parampageable
      * @return
      */
     Page<VaccinationHistory> findAllByPatient_NameContaining(String name,Pageable pageable);

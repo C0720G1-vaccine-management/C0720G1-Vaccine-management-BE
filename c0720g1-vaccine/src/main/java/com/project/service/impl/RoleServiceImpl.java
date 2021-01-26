@@ -14,11 +14,6 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleRepository roleRepository;
 
-    @Override
-    public List<String> getAllRoles(int id) {
-        return roleRepository.getAllRoleName(id);
-    }
-
 
     @Override
     public void setDefaultRole(int accountId, Integer roleId) {
@@ -33,6 +28,7 @@ public class RoleServiceImpl implements RoleService {
     public List<Role> findAllRole() {
         return roleRepository.findAll();
     }
+
 
     /**
      * LuyenNT code

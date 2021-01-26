@@ -3,6 +3,7 @@ package com.project.dto;
 /**
 * NhiTTY
 **/
+
 public class PatientDTO {
     private String name;
     private String dateOfBirth;
@@ -91,3 +92,6 @@ public class PatientDTO {
         this.email = email;
     }
 }
+
+
+

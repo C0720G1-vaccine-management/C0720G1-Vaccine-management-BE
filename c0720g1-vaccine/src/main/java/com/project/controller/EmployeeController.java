@@ -44,14 +44,12 @@ public class EmployeeController {
     /*
      * HungDH - Hien thi danh sach nhan vien
      */
-
-
-    @GetMapping("/")
+    @GetMapping("/list-employee")
     public ResponseEntity<List<EmployeeListDTO>> getAllEmployee(@RequestParam Optional<String> nameSearch) {
         String afterCheck = "";
         List<EmployeeListDTO> employeeList = employeeService.getAllEmployee();
         if (employeeList.isEmpty()) {
-            return new ResponseEntity<List<EmployeeListDTO>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             if (nameSearch.isPresent()) {
                 afterCheck = nameSearch.get();
@@ -60,6 +58,7 @@ public class EmployeeController {
             return new ResponseEntity<List<EmployeeListDTO>>(employeeList, HttpStatus.OK);
         }
     }
+
 
     /*
      * Hung DH - hien thi position list
