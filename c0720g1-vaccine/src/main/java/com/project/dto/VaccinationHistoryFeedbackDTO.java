@@ -10,5 +10,5 @@ public interface VaccinationHistoryFeedbackDTO {
     String getPatientPhone();
     String getVaccineTypeName();
     String getVaccinationDate();
-    String getVaccineHistoryPreStatus();
+    String getVaccineHistoryAfterStatus();
 }

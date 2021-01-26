@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface VaccineService {
-    List<Vaccine> getAllVaccine();
         //Phuc create
     Vaccine findById(Integer id);
 
@@ -31,4 +30,47 @@ public interface VaccineService {
      * Phuoc: Tìm kiếm vắc-xin theo ID
      **/
     VaccineDTO getVaccineById(Integer id);
+
+    /**
+     * TinVT
+     * Find All VaccnineDTO
+     * @return
+     */
+    List<VaccineDTO> getAllVaccineDTO(int index);
+
+    /**
+     * TinVT
+     * Find All VaccnineDTO not pagination
+     * @return
+     */
+    List<VaccineDTO> getAllVaccineDTONotPagination();
+
+    /**
+     * TinVT
+     * Find by name and type vaccine and origin and status
+     * @return
+     */
+    List<VaccineDTO> search(String name, String vaccineType, String origin);
+
+
+    /**
+     * TinVT
+     * create new Vaccnine
+     * @return
+     */
+    void createVaccine(String nameVaccine, double dosageVaccine, String licenseCode, String maintenance, String origin, String expired, String age, int quantity, int vaccineTypeId);
+
+    /**
+     * TinVT
+     * Find by name Vaccnine
+     * @return
+     */
+    Vaccine searchName(String name);
+
+    /**
+     * TinVT
+     * Find by name Vaccnine
+     * @return
+     */
+    List<Vaccine> getAllVaccine();
 }

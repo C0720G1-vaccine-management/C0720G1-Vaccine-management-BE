@@ -2,22 +2,20 @@ package com.project.repository;
 import com.project.dto.EmployeeFindIdDTO;
 import com.project.dto.EmployeeListDTO;
 import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.repository.query.Param;
 import com.project.entity.Account;
 import com.project.entity.Employee;
 import com.project.entity.Position;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
-//Luyen
-// import javax.transaction.Transactional;
-// @Transactional
-
-
+@Transactional
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     /*
     * Hung DH - hien thi list Employee va ten quyen truy cap cua tung nhan vien
@@ -90,11 +88,34 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     @Modifying
     @Query(value = "update employee set employee.delete_flag = 1 where employee.employee_id = ?1", nativeQuery = true)
     void deleteEmployee(int id);
-    
-        //luyen code
+
+    /** LuyenNT code
+     * @param name
+     * @param dateOfBirth
+     * @param idCard
+     * @param address
+     * @param phone
+     * @param position
+     * @param account
+     * @param delete_flag
+     */
     @Modifying
     @Query(value = "insert into employee(name,date_of_birth,id_card," +
             "address,phone,position_id,account_id,delete_flag) values (?1,?2,?3,?4,?5,?6,?7,?8)", nativeQuery = true)
     void createNewEmployee(String name, String dateOfBirth, String idCard,
-                           String address, String phone, Integer position_id, Integer account_id,Boolean delete_flag);
+                           String address, String phone, Integer position, Integer account,Boolean delete_flag);
+
+    /** LuyenNT code
+     * @param phone
+     * @return
+     */
+    @Query(value = "select count(phone) from employee where phone = ?", nativeQuery = true)
+    Integer findByPhone(String phone);
+
+    /** LuyenNT code
+     * @param idCard
+     * @return
+     */
+    @Query(value = "select count(id_card) from employee where id_card = ?", nativeQuery = true)
+    Integer finByIdCard(String idCard);
 }

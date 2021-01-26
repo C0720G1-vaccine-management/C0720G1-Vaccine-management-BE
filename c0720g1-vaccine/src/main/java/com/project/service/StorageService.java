@@ -8,7 +8,15 @@ import java.util.List;
 
 public interface StorageService {
 
+
    List<Storage> findAll();
 
    Storage findById(Integer id);
+
+   /**
+    * TinVT
+    * create Storage
+    * @return
+    */
+   void createStorage(int quantity , int vaccineId);
 }

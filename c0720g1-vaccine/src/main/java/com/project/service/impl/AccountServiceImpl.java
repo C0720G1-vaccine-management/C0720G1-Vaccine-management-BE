@@ -49,6 +49,15 @@ public class AccountServiceImpl implements AccountService {
         sendVerificationEmail(username, randomCode, email);
     }
 
+    /** LuyenNT
+     * @param username
+     * @param password
+     */
+    @Override
+    public void addNew(String username, String password) {
+        accountRepository.addNew(username,password,true,null);
+    }
+
     @Override
     public Boolean findAccountByVerificationCode(String code) {
         Account account = accountRepository.findAccountByVerificationCode(code);

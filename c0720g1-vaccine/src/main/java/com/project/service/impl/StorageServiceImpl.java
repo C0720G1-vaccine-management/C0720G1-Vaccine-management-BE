@@ -22,4 +22,14 @@ public class StorageServiceImpl implements StorageService {
     public Storage findById(Integer id) {
         return this.storageRepository.findById(id).orElse(null);
     }
+
+    /**
+     * TinVT
+     * create Storage
+     * @return
+     */
+    @Override
+    public void createStorage(int quantity, int vaccineId) {
+        storageRepository.createStorage(quantity,vaccineId);
+    }
 }
