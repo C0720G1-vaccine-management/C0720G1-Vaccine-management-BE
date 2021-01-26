@@ -4,24 +4,24 @@ import com.project.entity.Role;
 
 import java.util.List;
 
-public interface RoleService 
-  
-  List<String> getAllRoles(int id);
+public interface RoleService {
 
-  void setDefaultRole(int accountId, Integer roleId);
+    List<String> getAllRoles(int id);
 
-  /*
-  * HungDH
-   */
-  List<Role> findAllRole();
+    void setDefaultRole(int accountId, Integer roleId);
 
- List<String> getAllRoles(int id);
+    /*
+     * HungDH
+     */
+    List<Role> findAllRole();
 
- /** LuyenNT
-  * @return
-  */
- List<Role> getAllRoles();
 
- void setDefaultRole(int accountId, Integer roleId);
+    /**
+     * LuyenNT
+     *
+     * @return
+     */
+    List<Role> getAllRoles();
+
 
 }

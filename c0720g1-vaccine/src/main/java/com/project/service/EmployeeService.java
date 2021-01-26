@@ -38,8 +38,6 @@ public interface EmployeeService {
      */
     List<EmployeeListDTO> findEmployeeByIdCard(String idCardSearch);
 
-        // luyen code
-    void createNewEmployee(EmployeeDto employeeDto);
 
     /** LuyenNT code
      * @param employeeDto
@@ -54,7 +52,7 @@ public interface EmployeeService {
     Integer findByPhone(String phone);
   
      /** LuyenNT code
-     * @param phone
+     * @paramphone
      * @return
      */
     Integer findByIdCard(String idCard);
