@@ -37,6 +37,11 @@ public interface VaccinationHistoryService {
     VaccinationHistory registerVaccinationHistory(VaccinationHistory vaccinationHistoryTemp);
 
     /**
+     * Made by Khanh lấy list history
+     */
+    List<VaccinationHistory> findAll();
+
+     /**
      * Nguyen Van Linh: Get all email of patient to remind vaccination
      */
 
@@ -73,5 +78,6 @@ public interface VaccinationHistoryService {
      find by id:  create by LongBP
      **/
     VaccinationHistoryRegisteredDTO findId(Integer id);
+
 
 }

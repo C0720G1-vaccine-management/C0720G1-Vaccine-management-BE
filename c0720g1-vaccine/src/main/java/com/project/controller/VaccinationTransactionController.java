@@ -1,5 +1,7 @@
 package com.project.controller;
 
+import com.project.entity.VaccinationTransaction;
+import com.project.service.VaccinationTransactionService;
 import com.project.service.impl.VaccinationTransactionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -12,14 +14,17 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/public")
 @CrossOrigin(origins = "http://localhost:4200")
 public class VaccinationTransactionController {
 
     @Autowired
-    VaccinationTransactionServiceImpl vaccinationTransactionServiceImpl;
+    VaccinationTransactionService vaccinationTransactionService;
 
-    @GetMapping({"/list-vaccine-transaction/name={keyword}type={keyword2}", "/list-vaccine-transaction"})
+    /**
+     * Made by Khanh phân trang, tìm kiếm , hiển thị list giao dịch
+     */
+    @GetMapping({"/vaccine-transaction-list/name={keyword}type={keyword2}", "/vaccine-transaction-list"})
     public ResponseEntity<?> listVaccineTransaction(@PageableDefault(size = 5) Pageable pageable,
                                                     @PathVariable Optional<String> keyword,
                                                     @PathVariable Optional<String> keyword2) {
@@ -30,11 +35,31 @@ public class VaccinationTransactionController {
             keyWordForSearchNamePatient = keyword.get();
             keyWordForSearchVaccineType = keyword2.get();
 
-            return new ResponseEntity<>(vaccinationTransactionServiceImpl.search(
+            return new ResponseEntity<>(vaccinationTransactionService.search(
                     keyWordForSearchNamePatient, keyWordForSearchVaccineType, pageable), HttpStatus.OK);
 
         }
-        return new ResponseEntity<>(vaccinationTransactionServiceImpl.findAll(pageable), HttpStatus.OK);
+        return new ResponseEntity<>(vaccinationTransactionService.findAll(pageable), HttpStatus.OK);
     }
+
+    @PostMapping("/vaccine-transaction-create")
+    public ResponseEntity<?> createVaccineTransaction(@RequestParam Integer idVaccineHistory,
+                                                      @RequestParam double price,
+                                                      @RequestParam Integer quantity) {
+        this.vaccinationTransactionService.save(idVaccineHistory, price, quantity);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PutMapping("/vaccine-transaction-edit/")
+    public ResponseEntity<?> editVaccineTransaction(@RequestBody VaccinationTransaction vaccinationTransaction) {
+        this.vaccinationTransactionService.edit(vaccinationTransaction);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/get-vaccine-transaction-id/{id}")
+    public ResponseEntity<?> getId(@PathVariable Integer id) {
+        return new ResponseEntity<>(this.vaccinationTransactionService.findById(id), HttpStatus.OK);
+    }
+
 
 }
