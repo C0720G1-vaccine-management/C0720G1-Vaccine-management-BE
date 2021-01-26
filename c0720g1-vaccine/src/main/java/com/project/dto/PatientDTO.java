@@ -1,5 +1,8 @@
 package com.project.dto;
-import javax.persistence.Column;
+
+/**
+* NhiTTY
+**/
 
 public class PatientDTO {
     private String name;
@@ -9,6 +12,29 @@ public class PatientDTO {
     private String phone;
     private String address;
     private String email;
+    private Boolean deleteFlag;
+
+    public PatientDTO() {
+    }
+
+    public PatientDTO(String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email, Boolean deleteFlag) {
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.guardian = guardian;
+        this.phone = phone;
+        this.address = address;
+        this.email = email;
+        this.deleteFlag = deleteFlag;
+    }
+
+    public Boolean getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(Boolean deleteFlag) {
+        this.deleteFlag = deleteFlag;
+    }
 
     public String getName() {
         return name;
@@ -66,3 +92,6 @@ public class PatientDTO {
         this.email = email;
     }
 }
+
+
+

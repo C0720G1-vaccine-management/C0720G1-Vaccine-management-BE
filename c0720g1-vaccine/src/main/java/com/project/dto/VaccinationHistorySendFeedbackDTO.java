@@ -2,13 +2,16 @@ package com.project.dto;
 
 public class VaccinationHistorySendFeedbackDTO {
 
-    private String preStatus;
+    private String afterStatus;
 
-    public String getPreStatus() {
-        return preStatus;
+    public VaccinationHistorySendFeedbackDTO() {
     }
 
-    public void setPreStatus(String preStatus) {
-        this.preStatus = preStatus;
+    public String getAfterStatus() {
+        return afterStatus;
+    }
+
+    public void setAfterStatus(String afterStatus) {
+        this.afterStatus = afterStatus;
     }
 }

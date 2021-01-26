@@ -1,9 +1,31 @@
 package com.project.service;
 
+import com.project.entity.Role;
+
 import java.util.List;
 
 public interface RoleService {
- List<String> getAllRoles(int id);
+    /**
+     * HungDH
+     */
+    List<Role> findAllRole();
 
- void setDefaultRole(int accountId, Integer roleId);
+
+    /**
+     * LuyenNT
+     *
+     * @return
+     */
+    void setDefaultRole(int accountId, Integer roleId);
+
+
+
+    /**
+     * LuyenNT
+     *
+     * @return
+     */
+    List<Role> getAllRoles();
+
+
 }
