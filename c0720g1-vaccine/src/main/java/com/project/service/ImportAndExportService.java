@@ -3,17 +3,18 @@ import com.project.dto.ImportAndExportDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.project.entity.ImportAndExport;
-import java.util.List;
 
 public interface ImportAndExportService {
-    //    Made by Khanh
+    /**
+     *    Made by Khanh
+     */
     Page<ImportAndExport> findAll(String action,Pageable pageable);
 
     Page<ImportAndExport> search(String action,Integer vaccineId,String vaccineType,String origin,Pageable pageable);
 
     ImportAndExport findById(Integer id);
 
-    void save(ImportAndExportDTO importAndExportDTO);
+    void editPrice(Integer id, Long price);
 
 
 //    Page<ImportAndExport> findByNameContaining(Pageable pageable, String name);

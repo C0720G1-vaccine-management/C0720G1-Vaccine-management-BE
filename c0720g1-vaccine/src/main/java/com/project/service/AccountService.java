@@ -26,5 +26,10 @@ public interface AccountService {
 
     void addNew(String username, String password, String email) throws MessagingException;
 
+    /** LuyenNT code
+     * @param
+     * @return
+     */
+    void addNew(String username, String password);
     Boolean findAccountByVerificationCode(String code);
 }

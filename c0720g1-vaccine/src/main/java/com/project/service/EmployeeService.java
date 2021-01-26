@@ -6,6 +6,8 @@ import com.project.dto.EmployeeListDTO;
 import com.project.entity.Account;
 import com.project.entity.Employee;
 import com.project.entity.Position;
+
+import javax.mail.MessagingException;
 import java.util.List;
 
 public interface EmployeeService {
@@ -25,6 +27,7 @@ public interface EmployeeService {
      * HungDH - xoa nhan vien
      */
     void deleteEmployee(int id);
+
     /*
      * HungDH - tim kiem nhan vien theo ten
      */
@@ -37,4 +40,23 @@ public interface EmployeeService {
 
         // luyen code
     void createNewEmployee(EmployeeDto employeeDto);
+
+    /** LuyenNT code
+     * @param employeeDto
+     * @throws MessagingException
+     */
+    void createNewEmployee(EmployeeDto employeeDto) throws MessagingException;
+
+    /** LuyenNT code
+     * @param phone
+     * @return
+     */
+    Integer findByPhone(String phone);
+  
+     /** LuyenNT code
+     * @param phone
+     * @return
+     */
+    Integer findByIdCard(String idCard);
+
 }

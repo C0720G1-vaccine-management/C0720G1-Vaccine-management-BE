@@ -17,6 +17,7 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer locationId;
     private String name;
+
     @OneToMany(mappedBy = "location")
     @JsonBackReference
     private Set<Vaccination> vaccinationList;

@@ -14,6 +14,6 @@ public class EmployeeDto {
     String idCard;
     String address;
     String phone;
-    Integer position_id;
-    Integer account_id;
+    Integer position;
+    Integer account;
 }
