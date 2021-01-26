@@ -61,6 +61,7 @@ public class EmployeeController {
         }
         return new ResponseEntity<List<Position>>(positionList, HttpStatus.OK);
     }
+    
     /*
      * Hung DH - hien thi account list
      */
