@@ -1,5 +1,4 @@
 package com.project.validation;
-
 import com.project.dto.PatientDTO;
 import com.project.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +10,12 @@ import java.util.Date;
 import java.util.regex.Pattern;
 
 /**
- * Nhi,Duy
+ * Nhi
  **/
 @Component
 public class PatientByRequestDTOValidator implements Validator {
-    @Autowired
-    private PatientService patientService;
+@Autowired
+private PatientService patientService;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -26,10 +25,16 @@ public class PatientByRequestDTOValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         PatientDTO patientDTO = (PatientDTO) target;
+
         Date date = new Date();
         String[] dateSplit = patientDTO.getDateOfBirth().split("-");
         dateSplit[0] = String.valueOf(Integer.parseInt(dateSplit[0]) - 1900);
         Date dateOfBirth = new Date(Integer.parseInt(dateSplit[0]), Integer.parseInt(dateSplit[1]) - 1, Integer.parseInt(dateSplit[2]));
+        if (patientDTO.getDateOfBirth() == null) {
+            errors.rejectValue("dateOfBirth", "dateOfBirth.null", "Ngày sinh không được để trống");
+        } else if (((date.getTime()) - (dateOfBirth.getTime())) / 1000 / 60 / 60 / 24 < 90 || ((date.getTime()) - (dateOfBirth.getTime())) / 1000 / 60 / 60 / 24 > 36525) {
+            errors.rejectValue("dateOfBirth", "dateOfBirth.format", "Ngày sinh phải từ 90 ngày tuổi đến 100 tuổi");
+        }
 
         if (patientDTO.getName() == null) {
             errors.rejectValue("name", "name.null", "Tên không được để trống");
@@ -41,16 +46,10 @@ public class PatientByRequestDTOValidator implements Validator {
 
         if (patientDTO.getGender() == null) {
             errors.rejectValue("gender", "gender.null", "Giới tính không được để trống");
-        } else if (!patientDTO.getGender().equals("Nam")) {
+        } else if (!patientDTO.getGender().equals("Nam") ) {
             if (!patientDTO.getGender().equals("Nữ")) {
                 errors.rejectValue("gender", "gender.format", "Giới tính không đúng định dạng");
             }
-        }
-
-        if (patientDTO.getDateOfBirth() == null) {
-            errors.rejectValue("dateOfBirth", "dateOfBirth.null", "Ngày sinh không được để trống");
-        } else if (((date.getTime()) - (dateOfBirth.getTime())) / 1000 / 60 / 60 / 24 < 90 || ((date.getTime()) - (dateOfBirth.getTime())) / 1000 / 60 / 60 / 24 > 36525) {
-            errors.rejectValue("dateOfBirth", "dateOfBirth.format", "Ngày sinh phải từ 90 ngày tuổi đến 100 tuổi");
         }
 
         if (patientDTO.getGuardian().length() < 6) {
@@ -79,4 +78,5 @@ public class PatientByRequestDTOValidator implements Validator {
             errors.rejectValue("phone", "phone.duplicate", "Số điện thoại đã tồn tại");
         }
     }
+
 }

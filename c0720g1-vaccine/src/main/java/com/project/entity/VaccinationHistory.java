@@ -22,6 +22,7 @@ public class VaccinationHistory {
     @ManyToOne
     @JoinColumn(name = "vaccination_id",nullable = false)
     private Vaccination vaccination;
+
     @ManyToOne
     @JoinColumn(name = "patient_id",nullable = false)
     private Patient patient;
