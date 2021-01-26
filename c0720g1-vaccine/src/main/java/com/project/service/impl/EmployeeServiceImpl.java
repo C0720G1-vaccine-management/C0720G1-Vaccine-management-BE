@@ -65,13 +65,8 @@ public class EmployeeServiceImpl implements EmployeeService {
      * HungDH
      */
     @Override
-    public List<EmployeeListDTO> findEmployeeByName(String nameSearch) {
-        return employeeRepository.findEmployeeByName(nameSearch);
-    }
-
-    @Override
-    public List<EmployeeListDTO> findEmployeeByIdCard(String idCardSearch) {
-        return employeeRepository.findEmployeeByIdCard(idCardSearch);
+    public List<EmployeeListDTO> findEmployeeByIdAndNameAndPosition(String nameSearch, String idEmpSearch, String positionSearch) {
+        return employeeRepository.findEmployeeByIdAndNameAndPosition(nameSearch, idEmpSearch, positionSearch);
     }
 
     /**

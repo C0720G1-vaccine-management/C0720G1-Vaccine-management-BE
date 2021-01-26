@@ -45,18 +45,24 @@ public class EmployeeController {
      * HungDH - Hien thi danh sach nhan vien
      */
     @GetMapping("/list-employee")
-    public ResponseEntity<List<EmployeeListDTO>> getAllEmployee(@RequestParam Optional<String> nameSearch) {
-        String afterCheck = "";
-        List<EmployeeListDTO> employeeList = employeeService.getAllEmployee();
+    public ResponseEntity<List<EmployeeListDTO>> getAllEmployee(@RequestParam(defaultValue = "") String nameSearch,
+                                                                @RequestParam(defaultValue = "") String idEmpSearch,
+                                                                @RequestParam(defaultValue = "") String positionSearch
+    ) {
+        List<EmployeeListDTO> employeeList;
+        if (!nameSearch.equals("") || !idEmpSearch.equals("") || !positionSearch.equals("")) {
+            return new ResponseEntity<List<EmployeeListDTO>>(employeeService.findEmployeeByIdAndNameAndPosition
+                    ("%" + nameSearch + "%", "%" + idEmpSearch+ "%", "%" +positionSearch+ "%"), HttpStatus.OK);
+        } else {
+            employeeList = employeeService.getAllEmployee();
+        }
+
         if (employeeList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            if (nameSearch.isPresent()) {
-                afterCheck = nameSearch.get();
-                return new ResponseEntity<List<EmployeeListDTO>>(employeeService.findEmployeeByName("%" + afterCheck + "%"), HttpStatus.OK);
-            }
-            return new ResponseEntity<List<EmployeeListDTO>>(employeeList, HttpStatus.OK);
         }
+        System.out.println(employeeList.get(0));
+
+        return new ResponseEntity<List<EmployeeListDTO>>(employeeList, HttpStatus.OK);
     }
 
 
