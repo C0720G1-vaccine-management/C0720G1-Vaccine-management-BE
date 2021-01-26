@@ -24,7 +24,6 @@ public interface PatientService {
     Page<Patient> search(String name, String id, int pageable);
     void editPatient(Patient patient);
 
-
     /**
      *NhiTTY
      **/
@@ -50,8 +49,4 @@ public interface PatientService {
      **/
     Integer findByPhone(String phone);
 
-//    /**
-//     * TuNH:Lấy id khách hàng
-//     **/
-//    Integer getPatientId(Integer accountId);
 }

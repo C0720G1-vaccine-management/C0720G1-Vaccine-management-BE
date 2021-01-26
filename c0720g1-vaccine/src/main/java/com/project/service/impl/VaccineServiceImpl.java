@@ -13,17 +13,25 @@ import java.util.List;
 
 @Service
 public class VaccineServiceImpl implements VaccineService {
-
+    /**Phuc NB
+     **/
     @Autowired
     private VaccineRepository vaccineRepository;
 
-
-    //Phuc create
+    /**Phuc NB
+     * lấy id vắc-xin cần xuất
+     **/
     @Override
     public Vaccine findById(Integer id) {
-        return vaccineRepository.getOne(id);
+        return vaccineRepository.findByVaccineId(id);
     }
+    /**Phuc NB
+     * lưu vắc-xin sau khi xuất
+     **/
+    @Override
+    public void saveVaccine(Vaccine vaccine) {
 
+    }
 
 
     /**

@@ -25,24 +25,7 @@ public class VaccinationHistoryController {
 
     @Autowired
     private VaccinationHistoryService vaccinationHistoryService;
-
-//    @Autowired
-//    private PatientService patientService;
-
-//    /**
-//     * tuNH
-//     * lấy email của khách hàng khi đã đăng nhập
-//     **/
-//    @RequestMapping(value = "/gePatientVaccinationHistoryId/{accountId}", method = RequestMethod.GET)
-//    public ResponseEntity<Integer> getPatientId(@PathVariable Integer accountId ){
-//        Integer patentId = this.patientService.getPatientId(accountId);
-//        if(patentId == null){
-//            return new ResponseEntity<Integer>(HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity<Integer>(patentId, HttpStatus.OK);
-//    }
-
-
+    
     /**
      * tuNH
      * lấy danh lịch sử tiêm chủng, phân trang , tìm kiếm
