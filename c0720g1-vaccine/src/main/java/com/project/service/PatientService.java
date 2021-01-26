@@ -24,7 +24,6 @@ public interface PatientService {
     Page<Patient> search(String name, String id, int pageable);
     void editPatient(Patient patient);
 
-
     /**
      *NhiTTY
      **/
