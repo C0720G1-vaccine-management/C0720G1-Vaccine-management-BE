@@ -5,6 +5,7 @@ import com.project.dto.VaccinationHistoryGetAfterStatusDTO;
 import com.project.dto.VaccinationHistoryRegisteredDTO;
 import com.project.dto.VaccinationHistorySendFeedbackDTO;
 import com.project.entity.VaccinationHistory;
+import com.project.service.PatientService;
 import com.project.service.VaccinationHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,22 @@ public class VaccinationHistoryController {
 
     @Autowired
     private VaccinationHistoryService vaccinationHistoryService;
+
+    @Autowired
+    private PatientService patientService;
+
+    /**
+     * tuNH
+     * lấy id account của khách hàng khi đã đăng nhập
+     **/
+    @RequestMapping(value = "/gePatientVaccinationHistoryId/{accountId}", method = RequestMethod.GET)
+    public ResponseEntity<Integer> getPatientId(@PathVariable Integer accountId ){
+        Integer patentId = this.patientService.getPatientId(accountId);
+        if(patentId == null){
+            return new ResponseEntity<Integer>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Integer>(patentId, HttpStatus.OK);
+    }
 
     /**
      * tuNH

@@ -48,4 +48,10 @@ public interface PatientService {
      * Phuoc: Tìm kiếm theo Phone
      **/
     Integer findByPhone(String phone);
+
+
+    /**
+     * TuNH:Lấy id khách hàng
+     **/
+    Integer getPatientId(Integer accountId);
 }

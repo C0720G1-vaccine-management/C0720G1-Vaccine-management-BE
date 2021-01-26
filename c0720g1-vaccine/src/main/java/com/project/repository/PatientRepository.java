@@ -75,4 +75,12 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     @Query(value = "insert into patient(name,date_of_birth,gender,guardian,phone,address,email) values (?1,?2,?3,?4,?5,?6,?7)", nativeQuery = true)
     void savePatient(String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email);
 
+
+    /**
+     * TuNH:Lấy id khách hàng
+     **/
+    @Query(value = "select patient.patient_id from patient \n" +
+            "join account on patient.account_id = account.account_id\n" +
+            "where account.account_id = ?1", nativeQuery = true)
+    Integer getPatientId(Integer accountId);
 }
