@@ -10,6 +10,7 @@ import com.project.service.VaccinationHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -139,12 +140,18 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
      * find by id:  create by LongBP
      **/
     @Override
-    public VaccinationHistoryRegisteredDTO findId(Integer id) {
+    public List<VaccinationHistoryRegisteredDTO> findId(Integer id) {
         return this.vaccinationHistoryRepository.findId(id);
     }
 
     /**
-     * KhoaTA
+     * edit by id:  create by LongBP
+     **/
+    @Override
+    public void updateStatusVaccinationHistory(Boolean status, String preStatus, Integer id) {
+        vaccinationHistoryRepository.updateVaccinationHistoryStatus(status, preStatus, id);
+    }
+     /** KhoaTA
      * Cancel periodical vaccination register
      */
     @Override
