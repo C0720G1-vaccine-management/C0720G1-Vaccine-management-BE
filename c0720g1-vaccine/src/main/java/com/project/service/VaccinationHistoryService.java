@@ -8,6 +8,8 @@ import com.project.entity.VaccinationHistory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public interface VaccinationHistoryService {
@@ -82,5 +84,8 @@ public interface VaccinationHistoryService {
      **/
     VaccinationHistoryRegisteredDTO findId(Integer id);
 
-
+    /**
+     TuNH:  sendMailFeedbackForAdmin
+     **/
+    void sendMailFeedbackForAdmin(String value, String accountEmail) throws MessagingException, UnsupportedEncodingException;
 }

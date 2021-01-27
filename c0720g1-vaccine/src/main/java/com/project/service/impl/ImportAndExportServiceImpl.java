@@ -1,5 +1,5 @@
 package com.project.service.impl;
-import com.project.dto.ImportAndExportDTO;
+
 import org.springframework.stereotype.Service;
 import com.project.entity.ImportAndExport;
 import com.project.repository.ImportAndExportRepository;
@@ -13,20 +13,23 @@ public class ImportAndExportServiceImpl implements ImportAndExportService {
 
     @Autowired
     private ImportAndExportRepository importAndExportRepository;
+
     /**
      * Made by Khanh hiển thị list vaccine
      */
     @Override
-    public Page<ImportAndExport> findAll(String action,Pageable pageable) {
+    public Page<ImportAndExport> findAll(String action, Pageable pageable) {
         return this.importAndExportRepository.findAllByAction(action, pageable);
     }
+
     /**
      * Made by Khanh tìm kiếm phân trang list vaccine
      */
     @Override
-    public Page<ImportAndExport> search(String action,Integer vaccineId,String vaccineType,String origin,Pageable pageable) {
-        return this.importAndExportRepository.findAllByActionAndStorage_Vaccine_VaccineIdAndStorage_Vaccine_OriginContainingAndStorage_Vaccine_VaccineTypeName(action,vaccineId,vaccineType,origin,pageable);
+    public Page<ImportAndExport> search(String action, Integer vaccineId, String vaccineType, String origin, Pageable pageable) {
+        return this.importAndExportRepository.findAllByActionAndStorage_Vaccine_VaccineIdAndStorage_Vaccine_VaccineType_NameContainingAndStorage_Vaccine_OriginContaining(action, vaccineId, vaccineType, origin, pageable);
     }
+
     /**
      * Made by Khanh tìm kiếm đối tượng export
      */

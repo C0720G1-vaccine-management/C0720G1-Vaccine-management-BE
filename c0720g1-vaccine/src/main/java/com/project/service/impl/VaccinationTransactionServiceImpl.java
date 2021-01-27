@@ -33,14 +33,18 @@ public class VaccinationTransactionServiceImpl implements VaccinationTransaction
      */
     @Override
     public Page<VaccinationTransaction> search(String patientName, String vaccineType, Pageable pageable) {
-        return vaccinationTransactionRepository.findAllByVaccinationHistory_PatientNameContainingAndVaccinationHistory_Vaccination_Vaccine_VaccineTypeName(patientName, vaccineType, pageable);
+        return vaccinationTransactionRepository.findAllByVaccinationHistory_PatientNameContainingAndVaccinationHistory_Vaccination_Vaccine_VaccineTypeNameContaining(patientName, vaccineType, pageable);
     }
 
     /**
      * Made by Khanh chỉnh sửa giao dịch
      */
     @Override
-    public void edit(VaccinationTransaction vaccinationTransaction) {
+    public void edit(Integer id, double price, Long quantity) {
+        VaccinationTransaction vaccinationTransaction;
+        vaccinationTransaction = vaccinationTransactionRepository.findById(id).orElse(null);
+        vaccinationTransaction.setPrice(price);
+        vaccinationTransaction.setQuantity(quantity);
         this.vaccinationTransactionRepository.save(vaccinationTransaction);
     }
 
@@ -56,7 +60,7 @@ public class VaccinationTransactionServiceImpl implements VaccinationTransaction
      * Made by Khanh lưu giao dịch
      */
     @Override
-    public void save(Integer idVaccineHistory, double price, Integer quantity) {
+    public void save(Integer idVaccineHistory, double price, Long quantity) {
         VaccinationHistory vaccinationHistory = this.vaccinationHistoryRepository.findById(idVaccineHistory).orElse(null);
         VaccinationTransaction vaccinationTransaction = new VaccinationTransaction();
         vaccinationTransaction.setVaccinationHistory(vaccinationHistory);
@@ -71,4 +75,5 @@ public class VaccinationTransactionServiceImpl implements VaccinationTransaction
     public void delete(Integer id) {
         this.vaccinationTransactionRepository.deleteById(id);
     }
+
 }

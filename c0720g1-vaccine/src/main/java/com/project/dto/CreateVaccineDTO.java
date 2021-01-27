@@ -3,9 +3,9 @@ package com.project.dto;
 public class CreateVaccineDTO {
     private String nameVaccine;
     private String typeVaccine;
-    private String dateRecieve;
+    private String dayReceive;
     private String licenseCode;
-    private String orrigin;
+    private String origin;
     private String provider;
     private int unitPrice;
     private double dosage;
@@ -15,6 +15,22 @@ public class CreateVaccineDTO {
     private String age;
 
     public CreateVaccineDTO() {
+    }
+
+    public String getDayReceive() {
+        return dayReceive;
+    }
+
+    public void setDayReceive(String dayReceive) {
+        this.dayReceive = dayReceive;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 
     public String getNameVaccine() {
@@ -33,14 +49,6 @@ public class CreateVaccineDTO {
         this.typeVaccine = typeVaccine;
     }
 
-    public String getDateRecieve() {
-        return dateRecieve;
-    }
-
-    public void setDateRecieve(String dateRecieve) {
-        this.dateRecieve = dateRecieve;
-    }
-
     public String getLicenseCode() {
         return licenseCode;
     }
@@ -49,13 +57,6 @@ public class CreateVaccineDTO {
         this.licenseCode = licenseCode;
     }
 
-    public String getOrrigin() {
-        return orrigin;
-    }
-
-    public void setOrrigin(String orrigin) {
-        this.orrigin = orrigin;
-    }
 
     public String getProvider() {
         return provider;
@@ -112,5 +113,6 @@ public class CreateVaccineDTO {
     public void setAge(String age) {
         this.age = age;
     }
+
 }
 
