@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javax.mail.MessagingException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -26,9 +26,8 @@ public class MailerController {
     private VaccinationHistoryService vaccinationHistoryService;
 
 
-    @Scheduled(cron = "0 30 19 * * ?")
-//    @Scheduled(cron = "0/10 * * * * ?")
-    public void sendEmail() throws MessagingException {
+    @Scheduled(cron = "0 30 8 * * ?")
+    public void sendEmail() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
         LocalDate dayPlusAWeek = LocalDate.now().plusDays(7);
         String day = formatter.format(dayPlusAWeek);
