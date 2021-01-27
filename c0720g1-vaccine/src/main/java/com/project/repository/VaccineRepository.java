@@ -118,7 +118,7 @@ public interface VaccineRepository extends JpaRepository<Vaccine,Integer> {
      * get all vaccine
      * @return
      */
-    @Query(value = "select * form vaccine",nativeQuery = true)
+    @Query(value = "select * from vaccine",nativeQuery = true)
     List<Vaccine> getAllVaccine();
 
 }

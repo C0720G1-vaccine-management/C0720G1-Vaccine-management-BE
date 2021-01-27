@@ -5,14 +5,13 @@ import com.project.jwt.JwtUtility;
 import com.project.payload.reponse.JwtResponse;
 import com.project.payload.reponse.MessageResponse;
 import com.project.payload.request.LoginRequest;
+import com.project.payload.request.ResetPassRequest;
 import com.project.payload.request.SignupRequest;
 import com.project.payload.request.VerifyRequest;
 import com.project.service.AccountService;
 import com.project.service.RoleService;
-import com.project.service.VaccinationHistoryService;
 import com.project.service.impl.AccountDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,10 +20,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
 import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+
 import java.util.stream.Collectors;
 
 @RestController
@@ -43,39 +43,35 @@ public class SecurityController {
     @Autowired
     private RoleService roleService;
     @Autowired
-    PasswordEncoder encoder;
-    @Autowired
-    private VaccinationHistoryService vaccinationHistoryService;
+    private PasswordEncoder encoder;
 
-    @GetMapping("/test")
-    public ResponseEntity<List<String>> Home() {
 
-        List<String> listMail = vaccinationHistoryService.getAllEmailToSend();
-        return new ResponseEntity<List<String>>(listMail, HttpStatus.OK);
-    }
-
+    /**
+     * Nguyen Van Linh made it
+     */
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        System.out.println(loginRequest.getUsername());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtility.generateJwtToken(loginRequest.getUsername());
-
         AccountDetailsImpl userDetails = (AccountDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
-
+        Account account = accountService.findAccountByUserName(loginRequest.getUsername());
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
-                roles));
+                roles,account.getEmail()));
     }
 
+    /**
+     * Nguyen Van Linh made it
+     */
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) throws MessagingException {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) throws MessagingException, UnsupportedEncodingException {
         if (accountService.existsByUserName(signUpRequest.getUsername()) != null) {
             return ResponseEntity
                     .badRequest()
@@ -102,14 +98,53 @@ public class SecurityController {
         return ResponseEntity.ok(new MessageResponse("Đăng ký tài khoản thành công!"));
     }
 
+    /**
+     * Nguyen Van Linh made it
+     */
     @PostMapping("/verify")
     public ResponseEntity<?> VerifyEmail(@RequestBody VerifyRequest code) {
-        System.out.println(code.getCode());
         Boolean isVerified = accountService.findAccountByVerificationCode(code.getCode());
-        if(isVerified){
+        if (isVerified) {
             return ResponseEntity.ok(new MessageResponse("activated"));
-        }else {
+        } else {
             return ResponseEntity.ok(new MessageResponse("error"));
         }
     }
+    /**
+     * Nguyen Van Linh made it
+     */
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> reset(@RequestBody LoginRequest loginRequest) throws MessagingException, UnsupportedEncodingException {
+
+        if (accountService.existsByUserName(loginRequest.getUsername()) != null) {
+            accountService.addVerificationCode(loginRequest.getUsername());
+            return ResponseEntity.ok(new MessageResponse("Sent email "));
+        }
+        return ResponseEntity
+                .badRequest()
+                .body(new MessageResponse("Tài khoản không đúng"));
+    }
+
+    /**
+     * Nguyen Van Linh made it
+     */
+    @PostMapping("/verify-password")
+    public ResponseEntity<?> VerifyPassword(@RequestBody VerifyRequest code) {
+        Boolean isVerified = accountService.findAccountByVerificationCodeToResetPassword(code.getCode());
+        if (isVerified) {
+            return ResponseEntity.ok(new MessageResponse("accepted"));
+        } else {
+            return ResponseEntity.ok(new MessageResponse("error"));
+        }
+    }
+
+    /**
+     * Nguyen Van Linh made it
+     */
+    @PostMapping("/do-reset-password")
+    public ResponseEntity<?> doResetPassword(@RequestBody ResetPassRequest resetPassRequest) {
+        accountService.saveNewPassword(encoder.encode(resetPassRequest.getPassword()),resetPassRequest.getCode());
+            return ResponseEntity.ok(new MessageResponse("success"));
+    }
+
 }

@@ -13,8 +13,7 @@ public interface RoleService {
 
     /**
      * LuyenNT
-     *
-     * @return
+     *Nguyen Van Linh
      */
     void setDefaultRole(int accountId, Integer roleId);
 
