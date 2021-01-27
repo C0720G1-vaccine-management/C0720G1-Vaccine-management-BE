@@ -23,6 +23,8 @@ public class Vaccination {
     private Boolean status;
     private String description;
     private Boolean deleteFlag;
+    private Integer times;
+    private Integer duration;
     @ManyToOne
     @JoinColumn(name = "vaccine_id",nullable = false)
     private Vaccine vaccine;

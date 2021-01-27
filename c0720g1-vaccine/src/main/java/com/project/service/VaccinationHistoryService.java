@@ -47,6 +47,10 @@ public interface VaccinationHistoryService {
 
     List<String> getAllEmailToSend();
 
+    /**
+     * Nguyen Van Linh: Get all email of patient to remind vaccination with one more time they vaccination
+     */
+    List<String> getEmailToSendOfVaccinationMore();
 
 
     /** LuyenNT code

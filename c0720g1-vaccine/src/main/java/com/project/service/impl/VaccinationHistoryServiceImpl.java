@@ -77,6 +77,14 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
     }
 
     /**
+     *Nguyen Van Linh
+     */
+    @Override
+    public List<String> getEmailToSendOfVaccinationMore() {
+        return vaccinationHistoryRepository.getEmailToSendOfVaccinationMore();
+    }
+
+    /**
      * LuyenNT
      *
      * @param name

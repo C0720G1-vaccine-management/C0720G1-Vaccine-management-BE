@@ -11,7 +11,9 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Nguyen Van Linh
@@ -26,14 +28,18 @@ public class MailerController {
     private VaccinationHistoryService vaccinationHistoryService;
 
 
-    @Scheduled(cron = "0 40 10 * * ?")
+    @Scheduled(cron = "0 50 16 * * ?")
     public void sendEmail() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
         LocalDate dayPlusAWeek = LocalDate.now().plusDays(1);
         String day = formatter.format(dayPlusAWeek);
 
 
-        List<String> listEmail = vaccinationHistoryService.getAllEmailToSend();
+        List<String> listEmailOneTime = vaccinationHistoryService.getAllEmailToSend();
+        List<String> listEmailOneMoreTime = vaccinationHistoryService.getEmailToSendOfVaccinationMore();
+        Set<String> listEmail = new HashSet<>();
+        listEmail.addAll(listEmailOneTime);
+        listEmail.addAll(listEmailOneMoreTime);
         if (!(listEmail.size() == 0)) {
             String[] array = listEmail.toArray(new String[0]);
             // Create a Simple MailMessage.

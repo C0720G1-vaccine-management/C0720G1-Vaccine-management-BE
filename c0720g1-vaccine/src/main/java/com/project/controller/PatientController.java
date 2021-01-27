@@ -35,7 +35,7 @@ public class PatientController {
      * Duy NP
      **/
     @GetMapping("/list")
-    public ResponseEntity<Page<Patient>> getListPatient(@PageableDefault(size = 3) Pageable pageable) {
+    public ResponseEntity<Page<Patient>> getListPatient(@PageableDefault(size = 5) Pageable pageable) {
         Page<Patient> listPatient = patientService.findAllPatient2(pageable);
         return new ResponseEntity<>(listPatient, HttpStatus.OK);
     }
