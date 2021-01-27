@@ -12,12 +12,19 @@ public class JwtResponse {
     private Integer id;
     private String username;
     private List<String> roles;
-
-    public JwtResponse(String accessToken, Integer id, String username, List<String> roles) {
+    private String email;
+    /**
+     *Nguyen Van Linh
+     */
+    public JwtResponse(String accessToken, Integer id, String username, List<String> roles,String email) {
         this.token = accessToken;
         this.id = id;
         this.username = username;
         this.roles = roles;
+        this.email = email;
+    }
+
+    public JwtResponse() {
     }
 
     public String getAccessToken() {
@@ -55,5 +62,33 @@ public class JwtResponse {
 
     public List<String> getRoles() {
         return roles;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

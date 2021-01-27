@@ -11,17 +11,22 @@ import java.util.List;
 
 @Service
 public class RoleServiceImpl implements RoleService {
+    /**
+     *Nguyen Van Linh
+     */
     @Autowired
     private RoleRepository roleRepository;
 
-
+    /**
+     *Nguyen Van Linh
+     */
     @Override
     public void setDefaultRole(int accountId, Integer roleId) {
-        roleRepository.setDefaultRole(accountId, roleId);
+        roleRepository.setDefaultRole(accountId,roleId);
     }
 
 
-    /*
+    /**
      * HungDH
      */
     @Override

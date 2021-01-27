@@ -17,16 +17,11 @@ import java.util.List;
 public interface VaccinationHistoryRepository extends JpaRepository<VaccinationHistory, Integer> {
 
     /** LuyenNT code
-     * @param name
-     * @param status
-     * @return
+     *
      */
     Page<VaccinationHistory> findAllByPatient_NameContainingAndVaccination_StatusIs(String name, Boolean status, Pageable pageable);
 
     /** LuyenNT
-     * @paramame
-     * @parampageable
-     * @return
      */
     Page<VaccinationHistory> findAllByPatient_NameContaining(String name,Pageable pageable);
 
