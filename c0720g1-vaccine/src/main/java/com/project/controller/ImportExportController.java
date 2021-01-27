@@ -1,6 +1,8 @@
 package com.project.controller;
 
+import com.project.dto.SearchCriteria;
 import com.project.entity.Vaccine;
+import com.project.repository.VaccineTypeRepository;
 import com.project.service.VaccineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +24,8 @@ public class ImportExportController {
     @Autowired
     private ImportAndExportService importAndExportService;
 
+    @Autowired
+    private VaccineTypeRepository vaccineTypeRepository;
     /**Phuc NB
      *
      */
@@ -29,34 +33,40 @@ public class ImportExportController {
     private VaccineService vaccineService;
 
     /**
+     * Made by Khanh hiển thị list vaccine
+     */
+    @PostMapping("/vaccine-price-list")
+    public ResponseEntity<?> listPriceVaccine(@PageableDefault(size = 5) Pageable pageable
+    ) {
+        return new ResponseEntity<>(importAndExportService.findAll("export", pageable), HttpStatus.OK);
+    }
+    /**
      * Made by Khanh tìm kiếm , phân trang, hiển thị list vaccine
      */
-    @GetMapping({"/vaccine-price-list/search1={keyword}search2={keyword2}search3={keyword3}", "/vaccine-price-list"})
-    public ResponseEntity<?> listPriceVaccine(@PageableDefault(size = 5) Pageable pageable,
-                                              @PathVariable Optional<String> keyword,
-                                              @PathVariable Optional<String> keyword2,
-                                              @PathVariable Optional<String> keyword3) {
-        String keyWordForSearchVaccineId = "";
+    @PostMapping("/vaccine-price-search")
+    public ResponseEntity<?> searchVaccinePrice(@PageableDefault(size = 5) Pageable pageable, @RequestBody SearchCriteria searchCriteria
+    ) {
+        Integer keyWordForSearchVaccineId;
         String keyWordForSearchVaccineType = "";
         String keyWordForSearchVaccineOrigin = "";
-        if (keyword.isPresent() || keyword2.isPresent() || keyword3.isPresent()) {
-            keyWordForSearchVaccineId = keyword.orElse("0");
-            keyWordForSearchVaccineType = keyword2.get();
-            keyWordForSearchVaccineOrigin = keyword3.get();
-            return new ResponseEntity<>(importAndExportService.search("export", Integer.parseInt(keyWordForSearchVaccineId),
-                    keyWordForSearchVaccineType, keyWordForSearchVaccineOrigin, pageable), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(importAndExportService.findAll("export", pageable), HttpStatus.OK);
+
+        keyWordForSearchVaccineId = searchCriteria.getKeyword1();
+        keyWordForSearchVaccineType = searchCriteria.getKeyword2();
+        keyWordForSearchVaccineOrigin = searchCriteria.getKeyword3();
+        return new ResponseEntity<>(importAndExportService.search("export", keyWordForSearchVaccineId,
+                keyWordForSearchVaccineType, keyWordForSearchVaccineOrigin, pageable), HttpStatus.OK);
+
     }
 
     /**
      * Made by Khanh chỉnh sửa giá vaccine
      */
     @PutMapping("/vaccine-price-edit/{id}/{price}")
-    public ResponseEntity<?> editPriceVaccine(@PathVariable Integer id,@PathVariable Long price) {
-        this.importAndExportService.editPrice(id,price);
+    public ResponseEntity<?> editPriceVaccine(@PathVariable Integer id, @PathVariable Long price) {
+        this.importAndExportService.editPrice(id, price);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     /**
      * Made by Khanh lấy đối tượng export bằng id
      */
@@ -64,7 +74,20 @@ public class ImportExportController {
     public ResponseEntity<?> getId(@PathVariable Integer id) {
         return new ResponseEntity<>(this.importAndExportService.findById(id), HttpStatus.OK);
     }
-
+    /**
+     * Made by Khanh lấy tên kiểu vắc xin
+     */
+    @GetMapping("/getVaccineType")
+    public ResponseEntity<?> getVaccineType() {
+        return new ResponseEntity<>(this.vaccineTypeRepository.findAll(), HttpStatus.OK);
+    }
+    /**
+     * Made by Khanh lấy xuất sứ văc xin
+     */
+    @GetMapping("/getOriginVaccine")
+    public ResponseEntity<?> getOriginVaccine() {
+        return new ResponseEntity<>(this.vaccineService.getAllVaccine(), HttpStatus.OK);
+    }
     /**
      * Phuc NB
      * xử lý nghiệp vụ trừ số lượng khi xuất kho

@@ -1,6 +1,5 @@
 package com.project.jwt;
 
-import com.project.service.impl.AccountDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,15 +8,16 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Nguyen Van Linh made it
+ */
 @Component
 public class JwtUtility implements Serializable {
-    /**
-     * Nguyen Van Linh made it
-     */
     private static final Logger logger = LoggerFactory.getLogger(JwtUtility.class);
-    private AccountDetailsImpl accountDetails;
     private String jwtSecret = "secretkey";
-
+    /**
+     *Nguyen Van Linh
+     */
     public String generateJwtToken(String username) {
 
         return Jwts.builder()
@@ -27,11 +27,16 @@ public class JwtUtility implements Serializable {
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
-
+    /**
+     *Nguyen Van Linh
+     */
     public String getUserNameFromJwtToken(String token) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
 
+    /**
+     *Nguyen Van Linh
+     */
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);

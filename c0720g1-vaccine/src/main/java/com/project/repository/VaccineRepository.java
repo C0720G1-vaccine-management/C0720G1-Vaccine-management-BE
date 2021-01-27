@@ -54,9 +54,9 @@ public interface VaccineRepository extends JpaRepository<Vaccine,Integer> {
      * Find All VaccnineDTO pagination
      * @return
      */
-    @Query(value = "SELECT vaccine.vaccine_id as id,vaccine.name as name, vaccine_type.name as vaccineType,invoice.transaction_date as dateRecive, " +
+    @Query(value = "SELECT vaccine.vaccine_id as id,vaccine.name as name, vaccine_type.name as vaccineType,invoice.transaction_date as dayReceive, " +
             "vaccine.license_code as licenseCode, vaccine.origin as origin, vaccine.dosage as dosage, sum(storage.quantity) as shipmentNumber," +
-            "vaccine.expired as expired, vaccine.maintenance as mantenance, vaccine.age as age, sum(storage.quantity) as quantity" +
+            "vaccine.expired as expired, vaccine.maintenance as maintenance, vaccine.age as age, sum(storage.quantity) as quantity" +
             " FROM vaccine " +
             "left join vaccine_type on vaccine.vaccine_type_id = vaccine_type.vaccine_type_id " +
             "left join storage on storage.vaccine_id = vaccine.vaccine_id " +
@@ -69,9 +69,9 @@ public interface VaccineRepository extends JpaRepository<Vaccine,Integer> {
      * Find All VaccnineDTO not pagination 
      * @return
      */
-    @Query(value = "SELECT vaccine.vaccine_id as id,vaccine.name as name, vaccine_type.name as vaccineType,invoice.transaction_date as dateRecive, " +
+    @Query(value = "SELECT vaccine.vaccine_id as id,vaccine.name as name, vaccine_type.name as vaccineType,invoice.transaction_date as dayReceive, " +
             "vaccine.license_code as licenseCode, vaccine.origin as origin, vaccine.dosage as dosage, sum(storage.quantity) as shipmentNumber," +
-            "vaccine.expired as expired, vaccine.maintenance as mantenance, vaccine.age as age, sum(storage.quantity) as quantity" +
+            "vaccine.expired as expired, vaccine.maintenance as maintenance, vaccine.age as age, sum(storage.quantity) as quantity" +
             " FROM vaccine " +
             "left join vaccine_type on vaccine.vaccine_type_id = vaccine_type.vaccine_type_id " +
             "left join storage on storage.vaccine_id = vaccine.vaccine_id " +
@@ -83,9 +83,9 @@ public interface VaccineRepository extends JpaRepository<Vaccine,Integer> {
      * Find by name and type vaccine and origin and status has quantity > 0
      * @return
      */
-    @Query(value = "SELECT vaccine.vaccine_id as id,vaccine.name as name, vaccine_type.name as vaccineType,invoice.transaction_date as dateRecive, "+
+    @Query(value = "SELECT vaccine.vaccine_id as id,vaccine.name as name, vaccine_type.name as vaccineType,invoice.transaction_date as dayReceive, "+
             "vaccine.license_code as licenseCode, vaccine.origin as origin, vaccine.dosage as dosage, sum(storage.quantity) as shipmentNumber,"+
-            "vaccine.expired as expired, vaccine.maintenance as mantenance, vaccine.age as age, sum(storage.quantity) as quantity " +
+            "vaccine.expired as expired, vaccine.maintenance as maintenance, vaccine.age as age, sum(storage.quantity) as quantity " +
             "FROM vaccine left join vaccine_type on vaccine.vaccine_type_id = vaccine_type.vaccine_type_id " +
             "left join storage on storage.vaccine_id = vaccine.vaccine_id " +
             "left join invoice on invoice.vaccine_id = vaccine.vaccine_id  where " +
@@ -118,7 +118,7 @@ public interface VaccineRepository extends JpaRepository<Vaccine,Integer> {
      * get all vaccine
      * @return
      */
-    @Query(value = "select * form vaccine",nativeQuery = true)
+    @Query(value = "select * from vaccine",nativeQuery = true)
     List<Vaccine> getAllVaccine();
 
 }

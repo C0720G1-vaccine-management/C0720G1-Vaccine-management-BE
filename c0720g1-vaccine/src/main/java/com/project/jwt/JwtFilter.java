@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Nguyen Van Linh made it
+ */
 @Component
 public class JwtFilter extends OncePerRequestFilter {
     /**
@@ -25,6 +28,9 @@ public class JwtFilter extends OncePerRequestFilter {
     private JwtUtility jwtUtility;
     @Autowired
     private AccountDetailServiceImpl accountDetailService;
+    /**
+     *Nguyen Van Linh
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
@@ -47,6 +53,9 @@ public class JwtFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    /**
+     * Nguyen Van Linh made it
+     */
     private String parseJwt(HttpServletRequest request) {
         String headerAuth = request.getHeader("Authorization");
 

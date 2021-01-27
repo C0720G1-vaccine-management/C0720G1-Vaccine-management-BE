@@ -17,16 +17,11 @@ import java.util.List;
 public interface VaccinationHistoryRepository extends JpaRepository<VaccinationHistory, Integer> {
 
     /** LuyenNT code
-     * @param name
-     * @param status
-     * @return
+     *
      */
     Page<VaccinationHistory> findAllByPatient_NameContainingAndVaccination_StatusIs(String name, Boolean status, Pageable pageable);
 
     /** LuyenNT
-     * @paramame
-     * @parampageable
-     * @return
      */
     Page<VaccinationHistory> findAllByPatient_NameContaining(String name,Pageable pageable);
 
@@ -84,7 +79,7 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
 
     @Query(value = "select email from vaccination join vaccination_history " +
             "on vaccination.vaccination_id = vaccination_history.vaccination_id " +
-            "join patient on patient.patient_id = vaccination_history.patient_id WHERE date >= curdate()+7",nativeQuery = true)
+            "join patient on patient.patient_id = vaccination_history.patient_id WHERE date >= curdate()+1",nativeQuery = true)
     List<String> getAllEmailToSend();
 
 

@@ -4,13 +4,13 @@ public interface VaccineDTO {
     String getId();
     String getName();
     String getVaccineType();
-    String getDateRecive();
+    String getDayReceive();
     String getLicenseCode();
     String getOrigin();
     Double getDosage();
     Integer getShipmentNumber();
     String getExpired();
-    String getMantenance();
+    String getMaintenance();
     String getAge();
     Integer getQuantity();
 }
