@@ -118,12 +118,12 @@ public class VaccineController {
             vaccineType = vaccineTypeService.findVaccineType(createVaccineDTO.getTypeVaccine());
         }
         vaccineService.createVaccine(createVaccineDTO.getNameVaccine(), createVaccineDTO.getDosage(), createVaccineDTO.getLicenseCode(),
-                createVaccineDTO.getMaintenance(), createVaccineDTO.getOrrigin(), createVaccineDTO.getExpired(), createVaccineDTO.getAge(),
+                createVaccineDTO.getMaintenance(), createVaccineDTO.getOrigin(), createVaccineDTO.getExpired(), createVaccineDTO.getAge(),
                 (int) createVaccineDTO.getQuantity(), vaccineType.getVaccineTypeId());
         Vaccine vaccine = vaccineService.searchName(createVaccineDTO.getNameVaccine());
         storageService.createStorage((int) createVaccineDTO.getQuantity(), vaccine.getVaccineId());
         invoiceService.createInvoice(createVaccineDTO.getExpired(), createVaccineDTO.getUnitPrice(), (int) createVaccineDTO.getQuantity(),
-                createVaccineDTO.getDateRecieve(), provider.getProviderId(), vaccine.getVaccineId());
+                createVaccineDTO.getDayReceive(), provider.getProviderId(), vaccine.getVaccineId());
         HttpHeaders httpHeaders = new HttpHeaders();
         return new ResponseEntity<Void>(httpHeaders, HttpStatus.OK);
     }

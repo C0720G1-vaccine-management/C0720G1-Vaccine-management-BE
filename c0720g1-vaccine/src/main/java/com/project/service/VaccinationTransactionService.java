@@ -12,11 +12,11 @@ public interface VaccinationTransactionService {
 
     Page<VaccinationTransaction> search(String patientName, String vaccineType, Pageable pageable);
 
-    void edit(VaccinationTransaction vaccinationTransaction);
+    void edit(Integer id,double price,Long quantity);
 
     VaccinationTransaction findById(Integer id);
 
-    void save(Integer idVaccineHistory, double price, Integer quantity);
+    void save(Integer idVaccineHistory, double price, Long quantity);
 
     void delete(Integer id);
 }

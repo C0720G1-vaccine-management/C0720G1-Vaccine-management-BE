@@ -34,7 +34,7 @@ public class PeriodicalVaccinationRegisterDTO {
     String address;
 
     @NotEmpty
-    @Pattern(regexp = "^(0|\\(+84\\))[1-9]\\d{7}$")
+    @Pattern(regexp = "^(0|\\(\\+84\\))[1-9]\\d{8}$")
     String phone;
 
     @NotEmpty

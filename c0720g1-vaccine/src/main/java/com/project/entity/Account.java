@@ -19,13 +19,19 @@ public class Account {
     private Boolean isEnabled;
     private String verificationCode;
     private String email;
+
     @OneToOne(mappedBy = "account")
+    @JsonBackReference
     private Patient patient;
+
     @OneToOne(mappedBy = "account")
+    @JsonBackReference
     private Employee employee;
+
     @OneToMany(mappedBy = "account")
     @JsonBackReference
     private Set<AccountRole> accountRoleList;
+
     @OneToMany(mappedBy = "account")
     @JsonBackReference
     private Set<ImportAndExport> importAndExportList;

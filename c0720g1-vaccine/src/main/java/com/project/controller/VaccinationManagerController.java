@@ -154,10 +154,10 @@ public class VaccinationManagerController {
      */
     @RequestMapping(value = "/vaccines", method = RequestMethod.GET)
     public ResponseEntity<List<Vaccine>> listAllVaccine() {
-        List<Vaccine> locations = vaccineService.getAllVaccine();
-        if (locations.isEmpty()) {
+        List<Vaccine> vaccine = vaccineService.getAllVaccine();
+        if (vaccine.isEmpty()) {
             return new ResponseEntity<List<Vaccine>>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<Vaccine>>(locations, HttpStatus.OK);
+        return new ResponseEntity<List<Vaccine>>(vaccine, HttpStatus.OK);
     }
 }
