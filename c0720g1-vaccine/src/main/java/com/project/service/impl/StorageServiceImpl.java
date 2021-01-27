@@ -32,4 +32,24 @@ public class StorageServiceImpl implements StorageService {
     public void createStorage(int quantity, int vaccineId) {
         storageRepository.createStorage(quantity,vaccineId);
     }
+
+    /**
+     * PhucNB
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Storage> getAllStorage(int id) {
+        return storageRepository.getAllStorage(id);
+    }
+
+    /**
+     * PhucNB
+     * @param storage
+     */
+    @Override
+    public void saveStorage(Storage storage) {
+        storageRepository.save(storage);
+
+    }
 }

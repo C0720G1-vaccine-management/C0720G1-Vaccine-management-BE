@@ -42,7 +42,7 @@ public class PatientServiceImpl implements PatientService {
             id = id.substring(3);
         }
         List<Patient> patientList = patientRepository.search(name,id);
-        Pageable pageable1 = PageRequest.of(pageable , 3);
+        Pageable pageable1 = PageRequest.of(pageable , 5);
         int start = (int) pageable1.getOffset();
         int end = Math.min((start + pageable1.getPageSize()), patientList.size());
         Page<Patient> pages = new PageImpl<Patient>(patientList.subList(start, end), pageable1, patientList.size());

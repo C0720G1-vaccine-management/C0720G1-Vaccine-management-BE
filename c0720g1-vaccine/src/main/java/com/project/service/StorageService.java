@@ -19,4 +19,16 @@ public interface StorageService {
     * @return
     */
    void createStorage(int quantity , int vaccineId);
+
+   /**
+    * PhucNB
+    * @param id
+    * @return
+    */
+   List<Storage> getAllStorage(int id);
+   /**
+    * PhucNB
+    * @param storage
+    */
+   void saveStorage(Storage storage);
 }

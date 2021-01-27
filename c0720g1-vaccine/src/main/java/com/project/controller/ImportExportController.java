@@ -1,8 +1,10 @@
 package com.project.controller;
 
 import com.project.dto.SearchCriteria;
+import com.project.entity.Storage;
 import com.project.entity.Vaccine;
 import com.project.repository.VaccineTypeRepository;
+import com.project.service.StorageService;
 import com.project.service.VaccineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +33,12 @@ public class ImportExportController {
      */
     @Autowired
     private VaccineService vaccineService;
+
+    /**
+     * PhucNB
+     */
+    @Autowired
+    StorageService storageService;
 
     /**
      * Made by Khanh hiển thị list vaccine
@@ -88,21 +96,38 @@ public class ImportExportController {
     public ResponseEntity<?> getOriginVaccine() {
         return new ResponseEntity<>(this.vaccineService.getAllVaccine(), HttpStatus.OK);
     }
+//    /**
+//     * Phuc NB
+//     * xử lý nghiệp vụ trừ số lượng khi xuất kho
+//     */
+//    @GetMapping("/{id}/exportVaccine")
+//    public ResponseEntity<?> exportVaccine(@Validated @PathVariable Integer id, @RequestParam("input") Long input) {
+//
+//        Vaccine vaccine = vaccineService.findById(id);
+//        if (vaccine == null) {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+//        vaccine.setQuantity(vaccine.getQuantity() - input);
+//        vaccineService.saveVaccine(vaccine);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
     /**
      * Phuc NB
      * xử lý nghiệp vụ trừ số lượng khi xuất kho
      */
     @GetMapping("/{id}/exportVaccine")
     public ResponseEntity<?> exportVaccine(@Validated @PathVariable Integer id, @RequestParam("input") Long input) {
-
-        Vaccine vaccine = vaccineService.findById(id);
-        if (vaccine == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        List<Storage> storageList = storageService.getAllStorage(id);
+        for (Storage storage : storageList) {
+            if (storage.getQuantity() > 0) {
+                storage.setQuantity(storage.getQuantity() - input);
+                storageService.saveStorage(storage);
+                break;
+            }
         }
-        vaccine.setQuantity(vaccine.getQuantity() - input);
-        vaccineService.saveVaccine(vaccine);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
     /**Phuc NB
      * lấy ra id của vắc-xin cần xuất kho
      **/

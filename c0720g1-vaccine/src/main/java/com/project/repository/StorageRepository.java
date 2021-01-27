@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Repository
 @Transactional
@@ -19,4 +21,13 @@ public interface StorageRepository extends JpaRepository<Storage,Integer> {
     @Modifying
     @Query(value = "insert into storage(quantity, vaccine_id) values(?1, ?2);", nativeQuery = true)
     void createStorage(int quantity, int vaccineId);
+
+    /**
+     * PhucNB
+     * @param id
+     * @return
+     */
+    @Modifying
+    @Query(value = "select  * from storage where vaccine_id = ?1",nativeQuery = true)
+    List<Storage> getAllStorage(int id);
 }

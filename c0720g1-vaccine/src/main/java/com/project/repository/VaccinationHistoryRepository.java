@@ -85,6 +85,14 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
             "join patient on patient.patient_id = vaccination_history.patient_id WHERE date >= curdate()+1",nativeQuery = true)
     List<String> getAllEmailToSend();
 
+    /**
+     *Nguyen Van Linh
+     */
+
+    @Query(value = "select email from vaccination join vaccination_history " +
+            "on vaccination.vaccination_id = vaccination_history.vaccination_id " +
+            "join patient on patient.patient_id = vaccination_history.patient_id where DATE_ADD(vaccination.date, INTERVAL vaccination.duration DAY) = curdate()+1",nativeQuery = true)
+    List<String> getEmailToSendOfVaccinationMore();
 
     /**
      search and paging:  create by LongBP
