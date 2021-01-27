@@ -16,4 +16,6 @@ public interface RegistrablePeriodicalVaccinationDTO {
     String getLocation();
     String getCountry();
     String getImage();
+    Integer getDuration();
+    Integer getTimes();
 }

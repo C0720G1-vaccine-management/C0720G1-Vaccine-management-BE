@@ -10,8 +10,13 @@ import com.project.service.VaccinationHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Service
@@ -19,6 +24,9 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
 
     @Autowired
     private VaccinationHistoryRepository vaccinationHistoryRepository;
+
+    @Autowired
+    JavaMailSender javaMailSender;
 
     /**
      * tuNH
@@ -93,7 +101,7 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
      */
     @Override
     public Page<VaccinationHistory> searchPeriodicVaccination(String name, Boolean status, Pageable pageable) {
-        return vaccinationHistoryRepository.findAllByPatient_NameContainingAndVaccination_StatusIs(name, status, pageable);
+        return vaccinationHistoryRepository.findAllByPatient_NameContainingAndStatusIs(name, status, pageable);
     }
 
     /**
@@ -104,8 +112,18 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
      * @return
      */
     @Override
-    public Page<VaccinationHistory> finAllPeriodicVaccination(String name, Pageable pageable) {
+    public Page<VaccinationHistory> searchNoStatusPeriodicVaccination(String name, Pageable pageable) {
         return vaccinationHistoryRepository.findAllByPatient_NameContaining(name, pageable);
+    }
+
+    /**
+     * LuyenNT
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<VaccinationHistory> finAllPeriodicVaccination(Pageable pageable) {
+        return vaccinationHistoryRepository.findAll(pageable);
     }
 
     /**
@@ -131,5 +149,34 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
     @Override
     public VaccinationHistoryRegisteredDTO findId(Integer id) {
         return this.vaccinationHistoryRepository.findId(id);
+    }
+
+    /**
+     * KhoaTA
+     * Cancel periodical vaccination register
+     */
+    @Override
+    public void cancelRegister(int vaccinationId, int patientId) {
+        this.vaccinationHistoryRepository.cancelRegister(vaccinationId, patientId);
+    }
+     /**
+     * TuNH:  sendMailFeedbackForAdmin
+     **/
+    @Override
+    public void sendMailFeedbackForAdmin(String value, String accountEmail) throws MessagingException, UnsupportedEncodingException {
+        String subject = "Hãy xác thực email của bạn";
+        String mailContent = "";
+
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
+        helper.setTo("nguyenhoangtu24061999@gmail.com");
+        helper.setFrom("vanlinh12b5@gmail.com", "TRUNG TÂM Y TẾ DỰ PHÒNG ĐÀ NẴNG");
+        helper.setSubject(subject);
+        mailContent = "<p sytle='color:red;'>Phản hồi từ người dùng ,<p>"
+                + "<p sytle='color:red;'>Nội dung:" + value + "<p>"
+                + "<p sytle='color:red;'> Bạn có một email phản hồi từ " + accountEmail + "<p>"
+                + "<p>TRUNG TÂM Y TẾ DỰ PHÒNG ĐÀ NẴNG</p>";
+        helper.setText(mailContent, true);
+        javaMailSender.send(message);
     }
 }

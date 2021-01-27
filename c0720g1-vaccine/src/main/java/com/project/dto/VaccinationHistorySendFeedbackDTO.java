@@ -14,4 +14,6 @@ public class VaccinationHistorySendFeedbackDTO {
     public void setAfterStatus(String afterStatus) {
         this.afterStatus = afterStatus;
     }
+
+
 }

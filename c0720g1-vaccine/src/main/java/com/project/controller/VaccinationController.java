@@ -1,6 +1,10 @@
 package com.project.controller;
 
 import com.project.dto.*;
+import com.project.payload.reponse.MessageResponse;
+import com.project.payload.request.VerifyRequest;
+import com.project.service.AccountService;
+import com.project.service.VaccinationHistoryService;
 import com.project.service.VaccinationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +21,12 @@ import java.util.List;
 public class VaccinationController {
     @Autowired
     private VaccinationService vaccinationService;
+
+    @Autowired
+    private AccountService accountService;
+
+    @Autowired
+    private VaccinationHistoryService vaccinationHistoryService;
 
     /**KhoaTA
      *display list of registrable periodical vaccinations
@@ -54,7 +64,9 @@ public class VaccinationController {
             return new ResponseEntity<>(false, HttpStatus.NOT_ACCEPTABLE);
         } else {
             try {
-                vaccinationService.saveRegister(register);
+                int idPatient = vaccinationService.saveRegister(register);
+                RegistrablePeriodicalVaccinationDTO registrableVaccination = this.vaccinationService.findRegistrableVaccinationById(register.getVaccinationId());
+                this.accountService.sendInfoEmail(register, registrableVaccination, idPatient);
                 return new ResponseEntity<>(true, HttpStatus.CREATED);
             } catch (Exception exception) {
                 return new ResponseEntity<>(false, HttpStatus.NOT_ACCEPTABLE);
@@ -95,5 +107,17 @@ public class VaccinationController {
             return new ResponseEntity<>(registrableVaccinationList,HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(registrableVaccinationList, HttpStatus.OK);
+    }
+    /**
+    * KhoaTA
+    */
+    @PostMapping("/cancel")
+    public void VerifyCancel(@RequestBody VerifyRequest code) {
+        System.out.println(code.getCode());
+        int vaccinationId = Integer.parseInt(code.getCode().substring(0,code.getCode().indexOf("|")));
+        System.out.println(vaccinationId);
+        int patientId = Integer.parseInt(code.getCode().substring(code.getCode().indexOf("|")+1));
+        System.out.println(patientId);
+        this.vaccinationHistoryService.cancelRegister(vaccinationId, patientId);
     }
 }

@@ -29,14 +29,9 @@ public interface EmployeeService {
     void deleteEmployee(int id);
 
     /**
-     * HungDH - tim kiem nhan vien theo ten
+     * HungDH - tim kiem nhan vien theo id, ten, chuc vu
      */
-    List<EmployeeListDTO> findEmployeeByName(String nameSearch);
-
-    /**
-     * HungDH - tim kiem nhan vien theo CMND
-     */
-    List<EmployeeListDTO> findEmployeeByIdCard(String idCardSearch);
+    List<EmployeeListDTO> findEmployeeByIdAndNameAndPosition(String nameSearch, String idEmpSearch, String positionSearch);
 
     /** LuyenNT code
      * @param employeeDto
