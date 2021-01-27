@@ -62,8 +62,11 @@ public interface VaccinationHistoryService {
      * @param pageable
      * @return
      */
-    Page<VaccinationHistory> finAllPeriodicVaccination(String name, Pageable pageable);
+    Page<VaccinationHistory> searchNoStatusPeriodicVaccination(String name,Pageable pageable);
 
+    /** LuyenNT code
+     */
+    Page<VaccinationHistory> finAllPeriodicVaccination(Pageable pageable);
     /**
      list:  create by LongBP
      **/

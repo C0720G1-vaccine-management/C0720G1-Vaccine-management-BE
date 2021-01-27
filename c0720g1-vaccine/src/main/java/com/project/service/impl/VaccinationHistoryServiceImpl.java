@@ -85,7 +85,7 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
      */
     @Override
     public Page<VaccinationHistory> searchPeriodicVaccination(String name, Boolean status, Pageable pageable) {
-        return vaccinationHistoryRepository.findAllByPatient_NameContainingAndVaccination_StatusIs(name, status, pageable);
+        return vaccinationHistoryRepository.findAllByPatient_NameContainingAndStatusIs(name, status, pageable);
     }
 
     /**
@@ -96,8 +96,18 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
      * @return
      */
     @Override
-    public Page<VaccinationHistory> finAllPeriodicVaccination(String name, Pageable pageable) {
+    public Page<VaccinationHistory> searchNoStatusPeriodicVaccination(String name, Pageable pageable) {
         return vaccinationHistoryRepository.findAllByPatient_NameContaining(name, pageable);
+    }
+
+    /**
+     * LuyenNT
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<VaccinationHistory> finAllPeriodicVaccination(Pageable pageable) {
+        return vaccinationHistoryRepository.findAll(pageable);
     }
 
     /**
