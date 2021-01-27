@@ -19,6 +19,7 @@ public class VaccinationHistory {
     private Double dosage;
     private String preStatus;
     private String afterStatus;
+    private Boolean deleteFlag = false;
     @ManyToOne
     @JoinColumn(name = "vaccination_id",nullable = false)
     private Vaccination vaccination;

@@ -102,4 +102,13 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
             " inner join vaccine_type on vaccine.vaccine_type_id = vaccine_type.vaccine_type_id" +
             " where patient.patient_id = ?1 ", nativeQuery = true)
     VaccinationHistoryRegisteredDTO findId(Integer id);
+
+     /**
+     * KhoaTA
+     * Cancel periodical vaccination register
+     */
+     @Modifying
+     @org.springframework.transaction.annotation.Transactional
+     @Query (value = "update vaccination_history set vaccination_history.delete_flag = true where vaccination_id = ?1 and patient_id = ?2", nativeQuery = true)
+    void cancelRegister(int vaccinationId, int patientId);
 }

@@ -1,12 +1,12 @@
 package com.project.service;
 
+import com.project.dto.PeriodicalVaccinationRegisterDTO;
+import com.project.dto.RegistrablePeriodicalVaccinationDTO;
 import com.project.entity.Account;
-import com.project.payload.request.VerifyRequest;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.Optional;
 
 
 public interface AccountService {
@@ -59,4 +59,10 @@ public interface AccountService {
      *Nguyen Van Linh
      */
     void saveNewPassword(String password,String code);
+
+    /**
+     * KhoaTA
+     * Send info email to patient after register for a vaccination
+     */
+    void sendInfoEmail(PeriodicalVaccinationRegisterDTO register, RegistrablePeriodicalVaccinationDTO registrableVaccination, int idPatient) throws MessagingException, UnsupportedEncodingException;
 }

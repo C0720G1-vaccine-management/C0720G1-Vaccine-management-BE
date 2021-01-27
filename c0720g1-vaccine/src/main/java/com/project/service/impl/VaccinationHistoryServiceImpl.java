@@ -134,6 +134,14 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
     }
 
     /**
+     * KhoaTA
+     * Cancel periodical vaccination register
+     */
+    @Override
+    public void cancelRegister(int vaccinationId, int patientId) {
+        this.vaccinationHistoryRepository.cancelRegister(vaccinationId, patientId);
+    }
+     /**
      * TuNH:  sendMailFeedbackForAdmin
      **/
     @Override
