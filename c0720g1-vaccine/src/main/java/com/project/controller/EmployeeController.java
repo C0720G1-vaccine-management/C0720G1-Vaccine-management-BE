@@ -14,6 +14,8 @@ import com.project.service.RoleService;
 import com.project.validation.EmployeeCreateByRequestDtoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.project.dto.EmployeeDto;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -45,23 +47,21 @@ public class EmployeeController {
      * HungDH - Hien thi danh sach nhan vien
      */
     @GetMapping("/list-employee")
-    public ResponseEntity<List<EmployeeListDTO>> getAllEmployee(@RequestParam(defaultValue = "") String nameSearch,
+    public ResponseEntity<List<EmployeeListDTO>> getAllEmployee(
+                                                                @RequestParam(defaultValue = "") String nameSearch,
                                                                 @RequestParam(defaultValue = "") String idEmpSearch,
                                                                 @RequestParam(defaultValue = "") String positionSearch
     ) {
         List<EmployeeListDTO> employeeList;
         if (!nameSearch.equals("") || !idEmpSearch.equals("") || !positionSearch.equals("")) {
             return new ResponseEntity<List<EmployeeListDTO>>(employeeService.findEmployeeByIdAndNameAndPosition
-                    ("%" + nameSearch + "%", "%" + idEmpSearch+ "%", "%" +positionSearch+ "%"), HttpStatus.OK);
+                    ("%" + nameSearch + "%", "%" + idEmpSearch + "%", "%" + positionSearch + "%"), (HttpStatus.OK));
         } else {
             employeeList = employeeService.getAllEmployee();
         }
-
         if (employeeList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        System.out.println(employeeList.get(0));
-
         return new ResponseEntity<List<EmployeeListDTO>>(employeeList, HttpStatus.OK);
     }
 
