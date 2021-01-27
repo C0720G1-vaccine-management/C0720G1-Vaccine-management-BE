@@ -80,4 +80,9 @@ public interface VaccinationHistoryService {
     VaccinationHistoryRegisteredDTO findId(Integer id);
 
 
+    /**
+     * KhoaTA
+     * Cancel periodical vaccination register
+     */
+    void cancelRegister(int vaccinationId, int patientId);
 }

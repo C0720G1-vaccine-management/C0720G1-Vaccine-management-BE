@@ -37,12 +37,14 @@ public class VaccinationServiceImpl implements VaccinationService {
     }
     /**KhoaTA
      *save patient and register for periodical vaccination
+     * @return
      */
     @Override
-    public void saveRegister(PeriodicalVaccinationRegisterDTO register) {
+    public int saveRegister(PeriodicalVaccinationRegisterDTO register) {
         this.patientRepository.savePatient(register.getName(), register.getDateOfBirth(), register.getGender(), register.getGuardian(), register.getPhone(), register.getAddress(), register.getEmail());
         int patientId = this.patientRepository.findLatestPatientId();
         this.vaccinationHistoryRepository.savePeriodicalVaccinationRegister(register.getVaccinationId(), patientId);
+        return patientId;
     }
 
 

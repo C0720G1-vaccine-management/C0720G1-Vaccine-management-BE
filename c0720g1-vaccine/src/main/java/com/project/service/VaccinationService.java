@@ -15,8 +15,9 @@ public interface VaccinationService {
 
     /**KhoaTA
      *Find registrable vaccination by Id
+     * @return
      */
-    void saveRegister(PeriodicalVaccinationRegisterDTO register);
+    int saveRegister(PeriodicalVaccinationRegisterDTO register);
 
 
     /**

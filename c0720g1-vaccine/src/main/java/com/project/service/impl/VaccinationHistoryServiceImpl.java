@@ -124,4 +124,13 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
     public VaccinationHistoryRegisteredDTO findId(Integer id) {
         return this.vaccinationHistoryRepository.findId(id);
     }
+
+    /**
+     * KhoaTA
+     * Cancel periodical vaccination register
+     */
+    @Override
+    public void cancelRegister(int vaccinationId, int patientId) {
+        this.vaccinationHistoryRepository.cancelRegister(vaccinationId, patientId);
+    }
 }
