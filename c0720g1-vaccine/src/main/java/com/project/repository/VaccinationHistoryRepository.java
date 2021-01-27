@@ -14,6 +14,7 @@ import org.springframework.data.jpa.repository.Query;
 import javax.transaction.Transactional;
 import java.util.List;
 
+@Transactional
 public interface VaccinationHistoryRepository extends JpaRepository<VaccinationHistory, Integer> {
 
     /** LuyenNT code
@@ -94,12 +95,23 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
     @Query(value = "select patient.patient_id as patientId, patient.name as patientName, patient.date_of_birth as patientDob, patient.gender as patientGender, \n" +
             " patient.guardian as patientGuardian, patient.phone as patientPhone, patient.address as patientAddress, \n" +
             " vaccine.name as vaccineName, vaccine_type.name as vaccineTypeName, vaccination.end_time as endTime, vaccination_history.status as vaccinationHistoryStatus, \n" +
-            " vaccination_history.dosage as dosage, vaccination_history.pre_status as preStatus, vaccination_history.after_status as afterStatus \n" +
+            " vaccination_history.dosage as dosage, vaccination_history.pre_status as preStatus, vaccination_history.after_status as afterStatus, vaccination_history.vaccination_history_id as vaccinationHistoryId \n" +
             " from vaccination_history \n" +
             " inner join vaccination on vaccination_history.vaccination_id = vaccination.vaccination_id \n" +
             " inner join patient on vaccination_history.patient_id = patient.patient_id \n" +
             " inner join vaccine on vaccination.vaccine_id = vaccine.vaccine_id \n" +
             " inner join vaccine_type on vaccine.vaccine_type_id = vaccine_type.vaccine_type_id" +
             " where patient.patient_id = ?1 ", nativeQuery = true)
-    VaccinationHistoryRegisteredDTO findId(Integer id);
+    List<VaccinationHistoryRegisteredDTO> findId(Integer id);
+
+    /**
+     edit by id:  create by LongBP
+     **/
+    @Modifying
+    @Query(
+            value = "update vaccination_history set " +
+                    "`status` = ?1, `pre_status` = ?2 where vaccination_history.vaccination_history_id = ?3",
+            nativeQuery = true)
+    void updateVaccinationHistoryStatus(Boolean status, String preStatus, Integer id);
+
 }

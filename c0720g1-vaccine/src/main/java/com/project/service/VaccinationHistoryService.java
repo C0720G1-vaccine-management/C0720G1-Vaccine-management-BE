@@ -77,7 +77,14 @@ public interface VaccinationHistoryService {
     /**
      find by id:  create by LongBP
      **/
-    VaccinationHistoryRegisteredDTO findId(Integer id);
+    List<VaccinationHistoryRegisteredDTO> findId(Integer id);
+
+    /**
+     Edit by id:  create by LongBP
+     **/
+    void updateStatusVaccinationHistory(Boolean status, String preStatus, Integer id);
+
+
 
 
 }

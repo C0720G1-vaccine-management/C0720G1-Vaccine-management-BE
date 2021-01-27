@@ -4,6 +4,7 @@ import com.project.dto.VaccinationHistoryFeedbackDTO;
 import com.project.dto.VaccinationHistoryGetAfterStatusDTO;
 import com.project.dto.VaccinationHistoryRegisteredDTO;
 import com.project.dto.VaccinationHistorySendFeedbackDTO;
+import com.project.entity.Vaccination;
 import com.project.entity.VaccinationHistory;
 import com.project.service.PatientService;
 import com.project.service.VaccinationHistoryService;
@@ -141,8 +142,8 @@ public class VaccinationHistoryController {
     /**
      * list:  create by LongBP
      **/
-    @RequestMapping(value = "/public/registered-for-vaccination/list", method = RequestMethod.GET)
-    public ResponseEntity<Page<VaccinationHistory>> getAllRegisteredVaccination(@PageableDefault(size = 3) Pageable pageable,
+    @RequestMapping(value = "/registered-for-vaccination/list", method = RequestMethod.GET)
+    public ResponseEntity<Page<VaccinationHistory>> getAllRegisteredVaccination(@PageableDefault(size = 5) Pageable pageable,
                                                                                 @RequestParam(defaultValue = "") String name) {
         Page<VaccinationHistory> list = vaccinationHistoryService.getAllRegisteredRequired(name, pageable);
         if (list.isEmpty()) {
@@ -154,8 +155,8 @@ public class VaccinationHistoryController {
     /**
      * search and paging:  create by LongBP
      **/
-    @RequestMapping(value = "/public/registered-for-vaccination/search", method = RequestMethod.GET)
-    public ResponseEntity<Page<VaccinationHistory>> searchRegisteredVaccination(@PageableDefault(size = 3) Pageable pageable,
+    @RequestMapping(value = "/registered-for-vaccination/search", method = RequestMethod.GET)
+    public ResponseEntity<Page<VaccinationHistory>> searchRegisteredVaccination(@PageableDefault(size = 5) Pageable pageable,
                                                                                 @RequestParam(defaultValue = "") String name,
                                                                                 @RequestParam(defaultValue = "") String status) {
         Page<VaccinationHistory> list = null;
@@ -178,15 +179,28 @@ public class VaccinationHistoryController {
     /**
      * find by id:  create by LongBP
      **/
-    @GetMapping("/public/registered-for-vaccination/view/{id}")
-    public ResponseEntity<VaccinationHistoryRegisteredDTO> viewEmployee(@PathVariable Integer id) {
-        VaccinationHistoryRegisteredDTO vaccinationHistoryRegisteredDTO = vaccinationHistoryService.findId(id);
+    @GetMapping("/registered-for-vaccination/view/{id}")
+    public ResponseEntity<List<VaccinationHistoryRegisteredDTO>> viewVaccinationHistory(@PathVariable Integer id) {
+        List<VaccinationHistoryRegisteredDTO> vaccinationHistoryRegisteredDTO = vaccinationHistoryService.findId(id);
         if (vaccinationHistoryRegisteredDTO == null) {
-            return new ResponseEntity<VaccinationHistoryRegisteredDTO>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<VaccinationHistoryRegisteredDTO>(vaccinationHistoryRegisteredDTO, HttpStatus.OK);
+        return new ResponseEntity<>(vaccinationHistoryRegisteredDTO, HttpStatus.OK);
     }
 
+    /**
+     * edit by id:  create by LongBP
+     **/
+    @RequestMapping(value = "/registered-for-vaccination/edit", method = RequestMethod.GET)
+    public ResponseEntity<VaccinationHistoryRegisteredDTO> updateVaccination(@RequestParam("id") Integer id,
+                                                                             @RequestParam String preStatus) {
 
+        List<VaccinationHistoryRegisteredDTO> vaccinationHistory = vaccinationHistoryService.findId(id);
+        if (vaccinationHistory == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        vaccinationHistoryService.updateStatusVaccinationHistory(true,preStatus,id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }
