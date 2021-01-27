@@ -31,7 +31,6 @@ public class VaccinationHistoryController {
     @Autowired
     private VaccinationHistoryService vaccinationHistoryService;
 
-
     /**
      * tuNH
      * lấy danh lịch sử tiêm chủng, phân trang , tìm kiếm
@@ -59,10 +58,9 @@ public class VaccinationHistoryController {
      * @return
      */
     @RequestMapping(value = "/periodic-vaccination/list", method = RequestMethod.GET)
-    public ResponseEntity<Page<VaccinationHistory>> findAllPeriodicVaccination(@PageableDefault(size = 2) Pageable
-                                                                                       pageable,
-                                                                               @RequestParam(defaultValue = "") String name) {
-        Page<VaccinationHistory> list = vaccinationHistoryService.finAllPeriodicVaccination(name, pageable);
+    public ResponseEntity<Page<VaccinationHistory>> findAllPeriodicVaccination(@PageableDefault(size = 5) Pageable
+                                                                                       pageable) {
+        Page<VaccinationHistory> list = vaccinationHistoryService.finAllPeriodicVaccination(pageable);
         if (list.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -70,14 +68,14 @@ public class VaccinationHistoryController {
     }
 
     @RequestMapping(value = "/periodic-vaccination/search", method = RequestMethod.GET)
-    public ResponseEntity<Page<VaccinationHistory>> searchPeriodicVaccination(@PageableDefault(size = 2) Pageable
+    public ResponseEntity<Page<VaccinationHistory>> searchPeriodicVaccination(@PageableDefault(size = 5) Pageable
                                                                                       pageable,
                                                                               @RequestParam(defaultValue = "") String name,
                                                                               @RequestParam(defaultValue = "") String status) {
         Page<VaccinationHistory> list = null;
-        Boolean statusNew = false;
+        Boolean statusNew;
         if (status.equals("")) {
-            list = vaccinationHistoryService.finAllPeriodicVaccination(name, pageable);
+            list = vaccinationHistoryService.searchNoStatusPeriodicVaccination(name, pageable);
         } else if (status.equals("true")) {
             statusNew = true;
             list = vaccinationHistoryService.searchPeriodicVaccination(name, statusNew, pageable);
