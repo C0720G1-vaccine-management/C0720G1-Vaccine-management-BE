@@ -13,8 +13,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @RestController
@@ -25,7 +30,8 @@ public class VaccinationHistoryController {
 
     @Autowired
     private VaccinationHistoryService vaccinationHistoryService;
-    
+
+
     /**
      * tuNH
      * lấy danh lịch sử tiêm chủng, phân trang , tìm kiếm
@@ -36,6 +42,7 @@ public class VaccinationHistoryController {
                                                                               @RequestParam(defaultValue = "") String vaccinationDate,
                                                                               @RequestParam(defaultValue = "") String accountEmail) {
         Page<VaccinationHistory> vaccinationHistories;
+
         if (vaccineName.isEmpty() && vaccinationDate.isEmpty()) {
             vaccinationHistories = this.vaccinationHistoryService.getAllVaccinationHistory(vaccineName, vaccinationDate, accountEmail, pageable);
         }
@@ -124,17 +131,17 @@ public class VaccinationHistoryController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-  
+
     /**
-    * Khanh
-    */
+     * Khanh
+     */
     @RequestMapping(value = "/vaccination-history-list", method = RequestMethod.GET)
-    public ResponseEntity<?> getListVaccinationHistory (){
+    public ResponseEntity<?> getListVaccinationHistory() {
         List<VaccinationHistory> list = this.vaccinationHistoryService.findAll();
-        if (list==null){
+        if (list == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(list,HttpStatus.OK);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
 
@@ -187,6 +194,16 @@ public class VaccinationHistoryController {
         return new ResponseEntity<VaccinationHistoryRegisteredDTO>(vaccinationHistoryRegisteredDTO, HttpStatus.OK);
     }
 
+    /**
+     * tuNH
+     * sendmail feedback for admin
+     **/
+    @RequestMapping(value = "/sendMailFeedbackForAdmin", method = RequestMethod.POST)
+    public ResponseEntity<Void> sendMailCo(@RequestParam(defaultValue = "") String value,
+                                           @RequestParam(defaultValue = "") String accountEmail) throws UnsupportedEncodingException, MessagingException {
+        this.vaccinationHistoryService.sendMailFeedbackForAdmin(value, accountEmail);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
 }
