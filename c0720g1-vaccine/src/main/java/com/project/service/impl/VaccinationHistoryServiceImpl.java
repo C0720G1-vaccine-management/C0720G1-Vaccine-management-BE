@@ -186,4 +186,22 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
         helper.setText(mailContent, true);
         javaMailSender.send(message);
     }
+
+    /**
+     * Phuoc
+     **/
+    @Override
+    public Page<VaccinationHistory> findAllByPatientId(Integer patientId, boolean b, Pageable pageable) {
+        return vaccinationHistoryRepository.findAllByPatient_PatientIdAndDeleteFlag(patientId, b, pageable);
+    }
+
+    @Override
+    public Page<VaccinationHistory> findAllByPatient_PatientIdAndVaccination_Vaccine_NameContainingAndVaccination_Date(Integer patient_patientId, String vaccination_vaccine_name, String vaccination_date,Boolean b, Pageable pageable) {
+        return vaccinationHistoryRepository.findAllByPatient_PatientIdAndVaccination_Vaccine_NameContainingAndVaccination_DateAndDeleteFlag(patient_patientId, vaccination_vaccine_name, vaccination_date, b, pageable);
+    }
+
+    @Override
+    public Page<VaccinationHistory> findAllByPatient_PatientIdAndVaccination_Vaccine_NameContainingAndDeleteFlag(Integer patient_patientId, String vaccination_vaccine_name, Boolean deleteFlag, Pageable pageable) {
+        return vaccinationHistoryRepository.findAllByPatient_PatientIdAndVaccination_Vaccine_NameContainingAndDeleteFlag(patient_patientId, vaccination_vaccine_name, deleteFlag, pageable);
+    }
 }

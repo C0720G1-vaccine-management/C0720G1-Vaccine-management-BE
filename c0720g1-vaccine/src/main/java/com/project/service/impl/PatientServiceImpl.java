@@ -91,4 +91,13 @@ public class PatientServiceImpl implements PatientService {
     }
 
 
+    /**
+     * Phuoc
+     **/
+    @Override
+    public List<Patient> findAllByEmail(String email, boolean b) {
+        return patientRepository.findAllByEmailAndDeleteFlag(email, b);
+    }
+
+
 }

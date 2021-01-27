@@ -134,4 +134,27 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
      @Query (value = "update vaccination_history set vaccination_history.delete_flag = true where vaccination_id = ?1 and patient_id = ?2", nativeQuery = true)
     void cancelRegister(int vaccinationId, int patientId);
 
+
+     /**
+      * Phuoc
+      **/
+     Page<VaccinationHistory> findAllByPatient_PatientIdAndDeleteFlag(Integer patient_patientId, Boolean deleteFlag, Pageable pageable);
+
+
+    /**
+     * Phuoc
+     **/
+     Page<VaccinationHistory> findAllByPatient_PatientIdAndVaccination_Vaccine_NameContainingAndVaccination_DateAndDeleteFlag(Integer patient_patientId, String vaccination_vaccine_name, String vaccination_date, Boolean deleteFlag, Pageable pageable);
+
+
+    /**
+     * Phuoc
+     **/
+    Page<VaccinationHistory> findAllByPatient_PatientIdAndVaccination_Vaccine_NameContainingAndDeleteFlag(Integer patient_patientId, String vaccination_vaccine_name, Boolean deleteFlag, Pageable pageable);
+
+
+
+    Page<VaccinationHistory> findAllByVaccination_Vaccine_NameContaining(String vaccination_vaccine_name, Pageable pageable);
+
+
 }

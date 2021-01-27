@@ -3,6 +3,7 @@ package com.project.controller;
 import com.project.dto.VaccinationByRequestDTO;
 import com.project.dto.VaccineDTO;
 import com.project.entity.*;
+import com.project.repository.VaccinationHistoryRepository;
 import com.project.service.PatientService;
 import com.project.service.VaccinationHistoryService;
 import com.project.service.VaccinationService;
@@ -18,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * PhuocTC
@@ -25,7 +27,7 @@ import javax.validation.Valid;
 
 @RestController
 @CrossOrigin(value = "*", allowedHeaders = "*")
-@RequestMapping(value = "/api/public")
+@RequestMapping(value = "/api")
 public class VaccinationByRequest {
 
     @Autowired
@@ -47,7 +49,7 @@ public class VaccinationByRequest {
     /**
      * PhuocTC: Tìm kiếm + Phân trang
      **/
-    @GetMapping(value = "/vaccine/list")
+    @GetMapping(value = "/public/vaccine/list")
     public ResponseEntity<Page<Vaccine>> getListVaccine(@PageableDefault(size = 5) Pageable pageable,
                                                         @RequestParam(defaultValue = "") String name,
                                                         @RequestParam(defaultValue = "") String vaccineTypeName,
@@ -76,7 +78,7 @@ public class VaccinationByRequest {
     /**
      * PhuocTC: Get Vắc-xin theo Id
      **/
-    @GetMapping(value = "/vaccination/get-vaccine/{id}")
+    @GetMapping(value = "/public/vaccination/get-vaccine/{id}")
     public ResponseEntity<VaccineDTO> registerVaccination(@PathVariable Integer id) {
         VaccineDTO vaccineDTO = vaccineService.getVaccineById(id);
 
@@ -91,7 +93,7 @@ public class VaccinationByRequest {
     /**
      * PhuocTC: Tạo mới đăng ký tim theo yêu cầu
      **/
-    @PostMapping(value = "/vaccination/create")
+    @PostMapping(value = "/public/vaccination/create")
     public ResponseEntity<?> registerPatient(@Valid @RequestBody VaccinationByRequestDTO vaccinationByRequestDTO,
                                              BindingResult bindingResult) {
 
@@ -137,4 +139,38 @@ public class VaccinationByRequest {
     }
 
 
+    @GetMapping("/public/profile")
+    public ResponseEntity<?> getListPatientByEmail(@RequestParam String email) {
+        List<Patient> patientList = patientService.findAllByEmail(email, false);
+
+        if (patientList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(patientList, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/public/profile-personal")
+    public ResponseEntity<?> getListVaccinationHistoryByPatient(@PageableDefault(size = 5) Pageable pageable,
+                                                                @RequestParam(defaultValue = "") Integer patientId,
+                                                                @RequestParam(defaultValue = "") String name,
+                                                                @RequestParam(defaultValue = "") String date) {
+
+
+        Page<VaccinationHistory> vaccinationHistoryList;
+
+        if (date.equals("")) {
+            vaccinationHistoryList =  vaccinationHistoryService.findAllByPatient_PatientIdAndVaccination_Vaccine_NameContainingAndDeleteFlag(patientId,name,false, pageable);
+        } else {
+            vaccinationHistoryList =  vaccinationHistoryService.findAllByPatient_PatientIdAndVaccination_Vaccine_NameContainingAndVaccination_Date(patientId,name,date,false, pageable);
+        }
+
+
+        if (vaccinationHistoryList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(vaccinationHistoryList, HttpStatus.OK);
+    }
 }

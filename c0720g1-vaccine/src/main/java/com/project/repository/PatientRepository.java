@@ -76,4 +76,8 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     void savePatient(String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email);
 
 
+    /**
+     * Phuoc
+     **/
+    List<Patient> findAllByEmailAndDeleteFlag(String email, Boolean deleteFlag);
 }

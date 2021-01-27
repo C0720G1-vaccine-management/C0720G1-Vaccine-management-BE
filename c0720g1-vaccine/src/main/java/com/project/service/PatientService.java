@@ -4,6 +4,7 @@ import com.project.entity.Patient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 
 
 public interface PatientService {
@@ -49,4 +50,9 @@ public interface PatientService {
      **/
     Integer findByPhone(String phone);
 
+
+    /**
+     * Phuoc
+     **/
+    List<Patient> findAllByEmail(String email, boolean b);
 }

@@ -106,4 +106,20 @@ public interface VaccinationHistoryService {
      **/
     void sendMailFeedbackForAdmin(String value, String accountEmail) throws MessagingException, UnsupportedEncodingException;
 
+
+    /**
+     * Phuoc
+     **/
+    Page<VaccinationHistory> findAllByPatientId(Integer patientId, boolean b, Pageable pageable);
+
+    /**
+     * Phuoc
+     **/
+    Page<VaccinationHistory> findAllByPatient_PatientIdAndVaccination_Vaccine_NameContainingAndVaccination_Date(Integer patient_patientId, String vaccination_vaccine_name, String vaccination_date, Boolean b, Pageable pageable);
+
+
+    /**
+     * Phuoc
+     **/
+    Page<VaccinationHistory> findAllByPatient_PatientIdAndVaccination_Vaccine_NameContainingAndDeleteFlag(Integer patient_patientId, String vaccination_vaccine_name, Boolean deleteFlag, Pageable pageable);
 }
