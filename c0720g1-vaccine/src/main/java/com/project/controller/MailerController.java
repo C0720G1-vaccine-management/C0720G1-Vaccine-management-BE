@@ -26,10 +26,10 @@ public class MailerController {
     private VaccinationHistoryService vaccinationHistoryService;
 
 
-    @Scheduled(cron = "0 30 8 * * ?")
+    @Scheduled(cron = "0 40 10 * * ?")
     public void sendEmail() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
-        LocalDate dayPlusAWeek = LocalDate.now().plusDays(7);
+        LocalDate dayPlusAWeek = LocalDate.now().plusDays(1);
         String day = formatter.format(dayPlusAWeek);
 
 
