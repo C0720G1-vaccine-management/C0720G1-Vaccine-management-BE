@@ -4,6 +4,7 @@ package com.project.dto;
  * DTO: create by LongBP
  */
 public interface VaccinationHistoryRegisteredDTO {
+    Integer getVaccinationHistoryId();
     Integer getPatientId();
     String getPatientName();
     String getPatientDob();
