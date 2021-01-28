@@ -1,14 +1,10 @@
 package com.project.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.Set;
 
-@Data
+
 @Entity(name = "vaccination")
 public class Vaccination {
     @Id
@@ -41,7 +37,7 @@ public class Vaccination {
     public Vaccination() {
     }
 
-    public Vaccination(Integer vaccinationId, String startTime, String endTime, String date, Boolean status, String description, Boolean deleteFlag, Vaccine vaccine, Set<VaccinationHistory> vaccinationHistoryList, VaccinationType vaccinationType, Location location) {
+    public Vaccination(Integer vaccinationId, String startTime, String endTime, String date, Boolean status, String description, Boolean deleteFlag, Integer duration, Integer times, Vaccine vaccine, Set<VaccinationHistory> vaccinationHistoryList, VaccinationType vaccinationType, Location location) {
         this.vaccinationId = vaccinationId;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -49,6 +45,8 @@ public class Vaccination {
         this.status = status;
         this.description = description;
         this.deleteFlag = deleteFlag;
+        this.duration = duration;
+        this.times = times;
         this.vaccine = vaccine;
         this.vaccinationHistoryList = vaccinationHistoryList;
         this.vaccinationType = vaccinationType;
@@ -141,5 +139,21 @@ public class Vaccination {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public Integer getTimes() {
+        return times;
+    }
+
+    public void setTimes(Integer times) {
+        this.times = times;
     }
 }
