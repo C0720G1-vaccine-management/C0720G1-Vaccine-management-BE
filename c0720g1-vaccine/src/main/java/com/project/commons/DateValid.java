@@ -14,16 +14,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({FIELD})
 @Retention(RUNTIME)
 public @interface DateValid {
-    int min() default 0;
-
-    int max() default Integer.MAX_VALUE;
 
     String message() default "Ngày bắt đầu phải sau ngày hiện tại";
 
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
-    @interface List {
-        DateValid[] value();
-    }
 }

@@ -53,7 +53,7 @@ public class VaccinationManagerServiceImpl implements VaccinationManagerService 
      */
     @Override
     public void saveVaccinationManager(VaccinationManagerDto vaccinationManagerDto) {
-        vaccinationManagerRepository.saveVaccinationManager(vaccinationManagerDto.getDate(), false, vaccinationManagerDto.getDescription(), vaccinationManagerDto.getStartTime(), vaccinationManagerDto.getEndTime(), false, vaccinationManagerDto.getLocationId(), 1, vaccinationManagerDto.getVaccineId());
+        vaccinationManagerRepository.saveVaccinationManager(vaccinationManagerDto.getDate(), false, vaccinationManagerDto.getDescription(), vaccinationManagerDto.getStartTime(), vaccinationManagerDto.getEndTime(), false, vaccinationManagerDto.getLocationId(), 1, vaccinationManagerDto.getVaccineId(), vaccinationManagerDto.getTimes(), vaccinationManagerDto.getDuration());
     }
 
     /**
@@ -61,7 +61,7 @@ public class VaccinationManagerServiceImpl implements VaccinationManagerService 
      */
     @Override
     public void updateVaccinationManager(VaccinationManagerDto vaccinationManagerDto) {
-        vaccinationManagerRepository.updateVaccinationManager(vaccinationManagerDto.getDate(), vaccinationManagerDto.getDescription(), vaccinationManagerDto.getStartTime(), vaccinationManagerDto.getEndTime(), vaccinationManagerDto.getLocationId(), vaccinationManagerDto.getVaccineId(), vaccinationManagerDto.getVaccinationId());
+        vaccinationManagerRepository.updateVaccinationManager(vaccinationManagerDto.getDate(), vaccinationManagerDto.getDescription(), vaccinationManagerDto.getStartTime(), vaccinationManagerDto.getEndTime(), vaccinationManagerDto.getLocationId(), vaccinationManagerDto.getVaccineId(), vaccinationManagerDto.getTimes(), vaccinationManagerDto.getDuration(), vaccinationManagerDto.getVaccinationId());
     }
 
     /**
