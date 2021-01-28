@@ -76,18 +76,20 @@ public class VaccinationByRequestDTOValidator implements Validator {
             errors.rejectValue("email", "email.null", "Email không được để trống");
         } else if (!Pattern.compile("^\\w{5,}.?\\w+(@\\w{3,8})(.\\w{3,8})+$").matcher(vaccination.getEmail()).find()) {
             errors.rejectValue("email", "email.format", "Email không đúng định dạng");
-        } else if (patientService.findByEmail(vaccination.getEmail()) > 0) {
-            errors.rejectValue("email", "email.duplicate", "Email đã tồn tại");
         }
+//        else if (patientService.findByEmail(vaccination.getEmail()) > 0) {
+//            errors.rejectValue("email", "email.duplicate", "Email đã tồn tại");
+//        }
 
 
         if (vaccination.getPhone() == null) {
             errors.rejectValue("phone", "phone.null", "Số điện thoại không được để trống");
         } else if (!Pattern.compile("^(0|\\(\\+84\\))\\d{9}$").matcher(vaccination.getPhone()).find()) {
             errors.rejectValue("phone", "phone.format", "Số điện thoại không đúng định dạng");
-        } else if (patientService.findByPhone(vaccination.getPhone()) > 0) {
-            errors.rejectValue("phone","phone.duplicate","Số điện thoại đã tồn tại");
         }
+//        else if (patientService.findByPhone(vaccination.getPhone()) > 0) {
+//            errors.rejectValue("phone","phone.duplicate","Số điện thoại đã tồn tại");
+//        }
 
         if (vaccination.getDateVaccination() == null) {
             errors.rejectValue("dateVaccination", "dateVaccination.null", "Ngày tiêm không được để trống");

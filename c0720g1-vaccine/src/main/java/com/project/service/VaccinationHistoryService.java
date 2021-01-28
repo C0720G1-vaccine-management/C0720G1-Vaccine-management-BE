@@ -76,12 +76,12 @@ public interface VaccinationHistoryService {
     /**
      list:  create by LongBP
      **/
-    Page<VaccinationHistory> getAllRegisteredRequired(String name, Pageable pageable);
+    Page<VaccinationHistory> getAllRegisteredRequired(String name,Integer id, Pageable pageable);
 
     /**
      search and paging:  create by LongBP
      **/
-    Page<VaccinationHistory> searchNameAndInjected(String name, Boolean status, Pageable pageable);
+    Page<VaccinationHistory> searchNameAndInjected(String name,Integer id, Boolean status, Pageable pageable);
 
     /**
      find by id:  create by LongBP
@@ -122,4 +122,6 @@ public interface VaccinationHistoryService {
      * Phuoc
      **/
     Page<VaccinationHistory> findAllByPatient_PatientIdAndVaccination_Vaccine_NameContainingAndDeleteFlag(Integer patient_patientId, String vaccination_vaccine_name, Boolean deleteFlag, Pageable pageable);
+
+    List<VaccinationHistory> findAllByVaccinationTransactionIsNull();
 }

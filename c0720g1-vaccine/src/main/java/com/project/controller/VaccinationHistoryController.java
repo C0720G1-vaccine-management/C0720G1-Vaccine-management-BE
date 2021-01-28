@@ -132,11 +132,11 @@ public class VaccinationHistoryController {
 
 
     /**
-     * Khanh
+     * Made by Khanh lấy list vaccine history
      */
     @RequestMapping(value = "/vaccination-history-list", method = RequestMethod.GET)
     public ResponseEntity<?> getListVaccinationHistory() {
-        List<VaccinationHistory> list = this.vaccinationHistoryService.findAll();
+        List<VaccinationHistory> list = this.vaccinationHistoryService.findAllByVaccinationTransactionIsNull();
         if (list == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -149,8 +149,9 @@ public class VaccinationHistoryController {
      **/
     @RequestMapping(value = "/registered-for-vaccination/list", method = RequestMethod.GET)
     public ResponseEntity<Page<VaccinationHistory>> getAllRegisteredVaccination(@PageableDefault(size = 5) Pageable pageable,
-                                                                                @RequestParam(defaultValue = "") String name) {
-        Page<VaccinationHistory> list = vaccinationHistoryService.getAllRegisteredRequired(name, pageable);
+                                                                                @RequestParam(defaultValue = "") String name,
+                                                                                @RequestParam Integer id) {
+        Page<VaccinationHistory> list = vaccinationHistoryService.getAllRegisteredRequired(name,id, pageable);
         if (list.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -163,17 +164,18 @@ public class VaccinationHistoryController {
     @RequestMapping(value = "/registered-for-vaccination/search", method = RequestMethod.GET)
     public ResponseEntity<Page<VaccinationHistory>> searchRegisteredVaccination(@PageableDefault(size = 5) Pageable pageable,
                                                                                 @RequestParam(defaultValue = "") String name,
-                                                                                @RequestParam(defaultValue = "") String status) {
+                                                                                @RequestParam(defaultValue = "") String status,
+                                                                                @RequestParam Integer id) {
         Page<VaccinationHistory> list = null;
         Boolean statusNew;
         if (status.equals("")) {
-            list = vaccinationHistoryService.getAllRegisteredRequired(name, pageable);
+            list = vaccinationHistoryService.getAllRegisteredRequired(name,id, pageable);
         } else if (status.equals("true")) {
             statusNew = true;
-            list = vaccinationHistoryService.searchNameAndInjected(name, statusNew, pageable);
+            list = vaccinationHistoryService.searchNameAndInjected(name,id, statusNew, pageable);
         } else if (status.equals("false")) {
             statusNew = false;
-            list = vaccinationHistoryService.searchNameAndInjected(name, statusNew, pageable);
+            list = vaccinationHistoryService.searchNameAndInjected(name,id, statusNew, pageable);
         }
         if (list.isEmpty()) {
             return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);

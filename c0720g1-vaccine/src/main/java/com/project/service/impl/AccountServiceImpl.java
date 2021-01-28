@@ -198,7 +198,7 @@ public class AccountServiceImpl implements AccountService {
                 "<br><br>\n" +
                 "<span style=\"font-weight: bold\"> Tên Vắc xin: </span><span>"+registrableVaccination.getVaccineName()+" </span>\n" +
                 "<br><br>\n" +
-                "<span style=\"font-weight: bold\"> Xuất xứ: </span><span>"+registrableVaccination.getLocation()+" </span>\n" +
+                "<span style=\"font-weight: bold\"> Xuất xứ: </span><span>"+registrableVaccination.getCountry()+" </span>\n" +
                 "<br><br>\n" +
                 "<p style=\"font-style: italic; color: red\">Trong trường hợp bạn không thể tham gia vì lý do nào đó, bạn có thể hủy đăng ký bằng link bên dưới:</p>\n" +
                 "<h3><a href='" + cancelRegisterUrl + "'>Link hủy đăng ký!</a></h3>" +

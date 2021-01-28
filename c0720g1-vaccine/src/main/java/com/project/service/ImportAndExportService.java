@@ -7,9 +7,9 @@ public interface ImportAndExportService {
     /**
      *    Made by Khanh
      */
-    Page<ImportAndExport> findAll(String action,Pageable pageable);
+    Page<ImportAndExport> findAll(String action, Pageable pageable);
 
-    Page<ImportAndExport> search(String action,Integer vaccineId,String vaccineType,String origin,Pageable pageable);
+    Page<ImportAndExport> search(String action, String vaccineType, String origin, Pageable pageable);
 
     ImportAndExport findById(Integer id);
 

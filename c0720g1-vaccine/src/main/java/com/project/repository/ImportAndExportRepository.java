@@ -19,7 +19,7 @@ public interface ImportAndExportRepository extends JpaRepository<ImportAndExport
     /**
      * Made by Khanh tìm kiếm các trường trong list
      */
-    Page<ImportAndExport> findAllByActionAndStorage_Vaccine_VaccineIdAndStorage_Vaccine_VaccineType_NameContainingAndStorage_Vaccine_OriginContaining(String action, Integer storage_vaccine_vaccineId, String storage_vaccine_vaccineType_name, String storage_vaccine_origin, Pageable pageable);
+    Page<ImportAndExport> findAllByActionAndStorage_Vaccine_VaccineType_NameContainingAndStorage_Vaccine_OriginContaining(String action, String storage_vaccine_vaccineType_name, String storage_vaccine_origin, Pageable pageable);
 
 
 }

@@ -61,11 +61,7 @@ public class VaccinationTransactionServiceImpl implements VaccinationTransaction
      */
     @Override
     public void save(Integer idVaccineHistory, double price, Long quantity) {
-        VaccinationHistory vaccinationHistory = this.vaccinationHistoryRepository.findById(idVaccineHistory).orElse(null);
-        VaccinationTransaction vaccinationTransaction = new VaccinationTransaction();
-        vaccinationTransaction.setVaccinationHistory(vaccinationHistory);
-        vaccinationTransaction.setPrice(price);
-        this.vaccinationTransactionRepository.save(vaccinationTransaction);
+        this.vaccinationTransactionRepository.createVaccineTransaction(price,quantity,idVaccineHistory);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.project.controller;
 
 import com.project.dto.SearchCriteria;
 import com.project.entity.VaccinationTransaction;
+import com.project.repository.VaccinationHistoryRepository;
 import com.project.service.VaccinationTransactionService;
 import com.project.service.impl.VaccinationTransactionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,10 @@ import java.util.Optional;
 public class VaccinationTransactionController {
 
     @Autowired
-    VaccinationTransactionService vaccinationTransactionService;
+    private VaccinationTransactionService vaccinationTransactionService;
+
+    @Autowired
+    private VaccinationHistoryRepository vaccinationHistoryRepository;
 
     /**
      * Made by Khanh phân trang, tìm kiếm , hiển thị list giao dịch
@@ -30,6 +34,7 @@ public class VaccinationTransactionController {
     public ResponseEntity<?> listVaccineTransaction(@PageableDefault(size = 5) Pageable pageable) {
         return new ResponseEntity<>(vaccinationTransactionService.findAll(pageable), HttpStatus.OK);
     }
+
     /**
      * Made by Khanh tìm kiếm , phân trang, hiển thị list tìm kiếm giao dịch
      */
@@ -44,6 +49,7 @@ public class VaccinationTransactionController {
         vaccinationTransactions = vaccinationTransactionService.search(keyWordForSearchNamePatient, keyWordForSearchVaccineType, pageable);
         return new ResponseEntity<>(vaccinationTransactions, HttpStatus.OK);
     }
+
     /**
      * Made by Khanh tạo mới giao dịch
      */
@@ -54,6 +60,7 @@ public class VaccinationTransactionController {
         this.vaccinationTransactionService.save(idVaccineHistory, price, quantity);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
     /**
      * Made by Khanh sửa giao dịch
      */
@@ -64,6 +71,7 @@ public class VaccinationTransactionController {
         this.vaccinationTransactionService.edit(id, price, quantity);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     /**
      * Made by Khanh lấy văc xin bằng id
      */
@@ -71,6 +79,7 @@ public class VaccinationTransactionController {
     public ResponseEntity<?> getId(@PathVariable Integer id) {
         return new ResponseEntity<>(this.vaccinationTransactionService.findById(id), HttpStatus.OK);
     }
+
     /**
      * Made by Khanh xóa giao dịch bằng id
      */
@@ -78,5 +87,12 @@ public class VaccinationTransactionController {
     public ResponseEntity<?> deleteVaccineTransaction(@PathVariable Integer id) {
         this.vaccinationTransactionService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    /**
+     * Made by Khanh lấy 1 đối tượng vaccine history bằng id
+     */
+    @GetMapping("/vaccine-history-patient/{id}")
+    public ResponseEntity<?> findByIdNamePatient(@PathVariable Integer id) {
+        return new ResponseEntity<>(this.vaccinationHistoryRepository.findById(id), HttpStatus.OK);
     }
 }

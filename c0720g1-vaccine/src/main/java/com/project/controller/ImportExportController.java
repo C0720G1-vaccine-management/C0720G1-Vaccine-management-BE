@@ -28,15 +28,11 @@ public class ImportExportController {
 
     @Autowired
     private VaccineTypeRepository vaccineTypeRepository;
-    /**Phuc NB
-     *
+    /**
+     * Phuc NB
      */
     @Autowired
     private VaccineService vaccineService;
-
-    /**
-     * PhucNB
-     */
     @Autowired
     StorageService storageService;
 
@@ -48,20 +44,19 @@ public class ImportExportController {
     ) {
         return new ResponseEntity<>(importAndExportService.findAll("export", pageable), HttpStatus.OK);
     }
+
     /**
      * Made by Khanh tìm kiếm , phân trang, hiển thị list vaccine
      */
     @PostMapping("/vaccine-price-search")
-    public ResponseEntity<?> searchVaccinePrice(@PageableDefault(size = 5) Pageable pageable, @RequestBody SearchCriteria searchCriteria
-    ) {
-        Integer keyWordForSearchVaccineId;
+    public ResponseEntity<?> searchVaccinePrice(@PageableDefault(size = 5) Pageable pageable,
+                                                @RequestBody SearchCriteria searchCriteria) {
         String keyWordForSearchVaccineType = "";
         String keyWordForSearchVaccineOrigin = "";
 
-        keyWordForSearchVaccineId = searchCriteria.getKeyword1();
         keyWordForSearchVaccineType = searchCriteria.getKeyword2();
         keyWordForSearchVaccineOrigin = searchCriteria.getKeyword3();
-        return new ResponseEntity<>(importAndExportService.search("export", keyWordForSearchVaccineId,
+        return new ResponseEntity<>(importAndExportService.search("export",
                 keyWordForSearchVaccineType, keyWordForSearchVaccineOrigin, pageable), HttpStatus.OK);
 
     }
@@ -82,6 +77,7 @@ public class ImportExportController {
     public ResponseEntity<?> getId(@PathVariable Integer id) {
         return new ResponseEntity<>(this.importAndExportService.findById(id), HttpStatus.OK);
     }
+
     /**
      * Made by Khanh lấy tên kiểu vắc xin
      */
@@ -89,6 +85,7 @@ public class ImportExportController {
     public ResponseEntity<?> getVaccineType() {
         return new ResponseEntity<>(this.vaccineTypeRepository.findAll(), HttpStatus.OK);
     }
+
     /**
      * Made by Khanh lấy xuất sứ văc xin
      */
@@ -96,21 +93,7 @@ public class ImportExportController {
     public ResponseEntity<?> getOriginVaccine() {
         return new ResponseEntity<>(this.vaccineService.getAllVaccine(), HttpStatus.OK);
     }
-//    /**
-//     * Phuc NB
-//     * xử lý nghiệp vụ trừ số lượng khi xuất kho
-//     */
-//    @GetMapping("/{id}/exportVaccine")
-//    public ResponseEntity<?> exportVaccine(@Validated @PathVariable Integer id, @RequestParam("input") Long input) {
-//
-//        Vaccine vaccine = vaccineService.findById(id);
-//        if (vaccine == null) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        }
-//        vaccine.setQuantity(vaccine.getQuantity() - input);
-//        vaccineService.saveVaccine(vaccine);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+
     /**
      * Phuc NB
      * xử lý nghiệp vụ trừ số lượng khi xuất kho
@@ -119,16 +102,28 @@ public class ImportExportController {
     public ResponseEntity<?> exportVaccine(@Validated @PathVariable Integer id, @RequestParam("input") Long input) {
         List<Storage> storageList = storageService.getAllStorage(id);
         for (Storage storage : storageList) {
-            if (storage.getQuantity() > 0) {
+            if (storage.getQuantity() > 0 ) {
+                if (storage.getQuantity() <= input){
+                   input = input - storage.getQuantity();
+                   storage.setQuantity(0L);
+                   storageService.saveStorage(storage);
+                    continue;
+                }
+//                else if (storage.getQuantity() == input){
+//                    input = input - storage.getQuantity();
+//                    storage.setQuantity(0L);
+//                    storageService.saveStorage(storage);
+//                    continue;
+//                }
                 storage.setQuantity(storage.getQuantity() - input);
                 storageService.saveStorage(storage);
-                break;
             }
         }
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    /**Phuc NB
+    /**
+     * Phuc NB
      * lấy ra id của vắc-xin cần xuất kho
      **/
     @GetMapping("/getVaccine/{idVaccine}")

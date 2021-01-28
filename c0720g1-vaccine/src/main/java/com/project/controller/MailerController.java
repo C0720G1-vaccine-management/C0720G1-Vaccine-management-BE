@@ -28,7 +28,7 @@ public class MailerController {
     private VaccinationHistoryService vaccinationHistoryService;
 
 
-    @Scheduled(cron = "0 50 16 * * ?")
+    @Scheduled(cron = "0 02 17 * * ?")
     public void sendEmail() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
         LocalDate dayPlusAWeek = LocalDate.now().plusDays(1);
@@ -39,7 +39,9 @@ public class MailerController {
         List<String> listEmailOneMoreTime = vaccinationHistoryService.getEmailToSendOfVaccinationMore();
         Set<String> listEmail = new HashSet<>();
         listEmail.addAll(listEmailOneTime);
+
         listEmail.addAll(listEmailOneMoreTime);
+        System.out.println(listEmail.toString());
         if (!(listEmail.size() == 0)) {
             String[] array = listEmail.toArray(new String[0]);
             // Create a Simple MailMessage.
