@@ -23,11 +23,13 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
     /** LuyenNT code
      *
      */
-    Page<VaccinationHistory> findAllByPatient_NameContainingAndVaccination_StatusIs(String name, Boolean status, Pageable pageable);
-
+    Page<VaccinationHistory> findAllByPatient_NameContainingAndVaccination_StatusIsAndVaccination_VaccinationType_VaccinationTypeId(String name, Boolean status,Integer number, Pageable pageable);
     /** LuyenNT
      */
-    Page<VaccinationHistory> findAllByPatient_NameContaining(String name,Pageable pageable);
+    Page<VaccinationHistory> findAllByPatient_NameContainingAndVaccination_VaccinationType_VaccinationTypeId(String name,Integer number,Pageable pageable);
+    /** LuyenNT
+     */
+    Page<VaccinationHistory> findAllByVaccination_VaccinationType_VaccinationTypeId(Integer number,Pageable pageable);
 
     /**
      * tuNH
@@ -97,8 +99,12 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
     /**
      search and paging:  create by LongBP
      **/
-    Page<VaccinationHistory> findAllByPatient_NameContainingAndStatusIs(String name, Boolean status, Pageable pageable);
+    Page<VaccinationHistory> findAllByPatient_NameContainingAndVaccination_VaccinationType_VaccinationTypeIdAndStatusIs(String name,Integer id, Boolean status, Pageable pageable);
 
+    /**
+     * LongBP
+     */
+//    Page<VaccinationHistory> findAllByPatient_NameContainingAndVaccination_VaccinationType_VaccinationTypeId(String name,Integer id,Pageable pageable);
     /**
      find by id:  create by LongBP
      **/
@@ -156,5 +162,7 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
 
     Page<VaccinationHistory> findAllByVaccination_Vaccine_NameContaining(String vaccination_vaccine_name, Pageable pageable);
 
+
+    List<VaccinationHistory> findAllByVaccinationTransactionIsNull();
 
 }

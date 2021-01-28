@@ -26,8 +26,8 @@ public class ImportAndExportServiceImpl implements ImportAndExportService {
      * Made by Khanh tìm kiếm phân trang list vaccine
      */
     @Override
-    public Page<ImportAndExport> search(String action, Integer vaccineId, String vaccineType, String origin, Pageable pageable) {
-        return this.importAndExportRepository.findAllByActionAndStorage_Vaccine_VaccineIdAndStorage_Vaccine_VaccineType_NameContainingAndStorage_Vaccine_OriginContaining(action, vaccineId, vaccineType, origin, pageable);
+    public Page<ImportAndExport> search(String action, String vaccineType, String origin, Pageable pageable) {
+        return this.importAndExportRepository.findAllByActionAndStorage_Vaccine_VaccineType_NameContainingAndStorage_Vaccine_OriginContaining(action, vaccineType, origin, pageable);
     }
 
     /**

@@ -102,9 +102,8 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
      */
     @Override
     public Page<VaccinationHistory> searchPeriodicVaccination(String name, Boolean status, Pageable pageable) {
-        return vaccinationHistoryRepository.findAllByPatient_NameContainingAndStatusIs(name, status, pageable);
+        return vaccinationHistoryRepository.findAllByPatient_NameContainingAndVaccination_StatusIsAndVaccination_VaccinationType_VaccinationTypeId(name, status,1, pageable);
     }
-
     /**
      * LuyenNT code
      *
@@ -114,9 +113,8 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
      */
     @Override
     public Page<VaccinationHistory> searchNoStatusPeriodicVaccination(String name, Pageable pageable) {
-        return vaccinationHistoryRepository.findAllByPatient_NameContaining(name, pageable);
+        return vaccinationHistoryRepository.findAllByPatient_NameContainingAndVaccination_VaccinationType_VaccinationTypeId(name,1, pageable);
     }
-
     /**
      * LuyenNT
      * @param pageable
@@ -124,15 +122,15 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
      */
     @Override
     public Page<VaccinationHistory> finAllPeriodicVaccination(Pageable pageable) {
-        return vaccinationHistoryRepository.findAll(pageable);
+        return vaccinationHistoryRepository.findAllByVaccination_VaccinationType_VaccinationTypeId(1,pageable);
     }
 
     /**
      * list:  create by LongBP
      */
     @Override
-    public Page<VaccinationHistory> getAllRegisteredRequired(String name, Pageable pageable) {
-        return this.vaccinationHistoryRepository.findAllByPatient_NameContaining(name, pageable);
+    public Page<VaccinationHistory> getAllRegisteredRequired(String name,Integer id, Pageable pageable) {
+        return this.vaccinationHistoryRepository.findAllByPatient_NameContainingAndVaccination_VaccinationType_VaccinationTypeId(name,id, pageable);
     }
 
 
@@ -140,8 +138,8 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
      * search and paging:  create by LongBP
      **/
     @Override
-    public Page<VaccinationHistory> searchNameAndInjected(String name, Boolean status, Pageable pageable) {
-        return this.vaccinationHistoryRepository.findAllByPatient_NameContainingAndStatusIs(name, status, pageable);
+    public Page<VaccinationHistory> searchNameAndInjected(String name,Integer id, Boolean status, Pageable pageable) {
+        return this.vaccinationHistoryRepository.findAllByPatient_NameContainingAndVaccination_VaccinationType_VaccinationTypeIdAndStatusIs(name, id, status, pageable);
     }
 
     /**
@@ -203,5 +201,10 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
     @Override
     public Page<VaccinationHistory> findAllByPatient_PatientIdAndVaccination_Vaccine_NameContainingAndDeleteFlag(Integer patient_patientId, String vaccination_vaccine_name, Boolean deleteFlag, Pageable pageable) {
         return vaccinationHistoryRepository.findAllByPatient_PatientIdAndVaccination_Vaccine_NameContainingAndDeleteFlag(patient_patientId, vaccination_vaccine_name, deleteFlag, pageable);
+    }
+
+    @Override
+    public List<VaccinationHistory> findAllByVaccinationTransactionIsNull() {
+        return vaccinationHistoryRepository.findAllByVaccinationTransactionIsNull();
     }
 }

@@ -44,7 +44,7 @@ public interface VaccineRepository extends JpaRepository<Vaccine,Integer> {
     /**
      * Phuoc: Tìm kiếm vắc-xin theo ID
      **/
-    @Query(value = "select vaccine.vaccine_id as vaccineId, vaccine.name as name, vaccine_type.name as vaccineTypeName, vaccine.origin as origin from vaccine " +
+    @Query(value = "select vaccine.vaccine_id as vaccineId, vaccine.name as name, vaccine_type.name as vaccineType, vaccine.origin as origin from vaccine " +
             "join vaccine_type on vaccine.vaccine_type_id = vaccine_type.vaccine_type_id " +
             "where vaccine.vaccine_id = ?1", nativeQuery = true)
     VaccineDTO getVaccineById(Integer id);

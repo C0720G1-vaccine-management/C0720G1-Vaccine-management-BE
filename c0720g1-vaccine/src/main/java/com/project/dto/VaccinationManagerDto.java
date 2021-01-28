@@ -27,5 +27,102 @@ public class VaccinationManagerDto {
     private Integer vaccineId;
     private Integer vaccinationTypeId;
     private Integer locationId;
+    private Integer times;
+    private Integer duration;
 
+    public Integer getVaccinationId() {
+        return vaccinationId;
+    }
+
+    public void setVaccinationId(Integer vaccinationId) {
+        this.vaccinationId = vaccinationId;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(Boolean deleteFlag) {
+        this.deleteFlag = deleteFlag;
+    }
+
+    public Integer getVaccineId() {
+        return vaccineId;
+    }
+
+    public void setVaccineId(Integer vaccineId) {
+        this.vaccineId = vaccineId;
+    }
+
+    public Integer getVaccinationTypeId() {
+        return vaccinationTypeId;
+    }
+
+    public void setVaccinationTypeId(Integer vaccinationTypeId) {
+        this.vaccinationTypeId = vaccinationTypeId;
+    }
+
+    public Integer getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(Integer locationId) {
+        this.locationId = locationId;
+    }
+
+    public Integer getTimes() {
+        return times;
+    }
+
+    public void setTimes(Integer times) {
+        this.times = times;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
 }

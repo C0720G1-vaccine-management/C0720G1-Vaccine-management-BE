@@ -64,6 +64,7 @@ public class VaccinationManagerServiceImpl implements VaccinationManagerService 
         vaccinationManagerRepository.updateVaccinationManager(vaccinationManagerDto.getDate(), vaccinationManagerDto.getDescription(), vaccinationManagerDto.getStartTime(), vaccinationManagerDto.getEndTime(), vaccinationManagerDto.getLocationId(), vaccinationManagerDto.getVaccineId(), vaccinationManagerDto.getTimes(), vaccinationManagerDto.getDuration(), vaccinationManagerDto.getVaccinationId());
     }
 
+
     /**
      * TrungTQ code: cập nhật vaccination trạng thái đã hoàn thành hay chưa
      */

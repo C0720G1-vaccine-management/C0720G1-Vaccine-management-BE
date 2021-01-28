@@ -48,11 +48,7 @@ public class PatientByRequestDTOValidator implements Validator {
                 errors.rejectValue("gender", "gender.format", "Giới tính không đúng định dạng");
             }
         }
-        if (patientDTO.getGuardian().length() < 6) {
-            errors.rejectValue("guardian", "guardian.length", "Tên người bảo hộ phải lớn hơn 6 ký tự");
-        } else if (!Pattern.compile("^[a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ]+(\\s[a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ]+)*$").matcher(patientDTO.getGuardian()).find()) {
-            errors.rejectValue("guardian", "guardian.pattern", "Tên người bảo hộ phải đúng định dạng");
-        }
+
         if (patientDTO.getAddress().length() > 200) {
             errors.rejectValue("address", "address.length", "Địa chỉ phải nhỏ hơn 200 ký tự");
         }
