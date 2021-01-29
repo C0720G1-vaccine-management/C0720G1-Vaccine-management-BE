@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Data
@@ -32,6 +33,7 @@ public class Patient {
 
     @OneToOne
     @JoinColumn(name = "account_id",unique = true)
+    @NotNull
     private Account account;
 
     public Integer getPatientId() {
