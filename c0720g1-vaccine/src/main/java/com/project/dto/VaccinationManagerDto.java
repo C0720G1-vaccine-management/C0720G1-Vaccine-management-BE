@@ -27,8 +27,6 @@ public class VaccinationManagerDto {
     private Integer vaccineId;
     private Integer vaccinationTypeId;
     private Integer locationId;
-    private Integer times;
-    private Integer duration;
 
     public Integer getVaccinationId() {
         return vaccinationId;

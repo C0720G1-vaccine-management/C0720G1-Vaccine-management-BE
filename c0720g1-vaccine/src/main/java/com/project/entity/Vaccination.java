@@ -19,8 +19,6 @@ public class Vaccination {
     private Boolean status;
     private String description;
     private Boolean deleteFlag;
-    private Integer duration;
-    private Integer times;
     @ManyToOne
     @JoinColumn(name = "vaccine_id",nullable = false)
     private Vaccine vaccine;
@@ -45,8 +43,6 @@ public class Vaccination {
         this.status = status;
         this.description = description;
         this.deleteFlag = deleteFlag;
-        this.duration = duration;
-        this.times = times;
         this.vaccine = vaccine;
         this.vaccinationHistoryList = vaccinationHistoryList;
         this.vaccinationType = vaccinationType;
@@ -141,19 +137,4 @@ public class Vaccination {
         this.location = location;
     }
 
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
-    }
-
-    public Integer getTimes() {
-        return times;
-    }
-
-    public void setTimes(Integer times) {
-        this.times = times;
-    }
 }
