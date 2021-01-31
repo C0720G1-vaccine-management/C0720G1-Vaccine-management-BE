@@ -39,7 +39,6 @@ public class MailerController {
         List<String> listEmailOneMoreTime = vaccinationHistoryService.getEmailToSendOfVaccinationMore();
         Set<String> listEmail = new HashSet<>();
         listEmail.addAll(listEmailOneTime);
-
         listEmail.addAll(listEmailOneMoreTime);
         System.out.println(listEmail.toString());
         if (!(listEmail.size() == 0)) {

@@ -9,9 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity(name = "patient")
 public class Patient {
     @Id
@@ -35,6 +32,35 @@ public class Patient {
     @JoinColumn(name = "account_id",unique = true)
     @NotNull
     private Account account;
+
+    public Patient() {
+    }
+
+    public Patient(Integer patientId, String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email, Boolean deleteFlag) {
+        this.patientId = patientId;
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.guardian = guardian;
+        this.phone = phone;
+        this.address = address;
+        this.email = email;
+        this.deleteFlag = deleteFlag;
+    }
+
+    public Patient(Integer patientId, String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email, Boolean deleteFlag, Set<VaccinationHistory> vaccinationHistoryList, @NotNull Account account) {
+        this.patientId = patientId;
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.guardian = guardian;
+        this.phone = phone;
+        this.address = address;
+        this.email = email;
+        this.deleteFlag = deleteFlag;
+        this.vaccinationHistoryList = vaccinationHistoryList;
+        this.account = account;
+    }
 
     public Integer getPatientId() {
         return patientId;

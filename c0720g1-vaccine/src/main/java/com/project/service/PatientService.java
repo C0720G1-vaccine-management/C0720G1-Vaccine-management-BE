@@ -28,7 +28,7 @@ public interface PatientService {
     /**
      *NhiTTY
      **/
-    void addPatient(PatientDTO patientDTO);
+    void addPatient(String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email,Integer accountId,Boolean deleteFlag);
 
 
 
@@ -60,4 +60,9 @@ public interface PatientService {
      * Linh: find patient by account id
      */
     Patient findByAccountId(int id, boolean b);
+
+    /**
+     * Linh
+     */
+
 }

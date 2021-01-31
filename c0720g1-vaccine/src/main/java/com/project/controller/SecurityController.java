@@ -66,7 +66,7 @@ public class SecurityController {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
         Account account = accountService.findAccountByUserName(loginRequest.getUsername());
-        Patient patient = patientService.findByAccountId(account.getAccountId(),false);
+        Patient patient = patientService.findByAccountId(account.getAccountId(), false);
         patient.setAccount(null);
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
@@ -79,29 +79,43 @@ public class SecurityController {
      */
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) throws MessagingException, UnsupportedEncodingException {
-        if (accountService.existsByUserName(signUpRequest.getUsername()) != null) {
+        if (accountService.existsById(signUpRequest.getBookId())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Tên tài khoản đã được sử dụng!!!"));
+                    .body(new MessageResponse("Mã số sổ  đã được đăng ký!!!"));
         }
-
-        if ((accountService.existsByEmail(signUpRequest.getEmail())) != null) {
+        if(accountService.existsByUserName(signUpRequest.getEmail())!=null){
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Email đã được sử dụng!"));
+                    .body(new MessageResponse("Email đã được đăng ký!!!"));
         }
 
         // Create new user's account
-        Account account = new Account(signUpRequest.getUsername(),
+        Account account = new Account(signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
-
+        Patient patient = new Patient(signUpRequest.getBookId(),
+                signUpRequest.getName(),
+                signUpRequest.getDateOfBirth(),
+                signUpRequest.getGender(),
+                signUpRequest.getGuardian(),
+                signUpRequest.getPhone(),
+                signUpRequest.getAddress(),
+                signUpRequest.getEmail(), false);
         //Add new user's account to database
         accountService.addNew(account.getUserName(), account.getEncryptPw(), signUpRequest.getEmail());
         //Find ID user's account newest after add to database
         Integer idAccountAfterCreated = accountService.findIdUserByUserName(account.getUserName());
         //Set default role is "ROLE_USER"
         roleService.setDefaultRole(idAccountAfterCreated, 1);
-
+        //Add new patient
+        patientService.addPatient(
+                signUpRequest.getName(),
+                signUpRequest.getDateOfBirth(),
+                signUpRequest.getGender(),
+                signUpRequest.getGuardian(),
+                signUpRequest.getPhone(),
+                signUpRequest.getAddress(),
+                signUpRequest.getEmail(), idAccountAfterCreated,false);
         return ResponseEntity.ok(new MessageResponse("Đăng ký tài khoản thành công!"));
     }
 

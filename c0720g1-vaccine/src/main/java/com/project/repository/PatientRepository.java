@@ -30,7 +30,7 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     /**
      * Duy NP
      **/
-    @javax.transaction.Transactional
+    @Transactional
     @Modifying
     @Query(value = "update patient as p set p.name =?1,p.date_of_birth =?2,p.gender =?3" +
             ",p.guardian =?4,p.phone =?5,p.address =?6,p.email =?7 where patient_id =?8", nativeQuery = true)
@@ -40,9 +40,7 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     /**
      * NhiTTY
      **/
-    @Modifying
-    @Query(value = "insert into patient(name,date_of_birth,gender,guardian,phone,address,email,delete_flag) values (?1,?2,?3,?4,?5,?6,?7,b'0')", nativeQuery = true)
-    void addPatient(String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email);
+
 
     /**
      * Duy NP
@@ -86,4 +84,9 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
      * Linh
      */
     Patient findAllByAccount_AccountIdAndDeleteFlag(int id, Boolean deleteFlag);
+
+    @Modifying
+    @Transactional
+    @Query(value = "insert into patient(name,date_of_birth,gender,guardian,phone,address,email,account_id,delete_flag) values (?1,?2,?3,?4,?5,?6,?7,?8,?9)", nativeQuery = true)
+    void savePatientToRegister(String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email,Integer accountId,Boolean deleteFlag);
 }

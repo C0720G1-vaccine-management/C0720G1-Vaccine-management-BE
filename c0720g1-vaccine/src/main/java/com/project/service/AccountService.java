@@ -25,7 +25,7 @@ public interface AccountService {
     /**
      *Nguyen Van Linh
      */
-    String existsByEmail(String email);
+    Boolean existsById(Integer bookId);
     /**
      *Nguyen Van Linh
      */

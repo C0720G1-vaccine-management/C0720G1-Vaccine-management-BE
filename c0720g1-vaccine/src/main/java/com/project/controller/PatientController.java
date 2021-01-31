@@ -83,16 +83,16 @@ public class PatientController {
     /**
      * NhiTTY
      **/
-    @PostMapping(value = "/patient/create")
-    public ResponseEntity<?> createPatient(@Valid @RequestBody PatientDTO patientDTO, BindingResult bindingResult) {
-        patientByRequestDTOValidator.validate(patientDTO, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.OK);
-        }
-        patientService.addPatient(patientDTO);
-        HttpHeaders headers = new HttpHeaders();
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
-    }
+//    @PostMapping(value = "/patient/create")
+//    public ResponseEntity<?> createPatient(@Valid @RequestBody PatientDTO patientDTO, BindingResult bindingResult) {
+//        patientByRequestDTOValidator.validate(patientDTO, bindingResult);
+//        if (bindingResult.hasErrors()) {
+//            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.OK);
+//        }
+//        patientService.addPatient(patientDTO);
+//        HttpHeaders headers = new HttpHeaders();
+//        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+//    }
 
     /**
      * Duy NP
