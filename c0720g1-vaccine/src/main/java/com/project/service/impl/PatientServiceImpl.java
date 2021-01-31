@@ -1,4 +1,5 @@
 package com.project.service.impl;
+
 import com.project.dto.PatientDTO;
 import com.project.entity.Patient;
 import com.project.repository.PatientRepository;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -25,6 +27,7 @@ public class PatientServiceImpl implements PatientService {
     public Page<Patient> findAllPatient2(Pageable pageable) {
         return patientRepository.findAllByDeleteFlagIsFalse(pageable);
     }
+
     /**
      * Duy NP
      **/
@@ -41,30 +44,32 @@ public class PatientServiceImpl implements PatientService {
         if (id.length() > 3) {
             id = id.substring(3);
         }
-        List<Patient> patientList = patientRepository.search(name,id);
-        Pageable pageable1 = PageRequest.of(pageable , 5);
+        List<Patient> patientList = patientRepository.search(name, id);
+        Pageable pageable1 = PageRequest.of(pageable, 5);
         int start = (int) pageable1.getOffset();
         int end = Math.min((start + pageable1.getPageSize()), patientList.size());
         Page<Patient> pages = new PageImpl<Patient>(patientList.subList(start, end), pageable1, patientList.size());
         return pages;
     }
+
     /**
      * Duy NP
      **/
 
     @Override
     public void editPatient(Patient patient) {
-        this.patientRepository.editPatient(patient.getName(),patient.getDateOfBirth(),patient.getGender(),patient.getGuardian(),patient.getPhone(),patient.getAddress(),patient.getEmail(), patient.getPatientId());
+        this.patientRepository.editPatient(patient.getName(), patient.getDateOfBirth(), patient.getGender(), patient.getGuardian(), patient.getPhone(), patient.getAddress(), patient.getEmail(), patient.getPatientId());
     }
 
 
-
     /**
-     *NhiTTY
+     * NhiTTY
      **/
     @Override
-    public void addPatient(PatientDTO patientDTO) {
-        patientRepository.addPatient(patientDTO.getName(), patientDTO.getDateOfBirth(), patientDTO.getGender(), patientDTO.getGuardian(), patientDTO.getPhone(), patientDTO.getAddress(), patientDTO.getEmail());
+    public void addPatient(String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email, Integer accountId, Boolean deleteFlag) {
+        patientRepository.savePatientToRegister(name, dateOfBirth, gender, guardian, phone, address, email, accountId, deleteFlag);
+
+
     }
 
 
@@ -105,7 +110,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient findByAccountId(int id, boolean b) {
-        return patientRepository.findAllByAccount_AccountIdAndDeleteFlag(id,b);
+        return patientRepository.findAllByAccount_AccountIdAndDeleteFlag(id, b);
     }
 
 

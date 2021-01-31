@@ -9,45 +9,99 @@ public class SignupRequest {
     /**
      * Nguyen Van Linh made it
      */
+    private Integer bookId;
+    private String name;
+    private String gender;
+    private String dateOfBirth;
+    private String guardian;
+    private String address;
+    private String phone;
     @NotBlank
-    @Length(min = 6,max = 32)
-    private String username;
-    @NotBlank
-    @Length(min = 8,max = 32)
-    private String password;
-    @NotBlank
-    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",message = "wrong format, should be abc@abc.com ")
+    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "wrong format, should be abc@abc.com ")
     private String email;
+    @NotBlank
+    @Length(min = 8, max = 32)
+    private String password;
+
+
     /**
-     *Nguyen Van Linh
+     * Nguyen Van Linh
      */
     public SignupRequest() {
     }
+
     /**
-     *Nguyen Van Linh
+     * Nguyen Van Linh
      */
-    public SignupRequest(String username, String password, String email) {
-        this.username = username;
-        this.password = password;
+    public SignupRequest(Integer bookId, String name, String gender, String dateOfBirth, String guardian, String address, String phone, String email, String password) {
+        this.bookId = bookId;
+        this.name = name;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.guardian = guardian;
+        this.address = address;
+        this.phone = phone;
         this.email = email;
-    }
-    /**
-     *Nguyen Van Linh
-     */
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
         this.password = password;
+    }
+/**
+ *Nguyen Van Linh
+ */
+
+    public Integer getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(Integer bookId) {
+        this.bookId = bookId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getGuardian() {
+        return guardian;
+    }
+
+    public void setGuardian(String guardian) {
+        this.guardian = guardian;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getEmail() {
@@ -56,5 +110,13 @@ public class SignupRequest {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

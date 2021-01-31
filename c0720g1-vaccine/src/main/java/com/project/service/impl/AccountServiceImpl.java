@@ -44,9 +44,6 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.findIdUserByUserName(username);
     }
 
-    /**
-     * Nguyen Van Linh
-     */
     @Override
     public String existsByUserName(String username) {
         return accountRepository.existsByUserName(username);
@@ -56,9 +53,11 @@ public class AccountServiceImpl implements AccountService {
      * Nguyen Van Linh
      */
     @Override
-    public String existsByEmail(String email) {
-        return accountRepository.existsByEmail(email);
+    public Boolean existsById(Integer bookId) {
+        return accountRepository.existsById(bookId);
     }
+
+
 
 
     /**
