@@ -1,6 +1,8 @@
 package com.project.controller;
 
+import com.project.dto.PatientDTO;
 import com.project.entity.Account;
+import com.project.entity.Patient;
 import com.project.jwt.JwtUtility;
 import com.project.payload.reponse.JwtResponse;
 import com.project.payload.reponse.MessageResponse;
@@ -9,6 +11,7 @@ import com.project.payload.request.ResetPassRequest;
 import com.project.payload.request.SignupRequest;
 import com.project.payload.request.VerifyRequest;
 import com.project.service.AccountService;
+import com.project.service.PatientService;
 import com.project.service.RoleService;
 import com.project.service.impl.AccountDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
@@ -44,7 +48,8 @@ public class SecurityController {
     private RoleService roleService;
     @Autowired
     private PasswordEncoder encoder;
-
+    @Autowired
+    private PatientService patientService;
 
     /**
      * Nguyen Van Linh made it
@@ -61,10 +66,12 @@ public class SecurityController {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
         Account account = accountService.findAccountByUserName(loginRequest.getUsername());
+        Patient patient = patientService.findByAccountId(account.getAccountId(),false);
+        patient.setAccount(null);
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
-                roles,account.getEmail()));
+                roles, patient));
     }
 
     /**
@@ -110,6 +117,7 @@ public class SecurityController {
             return ResponseEntity.ok(new MessageResponse("error"));
         }
     }
+
     /**
      * Nguyen Van Linh made it
      */
@@ -143,8 +151,8 @@ public class SecurityController {
      */
     @PostMapping("/do-reset-password")
     public ResponseEntity<?> doResetPassword(@RequestBody ResetPassRequest resetPassRequest) {
-        accountService.saveNewPassword(encoder.encode(resetPassRequest.getPassword()),resetPassRequest.getCode());
-            return ResponseEntity.ok(new MessageResponse("success"));
+        accountService.saveNewPassword(encoder.encode(resetPassRequest.getPassword()), resetPassRequest.getCode());
+        return ResponseEntity.ok(new MessageResponse("success"));
     }
 
 }

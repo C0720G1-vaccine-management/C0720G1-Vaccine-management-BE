@@ -1,5 +1,8 @@
 package com.project.payload.reponse;
 
+import com.project.dto.PatientDTO;
+import com.project.entity.Patient;
+
 import java.util.List;
 
 
@@ -12,20 +15,22 @@ public class JwtResponse {
     private Integer id;
     private String username;
     private List<String> roles;
-    private String email;
+    private Patient patient;
     /**
      *Nguyen Van Linh
      */
-    public JwtResponse(String accessToken, Integer id, String username, List<String> roles,String email) {
+    public JwtResponse(String accessToken, Integer id, String username, List<String> roles, Patient patient) {
         this.token = accessToken;
         this.id = id;
         this.username = username;
         this.roles = roles;
-        this.email = email;
+        this.patient = patient;
     }
 
     public JwtResponse() {
     }
+
+
 
     public String getAccessToken() {
         return token;
@@ -84,11 +89,11 @@ public class JwtResponse {
         this.roles = roles;
     }
 
-    public String getEmail() {
-        return email;
+    public Patient getPatient() {
+        return patient;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 }

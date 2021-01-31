@@ -1,5 +1,6 @@
 package com.project.repository;
 
+import com.project.dto.PatientDTO;
 import com.project.entity.Patient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -80,4 +81,9 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
      * Phuoc
      **/
     List<Patient> findAllByEmailAndDeleteFlag(String email, Boolean deleteFlag);
+
+    /**
+     * Linh
+     */
+    Patient findAllByAccount_AccountIdAndDeleteFlag(int id, Boolean deleteFlag);
 }

@@ -99,5 +99,14 @@ public class PatientServiceImpl implements PatientService {
         return patientRepository.findAllByEmailAndDeleteFlag(email, b);
     }
 
+    /**
+     * Linh
+     */
+
+    @Override
+    public Patient findByAccountId(int id, boolean b) {
+        return patientRepository.findAllByAccount_AccountIdAndDeleteFlag(id,b);
+    }
+
 
 }

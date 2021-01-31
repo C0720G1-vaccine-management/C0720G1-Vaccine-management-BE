@@ -55,4 +55,9 @@ public interface PatientService {
      * Phuoc
      **/
     List<Patient> findAllByEmail(String email, boolean b);
+
+    /**
+     * Linh: find patient by account id
+     */
+    Patient findByAccountId(int id, boolean b);
 }
