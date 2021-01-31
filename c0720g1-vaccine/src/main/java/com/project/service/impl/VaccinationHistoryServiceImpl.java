@@ -1,10 +1,9 @@
 package com.project.service.impl;
 
-import com.project.dto.VaccinationHistoryFeedbackDTO;
-import com.project.dto.VaccinationHistoryGetAfterStatusDTO;
-import com.project.dto.VaccinationHistoryRegisteredDTO;
-import com.project.dto.VaccinationHistorySendFeedbackDTO;
+import com.project.dto.*;
+import com.project.entity.Patient;
 import com.project.entity.VaccinationHistory;
+import com.project.entity.Vaccine;
 import com.project.repository.VaccinationHistoryRepository;
 import com.project.service.VaccinationHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -185,6 +184,25 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
         javaMailSender.send(message);
     }
 
+    @Override
+    public void sendMail(VaccinationByRequestDTO vaccinationByRequestDTO, Patient patientTemp, Vaccine vaccineTemp) throws MessagingException, UnsupportedEncodingException {
+        String subject = "Phiếu đăng ký tiêm của bạn";
+        String mailContent = "";
+
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
+        helper.setTo(patientTemp.getEmail());
+        helper.setFrom("vanlinh12b5@gmail.com", "TRUNG TÂM Y TẾ DỰ PHÒNG ĐÀ NẴNG");
+        helper.setSubject(subject);
+        mailContent = "<p sytle='color:red;'>Phản hồi từ người dùng ,<p>"
+                + "<p sytle='color:red;'>Nội dung:" + patientTemp.getAddress() + "<p>"
+                + "<p sytle='color:red;'> Bạn có một email phản hồi từ " + patientTemp.getEmail() + "<p>"
+                + "<p>TRUNG TÂM Y TẾ DỰ PHÒNG ĐÀ NẴNG</p>";
+        helper.setText(mailContent, true);
+        javaMailSender.send(message);
+
+    }
+
     /**
      * Phuoc
      **/
@@ -207,4 +225,16 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
     public List<VaccinationHistory> findAllByVaccinationTransactionIsNull() {
         return vaccinationHistoryRepository.findAllByVaccinationTransactionIsNull();
     }
+
+    @Override
+    public Integer getAllVaccinationByDate(String date, boolean b) {
+        return vaccinationHistoryRepository.countAllByVaccination_DateAndDeleteFlag(date, b);
+    }
+
+    @Override
+    public Integer getAllVaccinationByDate(String date, String time, boolean b) {
+        return vaccinationHistoryRepository.countAllByVaccination_DateAndStartTimeAndDeleteFlag(date, time, b);
+    }
+
+
 }

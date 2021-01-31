@@ -164,4 +164,7 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
 
     List<VaccinationHistory> findAllByVaccinationTransactionIsNull();
 
+    Integer countAllByVaccination_DateAndDeleteFlag(String date, boolean b);
+
+    Integer countAllByVaccination_DateAndStartTimeAndDeleteFlag(String date, String time, boolean b);
 }

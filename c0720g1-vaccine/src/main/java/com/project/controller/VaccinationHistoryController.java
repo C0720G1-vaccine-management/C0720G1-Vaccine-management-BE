@@ -151,7 +151,8 @@ public class VaccinationHistoryController {
     public ResponseEntity<Page<VaccinationHistory>> getAllRegisteredVaccination(@PageableDefault(size = 5) Pageable pageable,
                                                                                 @RequestParam(defaultValue = "") String name,
                                                                                 @RequestParam Integer id) {
-        Page<VaccinationHistory> list = vaccinationHistoryService.getAllRegisteredRequired(name,id, pageable);
+        Page<VaccinationHistory> list = vaccinationHistoryService.getAllRegisteredRequired(name, id, pageable);
+
         if (list.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

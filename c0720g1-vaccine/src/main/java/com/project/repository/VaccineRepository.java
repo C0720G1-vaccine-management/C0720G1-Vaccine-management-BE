@@ -121,5 +121,7 @@ public interface VaccineRepository extends JpaRepository<Vaccine,Integer> {
     @Query(value = "select * from vaccine",nativeQuery = true)
     List<Vaccine> getAllVaccine();
 
+
+    Page<Vaccine> findAllByDurationIsNotNull(Pageable pageable);
 }
 

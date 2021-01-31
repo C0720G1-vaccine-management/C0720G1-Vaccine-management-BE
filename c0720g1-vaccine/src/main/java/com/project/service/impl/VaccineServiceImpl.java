@@ -122,4 +122,14 @@ public class VaccineServiceImpl implements VaccineService {
     public List<Vaccine> getAllVaccine() {
         return vaccineRepository.getAllVaccine();
     }
+
+    @Override
+    public Vaccine getVaccineByIdNameQuery(Integer id) {
+        return vaccineRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Page<Vaccine> getAllVaccineByDuration(Pageable pageable) {
+        return vaccineRepository.findAllByDurationIsNotNull(pageable);
+    }
 }
