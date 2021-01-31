@@ -16,7 +16,7 @@ public interface VaccinationHistoryService {
     /**
      * tuNH
      **/
-    Page<VaccinationHistory> getAllVaccinationHistory(String vaccineName, String vaccinationDate, String accountEmail, Pageable pageable);
+    Page<VaccinationHistory> getAllVaccinationHistory(String vaccineName, String vaccinationDate, int patientId, Pageable pageable);
 
     /**
      * tuNH
