@@ -37,16 +37,16 @@ public class VaccinationHistoryController {
      * lấy danh lịch sử tiêm chủng, phân trang , tìm kiếm
      **/
     @RequestMapping(value = "/vaccination-history", method = RequestMethod.GET)
-    public ResponseEntity<Page<VaccinationHistory>> findAllVaccinationHistory(@PageableDefault(size = 2) Pageable pageable,
+    public ResponseEntity<Page<VaccinationHistory>> findAllVaccinationHistory(@PageableDefault(size = 5) Pageable pageable,
                                                                               @RequestParam(defaultValue = "") String vaccineName,
                                                                               @RequestParam(defaultValue = "") String vaccinationDate,
-                                                                              @RequestParam(defaultValue = "") String accountEmail) {
+                                                                              @RequestParam(defaultValue = "") Integer patientId) {
         Page<VaccinationHistory> vaccinationHistories;
 
         if (vaccineName.isEmpty() && vaccinationDate.isEmpty()) {
-            vaccinationHistories = this.vaccinationHistoryService.getAllVaccinationHistory(vaccineName, vaccinationDate, accountEmail, pageable);
+            vaccinationHistories = this.vaccinationHistoryService.getAllVaccinationHistory(vaccineName, vaccinationDate, patientId, pageable);
         }
-        vaccinationHistories = this.vaccinationHistoryService.getAllVaccinationHistory(vaccineName, vaccinationDate, accountEmail, pageable);
+        vaccinationHistories = this.vaccinationHistoryService.getAllVaccinationHistory(vaccineName, vaccinationDate, patientId, pageable);
         if (vaccinationHistories == null) {
             return new ResponseEntity<Page<VaccinationHistory>>(HttpStatus.NOT_FOUND);
         }
