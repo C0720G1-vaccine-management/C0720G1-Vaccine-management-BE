@@ -1,10 +1,9 @@
 package com.project.service;
 
-import com.project.dto.VaccinationHistoryFeedbackDTO;
-import com.project.dto.VaccinationHistoryGetAfterStatusDTO;
-import com.project.dto.VaccinationHistoryRegisteredDTO;
-import com.project.dto.VaccinationHistorySendFeedbackDTO;
+import com.project.dto.*;
+import com.project.entity.Patient;
 import com.project.entity.VaccinationHistory;
+import com.project.entity.Vaccine;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -124,4 +123,10 @@ public interface VaccinationHistoryService {
     Page<VaccinationHistory> findAllByPatient_PatientIdAndVaccination_Vaccine_NameContainingAndDeleteFlag(Integer patient_patientId, String vaccination_vaccine_name, Boolean deleteFlag, Pageable pageable);
 
     List<VaccinationHistory> findAllByVaccinationTransactionIsNull();
+
+    Integer getAllVaccinationByDate(String date, boolean b);
+
+    Integer getAllVaccinationByDate(String date, String time, boolean b);
+
+    void sendMail(VaccinationByRequestDTO vaccinationByRequestDTO, Patient patientTemp, Vaccine vaccineTemp) throws MessagingException, UnsupportedEncodingException;
 }

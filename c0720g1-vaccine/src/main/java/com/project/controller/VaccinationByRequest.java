@@ -18,7 +18,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -79,13 +84,16 @@ public class VaccinationByRequest {
      * PhuocTC: Get Vắc-xin theo Id
      **/
     @GetMapping(value = "/public/vaccination/get-vaccine/{id}")
-    public ResponseEntity<VaccineDTO> registerVaccination(@PathVariable Integer id) {
+    public ResponseEntity<?> registerVaccination(@PathVariable Integer id) {
+
         VaccineDTO vaccineDTO = vaccineService.getVaccineById(id);
+
+        Vaccine vaccine = vaccineService.getVaccineByIdNameQuery(id);
 
         if (vaccineDTO == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(vaccineDTO, HttpStatus.OK);
+            return new ResponseEntity<>(vaccine, HttpStatus.OK);
         }
     }
 
@@ -95,44 +103,101 @@ public class VaccinationByRequest {
      **/
     @PostMapping(value = "/public/vaccination/create")
     public ResponseEntity<?> registerPatient(@Valid @RequestBody VaccinationByRequestDTO vaccinationByRequestDTO,
-                                             BindingResult bindingResult) {
+                                             BindingResult bindingResult) throws UnsupportedEncodingException, MessagingException {
 
-        vaccinationByRequestDTOValidator.validate(vaccinationByRequestDTO, bindingResult);
+        Patient patientTemp = patientService.getPatientById(vaccinationByRequestDTO.getPatientId());
+        Vaccine vaccineTemp = vaccineService.findById(vaccinationByRequestDTO.getVaccineId());
 
-        if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.OK);
+        if (vaccineTemp.getDuration() != null) {
+            for (int i = 0; i < vaccineTemp.getTimes(); i++) {
+                Vaccination vaccinationTemp = new Vaccination();
+                vaccinationTemp.setVaccine(vaccineTemp);
+                vaccinationTemp.setDate(vaccinationByRequestDTO.getDateVaccination());
+
+                String[] dateSplit = vaccinationByRequestDTO.getDateVaccination().split("-");
+
+                dateSplit[0] = String.valueOf(Integer.parseInt(dateSplit[0]) - 1900);
+
+                Date date = new Date(Integer.parseInt(dateSplit[0]), Integer.parseInt(dateSplit[1]) - 1, Integer.parseInt(dateSplit[2]));
+                date.setDate((vaccineTemp.getDuration() * (i)));
+
+                String year = date.getYear() + 1900 + "";
+                String month = date.getMonth() < 10 ? "0"+ (date.getMonth() + 1) : (date.getMonth() + 1) + "";
+                String day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate() + "";
+
+                LocalDate localDate = LocalDate.parse(year + "-" + month + "-" + day);
+
+                vaccinationTemp.setDate(localDate.toString());
+
+                vaccinationTemp.setLocation(new Location(1));
+                vaccinationTemp.setVaccinationType(new VaccinationType(2));
+                vaccinationTemp.setStatus(false);
+                vaccinationTemp.setDeleteFlag(false);
+
+                String[] timeSplit = vaccinationByRequestDTO.getTimeVaccination().split("-");
+                timeSplit[0] = timeSplit[0].trim();
+                timeSplit[1] = timeSplit[1].trim();
+
+                vaccinationTemp.setStartTime(timeSplit[0]);
+                vaccinationTemp.setEndTime(timeSplit[1]);
+                vaccinationTemp = vaccinationService.registerVaccination(vaccinationTemp);
+
+
+                VaccinationHistory vaccinationHistoryTemp = new VaccinationHistory();
+                vaccinationHistoryTemp.setPatient(patientTemp);
+                vaccinationHistoryTemp.setVaccination(vaccinationTemp);
+                vaccinationHistoryTemp.setStatus(false);
+
+                vaccinationHistoryTemp.setStartTime(timeSplit[0]);
+                vaccinationHistoryTemp.setEndTime(timeSplit[1]);
+
+                vaccinationHistoryService.registerVaccinationHistory(vaccinationHistoryTemp);
+            }
+        } else {
+            Vaccination vaccinationTemp = new Vaccination();
+            vaccinationTemp.setVaccine(vaccineTemp);
+            vaccinationTemp.setDate(vaccinationByRequestDTO.getDateVaccination());
+
+            String[] dateSplit = vaccinationByRequestDTO.getDateVaccination().split("-");
+
+            dateSplit[0] = String.valueOf(Integer.parseInt(dateSplit[0]) - 1900);
+
+            Date date = new Date(Integer.parseInt(dateSplit[0]), Integer.parseInt(dateSplit[1]) - 1, Integer.parseInt(dateSplit[2]));
+
+            String year = date.getYear() + 1900 + "";
+            String month = date.getMonth() < 10 ? "0"+ (date.getMonth() + 1) : (date.getMonth() + 1) + "";
+            String day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate() + "";
+
+            LocalDate localDate = LocalDate.parse(year + "-" + month + "-" + day);
+
+            vaccinationTemp.setDate(localDate.toString());
+
+            vaccinationTemp.setLocation(new Location(1));
+            vaccinationTemp.setVaccinationType(new VaccinationType(2));
+            vaccinationTemp.setStatus(false);
+            vaccinationTemp.setDeleteFlag(false);
+
+            String[] timeSplit = vaccinationByRequestDTO.getTimeVaccination().split("-");
+            timeSplit[0] = timeSplit[0].trim();
+            timeSplit[1] = timeSplit[1].trim();
+
+            vaccinationTemp.setStartTime(timeSplit[0]);
+            vaccinationTemp.setEndTime(timeSplit[1]);
+            vaccinationTemp = vaccinationService.registerVaccination(vaccinationTemp);
+
+
+            VaccinationHistory vaccinationHistoryTemp = new VaccinationHistory();
+            vaccinationHistoryTemp.setPatient(patientTemp);
+            vaccinationHistoryTemp.setVaccination(vaccinationTemp);
+            vaccinationHistoryTemp.setStatus(false);
+
+            vaccinationHistoryTemp.setStartTime(timeSplit[0]);
+            vaccinationHistoryTemp.setEndTime(timeSplit[1]);
+
+            vaccinationHistoryService.registerVaccinationHistory(vaccinationHistoryTemp);
         }
 
-
-        Patient patientTemp = new Patient();
-        patientTemp.setName(vaccinationByRequestDTO.getName());
-        patientTemp.setDateOfBirth(vaccinationByRequestDTO.getDateOfBirth());
-        patientTemp.setGender(vaccinationByRequestDTO.getGender());
-        patientTemp.setGuardian(vaccinationByRequestDTO.getGuardian());
-        patientTemp.setPhone(vaccinationByRequestDTO.getPhone());
-        patientTemp.setAddress(vaccinationByRequestDTO.getAddress());
-        patientTemp.setEmail(vaccinationByRequestDTO.getEmail());
-        patientTemp.setDeleteFlag(false);
-
-        patientTemp = patientService.create(patientTemp);
-
-        Vaccination vaccinationTemp = new Vaccination();
-        vaccinationTemp.setVaccine(vaccineService.findById(vaccinationByRequestDTO.getVaccineId()));
-        vaccinationTemp.setDate(vaccinationByRequestDTO.getDateVaccination());
-        vaccinationTemp.setLocation(new Location(1));
-        vaccinationTemp.setVaccinationType(new VaccinationType(2));
-        vaccinationTemp.setStatus(false);
-        vaccinationTemp.setDeleteFlag(false);
-
-        vaccinationTemp = vaccinationService.registerVaccination(vaccinationTemp);
-
-
-        VaccinationHistory vaccinationHistoryTemp = new VaccinationHistory();
-        vaccinationHistoryTemp.setPatient(patientTemp);
-        vaccinationHistoryTemp.setVaccination(vaccinationTemp);
-        vaccinationHistoryTemp.setStatus(false);
-
-        vaccinationHistoryService.registerVaccinationHistory(vaccinationHistoryTemp);
+        this.vaccinationHistoryService.sendMail(vaccinationByRequestDTO, patientTemp, vaccineTemp);
 
 
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -172,5 +237,37 @@ public class VaccinationByRequest {
         }
 
         return new ResponseEntity<>(vaccinationHistoryList, HttpStatus.OK);
+    }
+
+
+    @GetMapping(value = "/public/get-total-vaccination-in-date")
+    public ResponseEntity<?> getTotalVaccinationInDate(@RequestParam(defaultValue = "") String date) {
+
+        List<Integer> integerList = new ArrayList<>();
+
+        if (!date.equals("")) {
+
+            integerList.add(vaccinationHistoryService.getAllVaccinationByDate(date, false));
+            integerList.add(vaccinationHistoryService.getAllVaccinationByDate(date, "08:00:00",false));
+            integerList.add(vaccinationHistoryService.getAllVaccinationByDate(date, "09:30:00",false));
+            integerList.add(vaccinationHistoryService.getAllVaccinationByDate(date, "13:30:00",false));
+            integerList.add(vaccinationHistoryService.getAllVaccinationByDate(date, "15:00:00",false));
+
+            return new ResponseEntity<>(integerList, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        }
+    }
+
+
+    @GetMapping(value = "/public/get-list-vaccine")
+    public ResponseEntity<?> getListVaccine(@PageableDefault Pageable pageable) {
+        Page<Vaccine> vaccineList = vaccineService.getAllVaccineByDuration(pageable);
+
+        if (vaccineList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(vaccineList, HttpStatus.OK);
+        }
     }
 }
