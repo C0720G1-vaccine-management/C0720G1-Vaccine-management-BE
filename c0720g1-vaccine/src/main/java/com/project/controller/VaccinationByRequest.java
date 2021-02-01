@@ -108,9 +108,11 @@ public class VaccinationByRequest {
         Patient patientTemp = patientService.getPatientById(vaccinationByRequestDTO.getPatientId());
         Vaccine vaccineTemp = vaccineService.findById(vaccinationByRequestDTO.getVaccineId());
 
+        Vaccination vaccinationTemp = null;
+        VaccinationHistory vaccinationHistoryTemp= null;
         if (vaccineTemp.getDuration() != null) {
             for (int i = 0; i < vaccineTemp.getTimes(); i++) {
-                Vaccination vaccinationTemp = new Vaccination();
+                vaccinationTemp = new Vaccination();
                 vaccinationTemp.setVaccine(vaccineTemp);
                 vaccinationTemp.setDate(vaccinationByRequestDTO.getDateVaccination());
 
@@ -119,7 +121,10 @@ public class VaccinationByRequest {
                 dateSplit[0] = String.valueOf(Integer.parseInt(dateSplit[0]) - 1900);
 
                 Date date = new Date(Integer.parseInt(dateSplit[0]), Integer.parseInt(dateSplit[1]) - 1, Integer.parseInt(dateSplit[2]));
-                date.setDate((vaccineTemp.getDuration() * (i)));
+
+                if (i > 0) {
+                    date.setDate((vaccineTemp.getDuration() * (i)));
+                }
 
                 String year = date.getYear() + 1900 + "";
                 String month = date.getMonth() < 10 ? "0"+ (date.getMonth() + 1) : (date.getMonth() + 1) + "";
@@ -143,7 +148,7 @@ public class VaccinationByRequest {
                 vaccinationTemp = vaccinationService.registerVaccination(vaccinationTemp);
 
 
-                VaccinationHistory vaccinationHistoryTemp = new VaccinationHistory();
+                vaccinationHistoryTemp = new VaccinationHistory();
                 vaccinationHistoryTemp.setPatient(patientTemp);
                 vaccinationHistoryTemp.setVaccination(vaccinationTemp);
                 vaccinationHistoryTemp.setStatus(false);
@@ -154,7 +159,7 @@ public class VaccinationByRequest {
                 vaccinationHistoryService.registerVaccinationHistory(vaccinationHistoryTemp);
             }
         } else {
-            Vaccination vaccinationTemp = new Vaccination();
+            vaccinationTemp = new Vaccination();
             vaccinationTemp.setVaccine(vaccineTemp);
             vaccinationTemp.setDate(vaccinationByRequestDTO.getDateVaccination());
 
@@ -186,7 +191,7 @@ public class VaccinationByRequest {
             vaccinationTemp = vaccinationService.registerVaccination(vaccinationTemp);
 
 
-            VaccinationHistory vaccinationHistoryTemp = new VaccinationHistory();
+            vaccinationHistoryTemp = new VaccinationHistory();
             vaccinationHistoryTemp.setPatient(patientTemp);
             vaccinationHistoryTemp.setVaccination(vaccinationTemp);
             vaccinationHistoryTemp.setStatus(false);
@@ -197,7 +202,7 @@ public class VaccinationByRequest {
             vaccinationHistoryService.registerVaccinationHistory(vaccinationHistoryTemp);
         }
 
-        this.vaccinationHistoryService.sendMail(vaccinationByRequestDTO, patientTemp, vaccineTemp);
+        this.vaccinationHistoryService.sendMail(vaccinationByRequestDTO, patientTemp, vaccineTemp, vaccinationTemp);
 
 
         return new ResponseEntity<>(HttpStatus.CREATED);

@@ -2,6 +2,7 @@ package com.project.service;
 
 import com.project.dto.*;
 import com.project.entity.Patient;
+import com.project.entity.Vaccination;
 import com.project.entity.VaccinationHistory;
 import com.project.entity.Vaccine;
 import org.springframework.data.domain.Page;
@@ -128,12 +129,15 @@ public interface VaccinationHistoryService {
 
     Integer getAllVaccinationByDate(String date, String time, boolean b);
 
-    void sendMail(VaccinationByRequestDTO vaccinationByRequestDTO, Patient patientTemp, Vaccine vaccineTemp) throws MessagingException, UnsupportedEncodingException;
+
+
 
     /**
      * KhoaTA
      * Save new register for a vaccination
      */
     VaccinationHistory createNewRegister(PeriodicalVaccinationTempRegisterDTO register);
+
+    void sendMail(VaccinationByRequestDTO vaccinationByRequestDTO, Patient patientTemp, Vaccine vaccineTemp, Vaccination vaccination) throws MessagingException, UnsupportedEncodingException;
 
 }
