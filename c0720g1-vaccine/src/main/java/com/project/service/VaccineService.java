@@ -64,7 +64,7 @@ public interface VaccineService {
      * create new Vaccnine
      * @return
      */
-    void createVaccine(String nameVaccine, double dosageVaccine, String licenseCode, String maintenance, String origin, String expired, String age, int quantity, int vaccineTypeId);
+    void createVaccine(String nameVaccine, double dosageVaccine, String licenseCode, String maintenance, String origin, String expired, String age, int quantity, int vaccineTypeId, int vaccineDuration, int vaccineTimes);
 
     /**
      * TinVT

@@ -13,4 +13,6 @@ public interface VaccineDTO {
     String getMaintenance();
     String getAge();
     Integer getQuantity();
+    Integer getTimes();
+    Integer getDuration();
 }

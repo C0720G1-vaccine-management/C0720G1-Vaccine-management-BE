@@ -119,7 +119,7 @@ public class VaccineController {
         }
         vaccineService.createVaccine(createVaccineDTO.getNameVaccine(), createVaccineDTO.getDosage(), createVaccineDTO.getLicenseCode(),
                 createVaccineDTO.getMaintenance(), createVaccineDTO.getOrigin(), createVaccineDTO.getExpired(), createVaccineDTO.getAge(),
-                (int) createVaccineDTO.getQuantity(), vaccineType.getVaccineTypeId());
+                (int) createVaccineDTO.getQuantity(), vaccineType.getVaccineTypeId(), createVaccineDTO.getDuration(), createVaccineDTO.getTimes());
         Vaccine vaccine = vaccineService.searchName(createVaccineDTO.getNameVaccine());
         storageService.createStorage((int) createVaccineDTO.getQuantity(), vaccine.getVaccineId());
         invoiceService.createInvoice(createVaccineDTO.getExpired(), createVaccineDTO.getUnitPrice(), (int) createVaccineDTO.getQuantity(),

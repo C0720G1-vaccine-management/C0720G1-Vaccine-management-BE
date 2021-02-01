@@ -25,7 +25,7 @@ public interface StorageService {
     * @param id
     * @return
     */
-   List<Storage> getAllStorage(int id);
+   Storage getStorage(int id);
    /**
     * PhucNB
     * @param storage

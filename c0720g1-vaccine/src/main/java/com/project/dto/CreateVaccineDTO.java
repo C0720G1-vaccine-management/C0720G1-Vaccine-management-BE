@@ -13,8 +13,27 @@ public class CreateVaccineDTO {
     private String expired;
     private String maintenance;
     private String age;
+    private int times;
+    private int duration;
 
     public CreateVaccineDTO() {
+    }
+
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public int getTimes() {
+        return times;
+    }
+
+    public void setTimes(int times) {
+        this.times = times;
     }
 
     public String getDayReceive() {

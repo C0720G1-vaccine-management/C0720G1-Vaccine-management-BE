@@ -98,8 +98,8 @@ public class VaccineServiceImpl implements VaccineService {
      * @return
      */
     @Override
-    public void createVaccine(String nameVaccine, double dosageVaccine, String licenseCode, String maintenance, String origin, String expired, String age, int quantity, int vaccineTypeId) {
-        vaccineRepository.createVaccine(nameVaccine, dosageVaccine, licenseCode, maintenance, origin, expired, age, quantity, vaccineTypeId);
+    public void createVaccine(String nameVaccine, double dosageVaccine, String licenseCode, String maintenance, String origin, String expired, String age, int quantity, int vaccineTypeId, int vaccineDuration, int vaccineTimes) {
+        vaccineRepository.createVaccine(nameVaccine, dosageVaccine, licenseCode, maintenance, origin, expired, age, quantity, vaccineTypeId, vaccineDuration, vaccineTimes);
     }
 
     /**
