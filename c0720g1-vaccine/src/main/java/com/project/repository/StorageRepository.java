@@ -27,9 +27,8 @@ public interface StorageRepository extends JpaRepository<Storage,Integer> {
      * @param id
      * @return
      */
-    @Modifying
-    @Query(value = "select  * from storage where vaccine_id = ?1",nativeQuery = true)
-    List<Storage> getAllStorage(int id);
+    @Query(value = "select  * from storage where vaccine_id = ?",nativeQuery = true)
+    Storage getStorage(int id);
 
     /**
      * KhoaTA

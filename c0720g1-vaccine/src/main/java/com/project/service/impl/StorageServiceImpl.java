@@ -39,8 +39,8 @@ public class StorageServiceImpl implements StorageService {
      * @return
      */
     @Override
-    public List<Storage> getAllStorage(int id) {
-        return storageRepository.getAllStorage(id);
+    public Storage getStorage(int id) {
+        return storageRepository.getStorage(id);
     }
 
     /**
