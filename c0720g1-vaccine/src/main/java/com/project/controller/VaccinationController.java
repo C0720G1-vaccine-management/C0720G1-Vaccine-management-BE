@@ -62,7 +62,7 @@ public class VaccinationController {
     @PostMapping("/register-patient")
     public ResponseEntity<Boolean> savePeriodicalVaccinationRegister(@RequestBody PeriodicalVaccinationTempRegisterDTO register) throws UnsupportedEncodingException, MessagingException {
         VaccinationHistory vaccinationHistory = this.vaccinationHistoryService.createNewRegister(register);
-        this.vaccinationHistoryService.createNewRegister(register);
+//        this.vaccinationHistoryService.createNewRegister(register);
                 this.accountService.sendInfoEmail(register,vaccinationHistory);
                 return new ResponseEntity<>(true, HttpStatus.CREATED);
     }
