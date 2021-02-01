@@ -193,7 +193,7 @@ public class AccountServiceImpl implements AccountService {
                 "<br><br>\n" +
                 "<span style=\"font-weight: bold\"> Giờ tiêm chủng: </span><span>"+registrableVaccination.getStartTime()+"  - "+registrableVaccination.getEndTime()+"</span>\n" +
                 "<br><br>\n" +
-                "<span style=\"font-weight: bold\"> Địa điểm: </span><span>"+registrableVaccination.getLocation()+" </span>\n" +
+                "<span style=\"font-weight: bold\"> Địa điểm: </span><span> Trung Tâm y tế dự phòng - 103 Hùng Vương, Hải Châu, Đà Nẵng </span>\n" +
                 "<br><br>\n" +
                 "<span style=\"font-weight: bold\"> Tên Vắc xin: </span><span>"+registrableVaccination.getVaccineName()+" </span>\n" +
                 "<br><br>\n" +

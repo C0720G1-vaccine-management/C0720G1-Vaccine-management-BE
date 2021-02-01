@@ -61,6 +61,8 @@ public interface PatientService {
      */
     Patient findByAccountId(int id, boolean b);
 
+    Patient getPatientById(Integer patientId);
+
     /**
      * Linh
      */

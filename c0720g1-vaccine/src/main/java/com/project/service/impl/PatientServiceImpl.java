@@ -113,5 +113,10 @@ public class PatientServiceImpl implements PatientService {
         return patientRepository.findAllByAccount_AccountIdAndDeleteFlag(id, b);
     }
 
+    @Override
+    public Patient getPatientById(Integer patientId) {
+        return patientRepository.findById(patientId).orElse(null);
+    }
+
 
 }

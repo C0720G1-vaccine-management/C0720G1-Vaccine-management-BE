@@ -79,4 +79,8 @@ public interface VaccineService {
      * @return
      */
     List<Vaccine> getAllVaccine();
+
+    Vaccine getVaccineByIdNameQuery(Integer id);
+
+    Page<Vaccine> getAllVaccineByDuration(Pageable pageable);
 }

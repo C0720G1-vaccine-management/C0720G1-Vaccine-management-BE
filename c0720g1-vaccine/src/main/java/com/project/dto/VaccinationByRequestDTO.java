@@ -12,22 +12,25 @@ public class VaccinationByRequestDTO {
     private String email;
     private Boolean deleteFlag;
     private String dateVaccination;
+    private String timeVaccination;
     private Integer vaccineId;
 
 
-    public String getDateVaccination() {
-        return dateVaccination;
+    public VaccinationByRequestDTO() {
     }
 
-    public void setDateVaccination(String dateVaccination) {
+    public VaccinationByRequestDTO(Integer patientId, String name, String dateOfBirth, String gender, String guardian, String phone, String address, String email, Boolean deleteFlag, String dateVaccination, String timeVaccination, Integer vaccineId) {
+        this.patientId = patientId;
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.guardian = guardian;
+        this.phone = phone;
+        this.address = address;
+        this.email = email;
+        this.deleteFlag = deleteFlag;
         this.dateVaccination = dateVaccination;
-    }
-
-    public Integer getVaccineId() {
-        return vaccineId;
-    }
-
-    public void setVaccineId(Integer vaccineId) {
+        this.timeVaccination = timeVaccination;
         this.vaccineId = vaccineId;
     }
 
@@ -101,5 +104,29 @@ public class VaccinationByRequestDTO {
 
     public void setDeleteFlag(Boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
+    }
+
+    public String getDateVaccination() {
+        return dateVaccination;
+    }
+
+    public void setDateVaccination(String dateVaccination) {
+        this.dateVaccination = dateVaccination;
+    }
+
+    public String getTimeVaccination() {
+        return timeVaccination;
+    }
+
+    public void setTimeVaccination(String timeVaccination) {
+        this.timeVaccination = timeVaccination;
+    }
+
+    public Integer getVaccineId() {
+        return vaccineId;
+    }
+
+    public void setVaccineId(Integer vaccineId) {
+        this.vaccineId = vaccineId;
     }
 }

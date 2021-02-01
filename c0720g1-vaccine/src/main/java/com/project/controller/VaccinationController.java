@@ -120,4 +120,12 @@ public class VaccinationController {
         System.out.println(patientId);
         this.vaccinationHistoryService.cancelRegister(vaccinationId, patientId);
     }
+
+    /** KhoaTA
+     * Method for saving patient and register for periodical vaccination
+     */
+    @PostMapping("/check-register")
+    public ResponseEntity<PeriodicalVaccinationTempRegisterDTO> checkPeriodicalVaccinationRegister(@RequestBody PeriodicalVaccinationTempRegisterDTO register) {
+            return new ResponseEntity<PeriodicalVaccinationTempRegisterDTO>(this.vaccinationService.checkRegister(register), HttpStatus.OK);
+    }
 }

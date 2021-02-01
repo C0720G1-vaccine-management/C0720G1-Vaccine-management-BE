@@ -1,10 +1,10 @@
 package com.project.service.impl;
 
-import com.project.dto.VaccinationHistoryFeedbackDTO;
-import com.project.dto.VaccinationHistoryGetAfterStatusDTO;
-import com.project.dto.VaccinationHistoryRegisteredDTO;
-import com.project.dto.VaccinationHistorySendFeedbackDTO;
+import com.project.dto.*;
+import com.project.entity.Patient;
+import com.project.entity.Vaccination;
 import com.project.entity.VaccinationHistory;
+import com.project.entity.Vaccine;
 import com.project.repository.VaccinationHistoryRepository;
 import com.project.service.VaccinationHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -185,6 +185,41 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
         javaMailSender.send(message);
     }
 
+    @Override
+    public void sendMail(VaccinationByRequestDTO vaccinationByRequestDTO, Patient patientTemp, Vaccine vaccineTemp, Vaccination vaccination) throws MessagingException, UnsupportedEncodingException {
+        StringBuilder randomCode = new StringBuilder();
+        randomCode.append(vaccination.getVaccinationId()).append("|").append(vaccinationByRequestDTO.getPatientId());
+        String subject = "Thông tin đăng ký tiêm chủng của bạn";
+        String mailContent = "";
+        String cancelRegisterUrl = "http://localhost:4200/cancel-register?code=" + randomCode;
+
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
+        helper.setTo(patientTemp.getEmail());
+        helper.setFrom("vanlinh12b5@gmail.com","TRUNG TÂM Y TẾ DỰ PHÒNG ĐÀ NẴNG");
+        helper.setSubject(subject);
+        mailContent = "<span style=\"font-weight: bold\">Xin chào<span> "+patientTemp.getGuardian()+",</span></span>\n" +
+                "<br><br>\n" +
+                "<span style=\"font-weight: bold\"> "+patientTemp.getName()+"</span> <span>vừa được đăng ký tiêm chủng định kỳ với thông tin sau:</span>\n" +
+                "<br><br>\n" +
+                "<span style=\"font-weight: bold\"> Ngày tiêm chủng: </span><span>"+vaccinationByRequestDTO.getDateVaccination()+"</span>\n" +
+                "<br><br>\n" +
+                "<span style=\"font-weight: bold\"> Giờ tiêm chủng: </span><span>"+vaccination.getStartTime()+"  - "+vaccination.getEndTime()+"</span>\n" +
+                "<br><br>\n" +
+                "<span style=\"font-weight: bold\"> Địa điểm: </span><span>"+vaccination.getLocation().getName()+" </span>\n" +
+                "<br><br>\n" +
+                "<span style=\"font-weight: bold\"> Tên Vắc xin: </span><span>"+vaccineTemp.getName()+" </span>\n" +
+                "<br><br>\n" +
+                "<span style=\"font-weight: bold\"> Xuất xứ: </span><span>"+vaccineTemp.getOrigin()+" </span>\n" +
+                "<br><br>\n" +
+                "<p style=\"font-style: italic; color: red\">Trong trường hợp bạn không thể tham gia vì lý do nào đó, bạn có thể hủy đăng ký bằng link bên dưới:</p>\n" +
+                "<h3><a href='" + cancelRegisterUrl + "'>Link hủy đăng ký!</a></h3>" +
+                "<p>TRUNG TÂM Y TẾ DỰ PHÒNG ĐÀ NẴNG KÍNH BÁO</p>";
+        helper.setText(mailContent, true);
+        javaMailSender.send(message);
+
+    }
+
     /**
      * Phuoc
      **/
@@ -207,4 +242,16 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
     public List<VaccinationHistory> findAllByVaccinationTransactionIsNull() {
         return vaccinationHistoryRepository.findAllByVaccinationTransactionIsNull();
     }
+
+    @Override
+    public Integer getAllVaccinationByDate(String date, boolean b) {
+        return vaccinationHistoryRepository.countAllByVaccination_DateAndDeleteFlag(date, b);
+    }
+
+    @Override
+    public Integer getAllVaccinationByDate(String date, String time, boolean b) {
+        return vaccinationHistoryRepository.countAllByVaccination_DateAndStartTimeAndDeleteFlag(date, time, b);
+    }
+
+
 }

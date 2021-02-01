@@ -87,7 +87,9 @@ public interface VaccinationRepository extends JpaRepository<Vaccination,Integer
     /**KhoaTA
      *get the list for search data with date
      */
-    @Query(value = "select vaccination.vaccination_id as vaccinationId, vaccination.date, vaccination.start_time as startTime, vaccination.end_time as endTime, vaccine.name as vaccineName, vaccine_type.name as vaccineTypeName, vaccine.age as age, vaccination.description, location.name as location, vaccine.origin as country, vaccine.image as image , vaccination.duration, vaccination.times from vaccination " +
+    @Query(value = "select vaccination.vaccination_id as vaccinationId, vaccination.date, vaccination.start_time as startTime, vaccination.end_time as endTime, vaccine.name as vaccineName, " +
+            "vaccine_type.name as vaccineTypeName, vaccine.age as age, vaccination.description, location.name as location, vaccine.origin as country, vaccine.image as image, " +
+            "vaccine.duration, vaccine.times  from vaccination " +
             "join vaccination_type on vaccination.vaccination_type_id = vaccination_type.vaccination_type_id " +
             "join vaccine on vaccination.vaccine_id = vaccine.vaccine_id " +
             "join location on vaccination.location_id = location.location_id " +
@@ -104,7 +106,9 @@ public interface VaccinationRepository extends JpaRepository<Vaccination,Integer
     /**KhoaTA
      *get the list for search data without date
      */
-    @Query(value = "select vaccination.vaccination_id as vaccinationId, vaccination.date, vaccination.start_time as startTime, vaccination.end_time as endTime, vaccine.name as vaccineName, vaccine_type.name as vaccineTypeName, vaccine.age as age, vaccination.description, location.name as location, vaccine.origin as country, vaccine.image as image, vaccination.duration, vaccination.times from vaccination " +
+    @Query(value = "select vaccination.vaccination_id as vaccinationId, vaccination.date, vaccination.start_time as startTime, vaccination.end_time as endTime, vaccine.name as vaccineName, " +
+            "vaccine_type.name as vaccineTypeName, vaccine.age as age, vaccination.description, location.name as location, vaccine.origin as country, vaccine.image as image, " +
+            "vaccine.duration, vaccine.times from vaccination " +
             "join vaccination_type on vaccination.vaccination_type_id = vaccination_type.vaccination_type_id " +
             "join vaccine on vaccination.vaccine_id = vaccine.vaccine_id " +
             "join location on vaccination.location_id = location.location_id " +
