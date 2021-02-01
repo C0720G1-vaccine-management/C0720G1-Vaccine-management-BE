@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "location")
 public class Location {
@@ -24,5 +23,32 @@ public class Location {
 
     public Location(Integer locationId) {
         this.locationId = locationId;
+    }
+
+    public Location() {
+    }
+
+    public Integer getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(Integer locationId) {
+        this.locationId = locationId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Vaccination> getVaccinationList() {
+        return vaccinationList;
+    }
+
+    public void setVaccinationList(Set<Vaccination> vaccinationList) {
+        this.vaccinationList = vaccinationList;
     }
 }
