@@ -103,14 +103,19 @@ public class VaccinationServiceImpl implements VaccinationService {
                     '%'+searchData.getVaccineName()+'%', (searchData.getCurrentPage()-1)*5);
         }
     }
-
+    /**KhoaTA
+     *check available time frame and quantity for a periodical vaccination register
+     */
     @Override
     public PeriodicalVaccinationTempRegisterDTO checkRegister(PeriodicalVaccinationTempRegisterDTO register) {
         Integer vaccineId = this.vaccinationRepository.getOne(register.getVaccinationId()).getVaccine().getVaccineId();
         Integer registerQuantity = this.vaccinationHistoryRepository.findAllByVaccination_VaccinationIdIs(register.getVaccinationId()).size();
         Long maximumRegister = this.storageRepository.findAllByVaccine_VaccineIdIs(vaccineId).getQuantity();
-        register.setQuantityIsValid(registerQuantity+1 > maximumRegister);
-        register.setTimeIsValid(this.vaccinationHistoryRepository.findAllByVaccination_VaccinationIdIsAndStartTimeContainsAndEndTimeContains(register.getVaccinationId(), register.getStartTime(), register.getEndTime()).size()+1 > 3);
+        System.out.println("maximum register : " + maximumRegister);
+        register.setQuantityIsValid(registerQuantity+1 <= maximumRegister);
+        register.setTimeIsValid(this.vaccinationHistoryRepository.findAllByVaccination_VaccinationIdIsAndStartTimeContainsAndEndTimeContains(register.getVaccinationId(), register.getStartTime(), register.getEndTime()).size()+1 < 3);
+        String vaccineName = this.vaccineRepository.getOne(vaccineId).getName();
+        register.setAlreadyRegister(this.vaccinationHistoryRepository.findAllByPatient_PatientIdAndVaccination_Vaccine_NameIsAndDeleteFlagIs(register.getPatientId(), vaccineName, false).size() > 0);
         return register;
     }
 }

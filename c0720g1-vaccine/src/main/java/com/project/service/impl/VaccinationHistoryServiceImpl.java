@@ -4,7 +4,9 @@ import com.project.dto.*;
 import com.project.entity.Patient;
 import com.project.entity.VaccinationHistory;
 import com.project.entity.Vaccine;
+import com.project.repository.PatientRepository;
 import com.project.repository.VaccinationHistoryRepository;
+import com.project.repository.VaccinationRepository;
 import com.project.service.VaccinationHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,6 +29,11 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
 
     @Autowired
     JavaMailSender javaMailSender;
+
+    @Autowired
+    private PatientRepository patientRepository;
+    @Autowired
+    private VaccinationRepository vaccinationRepository;
 
     /**
      * tuNH
@@ -201,6 +208,21 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
         helper.setText(mailContent, true);
         javaMailSender.send(message);
 
+    }
+
+    /**
+     * KhoaTA
+     * Save new register for a vaccination
+     */
+    @Override
+    public VaccinationHistory createNewRegister(PeriodicalVaccinationTempRegisterDTO register) {
+        VaccinationHistory vaccinationHistory = new VaccinationHistory();
+        vaccinationHistory.setPatient(this.patientRepository.getOne(register.getPatientId()));
+        vaccinationHistory.setVaccination(this.vaccinationRepository.getOne(register.getVaccinationId()));
+        vaccinationHistory.setStartTime(register.getStartTime());
+        vaccinationHistory.setEndTime(register.getEndTime());
+        vaccinationHistory.setDeleteFlag(false);
+        return this.vaccinationHistoryRepository.save(vaccinationHistory);
     }
 
     /**

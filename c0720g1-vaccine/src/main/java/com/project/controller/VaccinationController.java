@@ -1,6 +1,7 @@
 package com.project.controller;
 
 import com.project.dto.*;
+import com.project.entity.VaccinationHistory;
 import com.project.payload.reponse.MessageResponse;
 import com.project.payload.request.VerifyRequest;
 import com.project.service.AccountService;
@@ -12,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @RestController
@@ -51,27 +54,17 @@ public class VaccinationController {
         if (registrableVaccination == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
         return new ResponseEntity<>(registrableVaccination, HttpStatus.OK);
     }
     /** KhoaTA
      * Method for saving patient and register for periodical vaccination
      */
     @PostMapping("/register-patient")
-    public ResponseEntity<Boolean> savePeriodicalVaccinationRegister(@Valid @RequestBody PeriodicalVaccinationRegisterDTO register, BindingResult result) {
-        if (result.hasErrors()) {
-            System.out.println(result.getFieldError());
-            return new ResponseEntity<>(false, HttpStatus.NOT_ACCEPTABLE);
-        } else {
-            try {
-                int idPatient = vaccinationService.saveRegister(register);
-                RegistrablePeriodicalVaccinationDTO registrableVaccination = this.vaccinationService.findRegistrableVaccinationById(register.getVaccinationId());
-                this.accountService.sendInfoEmail(register, registrableVaccination, idPatient);
+    public ResponseEntity<Boolean> savePeriodicalVaccinationRegister(@RequestBody PeriodicalVaccinationTempRegisterDTO register) throws UnsupportedEncodingException, MessagingException {
+        VaccinationHistory vaccinationHistory = this.vaccinationHistoryService.createNewRegister(register);
+        this.vaccinationHistoryService.createNewRegister(register);
+                this.accountService.sendInfoEmail(register,vaccinationHistory);
                 return new ResponseEntity<>(true, HttpStatus.CREATED);
-            } catch (Exception exception) {
-                return new ResponseEntity<>(false, HttpStatus.NOT_ACCEPTABLE);
-            }
-        }
     }
     /**KhoaTA
      *get the list of all vaccine's ages
@@ -126,6 +119,8 @@ public class VaccinationController {
      */
     @PostMapping("/check-register")
     public ResponseEntity<PeriodicalVaccinationTempRegisterDTO> checkPeriodicalVaccinationRegister(@RequestBody PeriodicalVaccinationTempRegisterDTO register) {
-            return new ResponseEntity<PeriodicalVaccinationTempRegisterDTO>(this.vaccinationService.checkRegister(register), HttpStatus.OK);
+        System.out.println(register.getPatientId());
+        System.out.println(register.getVaccinationId());
+        return new ResponseEntity<>(this.vaccinationService.checkRegister(register), HttpStatus.OK);
     }
 }
