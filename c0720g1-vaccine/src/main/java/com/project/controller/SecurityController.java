@@ -1,6 +1,5 @@
 package com.project.controller;
 
-import com.project.dto.PatientDTO;
 import com.project.entity.Account;
 import com.project.entity.Patient;
 import com.project.jwt.JwtUtility;
@@ -93,14 +92,6 @@ public class SecurityController {
         // Create new user's account
         Account account = new Account(signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
-        Patient patient = new Patient(signUpRequest.getBookId(),
-                signUpRequest.getName(),
-                signUpRequest.getDateOfBirth(),
-                signUpRequest.getGender(),
-                signUpRequest.getGuardian(),
-                signUpRequest.getPhone(),
-                signUpRequest.getAddress(),
-                signUpRequest.getEmail(), false);
         //Add new user's account to database
         accountService.addNew(account.getUserName(), account.getEncryptPw(), signUpRequest.getEmail());
         //Find ID user's account newest after add to database
