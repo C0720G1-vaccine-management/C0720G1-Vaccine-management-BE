@@ -171,4 +171,6 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
     List<VaccinationHistory> findAllByVaccination_VaccinationIdIs(Integer vaccinationId);
 
     List<VaccinationHistory> findAllByVaccination_VaccinationIdIsAndStartTimeContainsAndEndTimeContains(Integer vaccinationId, String startTime, String endTime);
+
+    List<VaccinationHistory> findAllByPatient_PatientIdAndVaccination_Vaccine_NameIsAndDeleteFlagIs(Integer patientId, String vaccineName,boolean status);
 }

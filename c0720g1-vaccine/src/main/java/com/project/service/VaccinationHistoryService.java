@@ -129,5 +129,15 @@ public interface VaccinationHistoryService {
 
     Integer getAllVaccinationByDate(String date, String time, boolean b);
 
+
+
+
+    /**
+     * KhoaTA
+     * Save new register for a vaccination
+     */
+    VaccinationHistory createNewRegister(PeriodicalVaccinationTempRegisterDTO register);
+
     void sendMail(VaccinationByRequestDTO vaccinationByRequestDTO, Patient patientTemp, Vaccine vaccineTemp, Vaccination vaccination) throws MessagingException, UnsupportedEncodingException;
+
 }
