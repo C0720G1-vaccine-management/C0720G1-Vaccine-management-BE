@@ -2,6 +2,7 @@ package com.project.service;
 
 import com.project.dto.*;
 import com.project.entity.Vaccination;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -43,4 +44,6 @@ public interface VaccinationService {
      *get the search periodical vaccination result
      */
     List<RegistrablePeriodicalVaccinationDTO> findCustomVaccination(PeriodicalSearchDataDTO searchData);
+
+    PeriodicalVaccinationTempRegisterDTO checkRegister(PeriodicalVaccinationTempRegisterDTO register);
 }
