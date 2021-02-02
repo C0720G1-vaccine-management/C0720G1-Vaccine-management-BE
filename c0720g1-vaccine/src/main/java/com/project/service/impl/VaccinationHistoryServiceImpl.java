@@ -256,9 +256,12 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
             repeatVaccination.setLocation(this.locationRepository.getOne(firstVaccination.getLocation().getLocationId()));
             repeatVaccination.setVaccinationType(this.vaccinationTypeRepository.getOne(2));
             repeatVaccination.setDescription("Tiêm nhắc");
+
             LocalDate vaccinationDate = LocalDate.parse(firstVaccination.getDate(), DateTimeFormatter.ISO_LOCAL_DATE);
             repeatVaccination.setDate(vaccinationDate.plusDays(i*firstVaccination.getVaccine().getDuration()).toString());
             vaccinationHistory.setVaccination(this.vaccinationRepository.save(repeatVaccination));
+            vaccinationHistory.setVaccinationTimes(i+1);
+            System.out.println(vaccinationHistory.toString());
             vaccinationHistoryRepository.save(vaccinationHistory);
         }
         VaccinationHistory vaccinationHistory = new VaccinationHistory();
@@ -267,6 +270,7 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
         vaccinationHistory.setStartTime(register.getStartTime());
         vaccinationHistory.setEndTime(register.getEndTime());
         vaccinationHistory.setDeleteFlag(false);
+        vaccinationHistory.setVaccinationTimes(1);
         return this.vaccinationHistoryRepository.save(vaccinationHistory);
     }
 

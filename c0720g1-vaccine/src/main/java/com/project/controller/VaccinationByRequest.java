@@ -116,24 +116,19 @@ public class VaccinationByRequest {
                 vaccinationTemp.setVaccine(vaccineTemp);
                 vaccinationTemp.setDate(vaccinationByRequestDTO.getDateVaccination());
 
-                String[] dateSplit = vaccinationByRequestDTO.getDateVaccination().split("-");
+//                String[] dateSplit = vaccinationByRequestDTO.getDateVaccination().split("-");
+//                dateSplit[0] = String.valueOf(Integer.parseInt(dateSplit[0]) - 1900);
+//                Date date = new Date(Integer.parseInt(dateSplit[0]), Integer.parseInt(dateSplit[1]) - 1, Integer.parseInt(dateSplit[2]));
+//                if (i > 0) {
+//                    date.setDate((vaccineTemp.getDuration() * (i)));
+//                }
+//                String year = date.getYear() + 1900 + "";
+//                String month = date.getMonth() < 10 ? "0"+ (date.getMonth() + 1) : (date.getMonth() + 1) + "";
+//                String day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate() + "";
+//                LocalDate localDate = LocalDate.parse(year + "-" + month + "-" + day);
 
-                dateSplit[0] = String.valueOf(Integer.parseInt(dateSplit[0]) - 1900);
-
-                Date date = new Date(Integer.parseInt(dateSplit[0]), Integer.parseInt(dateSplit[1]) - 1, Integer.parseInt(dateSplit[2]));
-
-                if (i > 0) {
-                    date.setDate((vaccineTemp.getDuration() * (i)));
-                }
-
-                String year = date.getYear() + 1900 + "";
-                String month = date.getMonth() < 10 ? "0"+ (date.getMonth() + 1) : (date.getMonth() + 1) + "";
-                String day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate() + "";
-
-                LocalDate localDate = LocalDate.parse(year + "-" + month + "-" + day);
-
-                vaccinationTemp.setDate(localDate.toString());
-
+                LocalDate localDate = LocalDate.parse(vaccinationByRequestDTO.getDateVaccination());
+                vaccinationTemp.setDate(localDate.plusDays(vaccineTemp.getDuration() * i).toString());
                 vaccinationTemp.setLocation(new Location(1));
                 vaccinationTemp.setVaccinationType(new VaccinationType(2));
                 vaccinationTemp.setStatus(false);
@@ -145,6 +140,10 @@ public class VaccinationByRequest {
 
                 vaccinationTemp.setStartTime(timeSplit[0]);
                 vaccinationTemp.setEndTime(timeSplit[1]);
+                if(i>0){
+                    vaccinationTemp.setDescription("Tiêm nhắc");
+                }
+
                 vaccinationTemp = vaccinationService.registerVaccination(vaccinationTemp);
 
 
@@ -152,7 +151,7 @@ public class VaccinationByRequest {
                 vaccinationHistoryTemp.setPatient(patientTemp);
                 vaccinationHistoryTemp.setVaccination(vaccinationTemp);
                 vaccinationHistoryTemp.setStatus(false);
-
+                vaccinationHistoryTemp.setVaccinationTimes(i+1);
                 vaccinationHistoryTemp.setStartTime(timeSplit[0]);
                 vaccinationHistoryTemp.setEndTime(timeSplit[1]);
 
@@ -243,7 +242,6 @@ public class VaccinationByRequest {
 
         return new ResponseEntity<>(vaccinationHistoryList, HttpStatus.OK);
     }
-
 
     @GetMapping(value = "/public/get-total-vaccination-in-date")
     public ResponseEntity<?> getTotalVaccinationInDate(@RequestParam(defaultValue = "") String date) {

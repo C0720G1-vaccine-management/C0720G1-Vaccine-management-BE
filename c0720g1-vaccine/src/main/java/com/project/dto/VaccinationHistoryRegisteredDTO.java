@@ -19,4 +19,5 @@ public interface VaccinationHistoryRegisteredDTO {
     String getDosage();
     String getPreStatus();
     String getAfterStatus();
+    Integer getVaccinationTimes();
 }

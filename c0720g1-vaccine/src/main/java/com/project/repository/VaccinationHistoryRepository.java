@@ -109,7 +109,7 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
      **/
     @Query(value = "select patient.patient_id as patientId, patient.name as patientName, patient.date_of_birth as patientDob, patient.gender as patientGender, \n" +
             " patient.guardian as patientGuardian, patient.phone as patientPhone, patient.address as patientAddress, \n" +
-            " vaccine.name as vaccineName, vaccine_type.name as vaccineTypeName, vaccination.end_time as endTime, vaccination_history.status as vaccinationHistoryStatus, \n" +
+            " vaccine.name as vaccineName, vaccine_type.name as vaccineTypeName, vaccination.end_time as endTime, vaccination_history.status as vaccinationHistoryStatus, vaccination_history.vaccination_times as vaccinationTimes, \n" +
             " vaccination_history.dosage as dosage, vaccination_history.pre_status as preStatus, vaccination_history.after_status as afterStatus, vaccination_history.vaccination_history_id as vaccinationHistoryId \n" +
             " from vaccination_history \n" +
             " inner join vaccination on vaccination_history.vaccination_id = vaccination.vaccination_id \n" +
