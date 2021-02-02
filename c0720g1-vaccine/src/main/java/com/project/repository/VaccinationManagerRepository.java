@@ -37,10 +37,10 @@ public interface VaccinationManagerRepository extends JpaRepository<Vaccination,
 
     @Modifying
     @Query(
-            value = "insert into vaccination(`date`, delete_flag, description, start_time, end_time, status, location_id, vaccination_type_id, vaccine_id, times, duration) " +
-                    "value (?1, ?2, ?3,?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11)",
+            value = "insert into vaccination(`date`, delete_flag, description, start_time, end_time, status, location_id, vaccination_type_id, vaccine_id) " +
+                    "value (?1, ?2, ?3,?4, ?5, ?6, ?7, ?8, ?9)",
             nativeQuery = true)
-    void saveVaccinationManager(String date, boolean delete, String description, String startTime, String endTime, boolean status, int location, int type, int vaccine, int times, int duration);
+    void saveVaccinationManager(String date, boolean delete, String description, String startTime, String endTime, boolean status, int location, int type, int vaccine);
 
     /**
      * TrungTQ Code: Query tạo cập nhập
@@ -50,10 +50,10 @@ public interface VaccinationManagerRepository extends JpaRepository<Vaccination,
     @Query(
             value = "update vaccination set " +
                     "`date` = ?1, description = ?2, start_time = ?3, end_time = ?4," +
-                    "location_id = ?5, vaccine_id = ?6 , times =?7, duration =?8 " +
-                    "where vaccination_id = ?9",
+                    "location_id = ?5, vaccine_id = ?6 " +
+                    "where vaccination_id = ?7",
             nativeQuery = true)
-    void updateVaccinationManager(String date, String description, String startTime, String endTime, int location, int vaccine, int times, int duration, int vaccinationId);
+    void updateVaccinationManager(String date, String description, String startTime, String endTime, int location, int vaccine, int vaccinationId);
 
     /**
      * TrungTQ code: Query xóa tạm thời thông tin một sự kiện tiêm chủng dự phòng

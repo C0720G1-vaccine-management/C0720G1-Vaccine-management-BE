@@ -7,26 +7,44 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 /** TrungTQ code: Để cập nhật và tạo mới vaccination*/
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+//@Data
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class VaccinationManagerDto {
     private Integer vaccinationId;
+
     @NotBlank(message = "Trường này không được để trống")
     private String startTime;
+
     @NotBlank(message = "Trường này không được để trống")
     private String endTime;
+
     @NotBlank(message = "Trường này không được để trống")
     private String date;
     private Boolean status;
+
     @NotBlank(message = "Trường này không được để trống")
     private String description;
-    private Integer times;
-    private Integer duration;
     private Boolean deleteFlag;
     private Integer vaccineId;
     private Integer vaccinationTypeId;
     private Integer locationId;
+
+    public VaccinationManagerDto() {
+    }
+
+    public VaccinationManagerDto(Integer vaccinationId, @NotBlank(message = "Trường này không được để trống") String startTime, @NotBlank(message = "Trường này không được để trống") String endTime, @NotBlank(message = "Trường này không được để trống") String date, Boolean status, @NotBlank(message = "Trường này không được để trống") String description, Boolean deleteFlag, Integer vaccineId, Integer vaccinationTypeId, Integer locationId) {
+        this.vaccinationId = vaccinationId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.date = date;
+        this.status = status;
+        this.description = description;
+        this.deleteFlag = deleteFlag;
+        this.vaccineId = vaccineId;
+        this.vaccinationTypeId = vaccinationTypeId;
+        this.locationId = locationId;
+    }
 
     public Integer getVaccinationId() {
         return vaccinationId;
@@ -106,21 +124,5 @@ public class VaccinationManagerDto {
 
     public void setLocationId(Integer locationId) {
         this.locationId = locationId;
-    }
-
-    public Integer getTimes() {
-        return times;
-    }
-
-    public void setTimes(Integer times) {
-        this.times = times;
-    }
-
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
     }
 }

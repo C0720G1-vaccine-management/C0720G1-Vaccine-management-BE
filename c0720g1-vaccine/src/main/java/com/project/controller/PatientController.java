@@ -44,7 +44,7 @@ public class PatientController {
      * Duy NP
      **/
 
-    @GetMapping("/patient/{id}")
+    @GetMapping("/r")
     public ResponseEntity<Patient> getPatientById(@PathVariable int id) {
         return new ResponseEntity<>(this.patientService.findPatientById(id), HttpStatus.OK);
     }
