@@ -18,6 +18,7 @@ public class VaccinationHistory {
     private Double dosage;
     private String preStatus;
     private String afterStatus;
+    private Integer vaccinationTimes;
     private Boolean deleteFlag = false;
     @Column(columnDefinition = "Time")
     private String startTime;
@@ -37,6 +38,14 @@ public class VaccinationHistory {
     private VaccinationTransaction vaccinationTransaction;
 
     public VaccinationHistory() {
+    }
+
+    public Integer getVaccinationTimes() {
+        return vaccinationTimes;
+    }
+
+    public void setVaccinationTimes(Integer vaccinationTimes) {
+        this.vaccinationTimes = vaccinationTimes;
     }
 
     public Integer getVaccinationHistoryId() {
