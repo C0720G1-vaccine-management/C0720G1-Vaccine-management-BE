@@ -55,8 +55,8 @@ public interface VaccineRepository extends JpaRepository<Vaccine,Integer> {
      * @return
      */
     @Query(value = "SELECT vaccine.vaccine_id as id,vaccine.name as name, vaccine_type.name as vaccineType,invoice.transaction_date as dayReceive, " +
-            "vaccine.license_code as licenseCode, vaccine.origin as origin, vaccine.dosage as dosage, sum(storage.quantity) as shipmentNumber," +
-            "vaccine.expired as expired, vaccine.maintenance as maintenance, vaccine.age as age, sum(storage.quantity) as quantity" +
+            "vaccine.license_code as licenseCode, vaccine.origin as origin, vaccine.dosage as dosage," +
+            "vaccine.expired as expired, vaccine.maintenance as maintenance, vaccine.age as age, vaccine.duration as duration, vaccine.times as times, storage.quantity as quantity" +
             " FROM vaccine " +
             "left join vaccine_type on vaccine.vaccine_type_id = vaccine_type.vaccine_type_id " +
             "left join storage on storage.vaccine_id = vaccine.vaccine_id " +
@@ -70,8 +70,8 @@ public interface VaccineRepository extends JpaRepository<Vaccine,Integer> {
      * @return
      */
     @Query(value = "SELECT vaccine.vaccine_id as id,vaccine.name as name, vaccine_type.name as vaccineType,invoice.transaction_date as dayReceive, " +
-            "vaccine.license_code as licenseCode, vaccine.origin as origin, vaccine.dosage as dosage, sum(storage.quantity) as shipmentNumber," +
-            "vaccine.expired as expired, vaccine.maintenance as maintenance, vaccine.age as age, sum(storage.quantity) as quantity" +
+            "vaccine.license_code as licenseCode, vaccine.origin as origin, vaccine.dosage as dosage," +
+            "vaccine.expired as expired, vaccine.maintenance as maintenance, vaccine.age as age, storage.quantity as quantity" +
             " FROM vaccine " +
             "left join vaccine_type on vaccine.vaccine_type_id = vaccine_type.vaccine_type_id " +
             "left join storage on storage.vaccine_id = vaccine.vaccine_id " +
@@ -84,8 +84,8 @@ public interface VaccineRepository extends JpaRepository<Vaccine,Integer> {
      * @return
      */
     @Query(value = "SELECT vaccine.vaccine_id as id,vaccine.name as name, vaccine_type.name as vaccineType,invoice.transaction_date as dayReceive, "+
-            "vaccine.license_code as licenseCode, vaccine.origin as origin, vaccine.dosage as dosage, sum(storage.quantity) as shipmentNumber,"+
-            "vaccine.expired as expired, vaccine.maintenance as maintenance, vaccine.age as age, sum(storage.quantity) as quantity " +
+            "vaccine.license_code as licenseCode, vaccine.origin as origin, vaccine.dosage as dosage,"+
+            "vaccine.expired as expired, vaccine.maintenance as maintenance, vaccine.age as age, storage.quantity as quantity " +
             "FROM vaccine left join vaccine_type on vaccine.vaccine_type_id = vaccine_type.vaccine_type_id " +
             "left join storage on storage.vaccine_id = vaccine.vaccine_id " +
             "left join invoice on invoice.vaccine_id = vaccine.vaccine_id  where " +
@@ -99,9 +99,9 @@ public interface VaccineRepository extends JpaRepository<Vaccine,Integer> {
      * @return
      */
     @Modifying
-    @Query(value = "insert into vaccine(vaccine.name, vaccine.dosage, vaccine.license_code , vaccine.maintenance, vaccine.origin, vaccine.expired, vaccine.age, vaccine.quantity, vaccine.vaccine_type_id, vaccine.delete_flag)\n" +
-            "value(?1, ?2, ?3, ?4, ?5,?6, ?7, ?8, ?9,0);",nativeQuery = true)
-    void createVaccine(String nameVaccine, double dosageVaccine, String licenseCode, String maintenance, String origin, String expired, String age, int quantity, int vaccineTypeId);
+    @Query(value = "insert into vaccine(vaccine.name, vaccine.dosage, vaccine.license_code , vaccine.maintenance, vaccine.origin, vaccine.expired, vaccine.age, vaccine.quantity, vaccine.vaccine_type_id,vaccine.duration,vaccine.times, vaccine.delete_flag)\n" +
+            "value(?1, ?2, ?3, ?4, ?5,?6, ?7, ?8, ?9,?10,?11,0);",nativeQuery = true)
+    void createVaccine(String nameVaccine, double dosageVaccine, String licenseCode, String maintenance, String origin, String expired, String age, int quantity, int vaccineTypeId, int vaccineDuration, int vaccineTimes);
 
 
     /**

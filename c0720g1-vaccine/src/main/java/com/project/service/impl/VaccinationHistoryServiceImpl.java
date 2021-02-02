@@ -5,7 +5,7 @@ import com.project.entity.Patient;
 import com.project.entity.Vaccination;
 import com.project.entity.VaccinationHistory;
 import com.project.entity.Vaccine;
-import com.project.repository.VaccinationHistoryRepository;
+import com.project.repository.*;
 import com.project.service.VaccinationHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -28,6 +30,15 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
 
     @Autowired
     JavaMailSender javaMailSender;
+
+    @Autowired
+    private PatientRepository patientRepository;
+    @Autowired
+    private VaccinationRepository vaccinationRepository;
+    @Autowired
+    private LocationRepository locationRepository;
+    @Autowired
+    private VaccinationTypeRepository vaccinationTypeRepository;
 
     /**
      * tuNH
@@ -218,6 +229,45 @@ public class VaccinationHistoryServiceImpl implements VaccinationHistoryService 
         helper.setText(mailContent, true);
         javaMailSender.send(message);
 
+    }
+
+    /**
+     * KhoaTA
+     * Save new register for a vaccination
+     */
+    @Override
+    public VaccinationHistory createNewRegister(PeriodicalVaccinationTempRegisterDTO register) {
+        Vaccination firstVaccination = this.vaccinationRepository.getOne(register.getVaccinationId());
+        Patient patient = this.patientRepository.getOne(register.getPatientId());
+        for( int i = 1; i < firstVaccination.getVaccine().getTimes(); i++) {
+            VaccinationHistory vaccinationHistory = new VaccinationHistory();
+            vaccinationHistory.setPatient(patient);
+            vaccinationHistory.setStartTime(register.getStartTime());
+            vaccinationHistory.setEndTime(register.getEndTime());
+            vaccinationHistory.setDeleteFlag(false);
+            Vaccination repeatVaccination = new Vaccination();
+            repeatVaccination.setVaccine(firstVaccination.getVaccine());
+            repeatVaccination.setDeleteFlag(false);
+            repeatVaccination.setLocation(firstVaccination.getLocation());
+            repeatVaccination.setDescription(firstVaccination.getDescription());
+            repeatVaccination.setStatus(false);
+            repeatVaccination.setStartTime(firstVaccination.getStartTime());
+            repeatVaccination.setEndTime(firstVaccination.getEndTime());
+            repeatVaccination.setLocation(this.locationRepository.getOne(firstVaccination.getLocation().getLocationId()));
+            repeatVaccination.setVaccinationType(this.vaccinationTypeRepository.getOne(2));
+            repeatVaccination.setDescription("Tiêm nhắc");
+            LocalDate vaccinationDate = LocalDate.parse(firstVaccination.getDate(), DateTimeFormatter.ISO_LOCAL_DATE);
+            repeatVaccination.setDate(vaccinationDate.plusDays(i*firstVaccination.getVaccine().getDuration()).toString());
+            vaccinationHistory.setVaccination(this.vaccinationRepository.save(repeatVaccination));
+            vaccinationHistoryRepository.save(vaccinationHistory);
+        }
+        VaccinationHistory vaccinationHistory = new VaccinationHistory();
+        vaccinationHistory.setPatient(patient);
+        vaccinationHistory.setVaccination(firstVaccination);
+        vaccinationHistory.setStartTime(register.getStartTime());
+        vaccinationHistory.setEndTime(register.getEndTime());
+        vaccinationHistory.setDeleteFlag(false);
+        return this.vaccinationHistoryRepository.save(vaccinationHistory);
     }
 
     /**

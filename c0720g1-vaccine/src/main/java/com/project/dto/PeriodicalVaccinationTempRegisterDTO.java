@@ -8,6 +8,15 @@ public class PeriodicalVaccinationTempRegisterDTO {
     String endTime;
     boolean timeIsValid;
     boolean quantityIsValid;
+    boolean alreadyRegister;
+
+    public boolean isAlreadyRegister() {
+        return alreadyRegister;
+    }
+
+    public void setAlreadyRegister(boolean alreadyRegister) {
+        this.alreadyRegister = alreadyRegister;
+    }
 
     public boolean isTimeIsValid() {
         return timeIsValid;

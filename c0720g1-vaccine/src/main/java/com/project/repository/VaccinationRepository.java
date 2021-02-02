@@ -27,7 +27,7 @@ public interface VaccinationRepository extends JpaRepository<Vaccination,Integer
     /**KhoaTA
      *find periodical vaccination with date > date.now() and id = argument
      */
-    @Query(value = "select vaccination.vaccination_id as vaccinationId, vaccination.date, vaccination.start_time as startTime, vaccination.end_time as endTime, vaccine.name as vaccineName, vaccine_type.name as vaccineTypeName, vaccine.age as age, vaccination.description, location.name as location, vaccine.origin as country,  vaccine.image as image from vaccination " +
+    @Query(value = "select vaccination.vaccination_id as vaccinationId, vaccination.date, vaccination.start_time as startTime, vaccination.end_time as endTime, vaccine.name as vaccineName, vaccine_type.name as vaccineTypeName, vaccine.age as age, vaccination.description, location.name as location, vaccine.origin as country,  vaccine.image as image, vaccine.times, vaccine.duration  from vaccination " +
             "join vaccination_type on vaccination.vaccination_type_id = vaccination_type.vaccination_type_id " +
             "join vaccine on vaccination.vaccine_id = vaccine.vaccine_id " +
             "join location on vaccination.location_id = location.location_id " +
@@ -64,9 +64,10 @@ public interface VaccinationRepository extends JpaRepository<Vaccination,Integer
             "and vaccination.start_time like ?3  " +
             "and vaccination.end_time like ?4  " +
             "and vaccine.name like ?5  " +
+            "and vaccination.description like ?6 " +
             "and vaccination.vaccination_type_id = 1 " +
             "and vaccination.delete_flag = 0", nativeQuery = true)
-    int findTotalPage(String age, String date, String startTime, String endTime, String vaccineName);
+    int findTotalPage(String age, String date, String startTime, String endTime, String vaccineName, String description);
     /**KhoaTA
      *get the total page of search data without date
      */
@@ -81,8 +82,9 @@ public interface VaccinationRepository extends JpaRepository<Vaccination,Integer
             "and vaccination.end_time like ?3  " +
             "and vaccine.name like ?4  " +
             "and vaccination.vaccination_type_id = 1 " +
+            "and vaccination.description like ?5 " +
             "and vaccination.delete_flag = 0", nativeQuery = true)
-    int findTotalPage(String age, String startTime, String endTime, String vaccineName);
+    int findTotalPage(String age, String startTime, String endTime, String vaccineName, String description);
 
     /**KhoaTA
      *get the list for search data with date
@@ -99,9 +101,10 @@ public interface VaccinationRepository extends JpaRepository<Vaccination,Integer
             "and vaccination.start_time like ?3  " +
             "and vaccination.end_time like ?4  " +
             "and vaccine.name like ?5  " +
+            "and vaccination.description like ?6 " +
             "and vaccination.vaccination_type_id = 1 " +
-            "and vaccination.delete_flag = 0 LIMIT ?6,5", nativeQuery = true)
-    List<RegistrablePeriodicalVaccinationDTO> findCustomListWithPageWithDate(String age, String date, String startTime, String endTime, String vaccineName, int offset);
+            "and vaccination.delete_flag = 0 LIMIT ?7,5", nativeQuery = true)
+    List<RegistrablePeriodicalVaccinationDTO> findCustomListWithPageWithDate(String age, String date, String startTime, String endTime, String vaccineName, String description, int offset);
 
     /**KhoaTA
      *get the list for search data without date
@@ -118,8 +121,9 @@ public interface VaccinationRepository extends JpaRepository<Vaccination,Integer
             "and vaccination.start_time like ?2  " +
             "and vaccination.end_time like ?3  " +
             "and vaccine.name like ?4  " +
+            "and vaccination.description like ?5 " +
             "and vaccination.vaccination_type_id = 1 " +
-            "and vaccination.delete_flag = 0 LIMIT ?5,5", nativeQuery = true)
-    List<RegistrablePeriodicalVaccinationDTO> findCustomListWithPageWithoutDate(String age, String startTime, String endTime, String vaccineName, int offset);
+            "and vaccination.delete_flag = 0 LIMIT ?6,5", nativeQuery = true)
+    List<RegistrablePeriodicalVaccinationDTO> findCustomListWithPageWithoutDate(String age, String startTime, String endTime, String vaccineName, String description, int offset);
 
 }

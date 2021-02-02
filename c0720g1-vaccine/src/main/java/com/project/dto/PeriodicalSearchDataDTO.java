@@ -6,6 +6,16 @@ public class PeriodicalSearchDataDTO {
     String endTime;
     String date;
     String age;
+    String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     int currentPage;
     int maxPage;
 

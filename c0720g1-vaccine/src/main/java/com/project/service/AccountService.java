@@ -1,8 +1,10 @@
 package com.project.service;
 
 import com.project.dto.PeriodicalVaccinationRegisterDTO;
+import com.project.dto.PeriodicalVaccinationTempRegisterDTO;
 import com.project.dto.RegistrablePeriodicalVaccinationDTO;
 import com.project.entity.Account;
+import com.project.entity.VaccinationHistory;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
@@ -64,5 +66,5 @@ public interface AccountService {
      * KhoaTA
      * Send info email to patient after register for a vaccination
      */
-    void sendInfoEmail(PeriodicalVaccinationRegisterDTO register, RegistrablePeriodicalVaccinationDTO registrableVaccination, int idPatient) throws MessagingException, UnsupportedEncodingException;
+    void sendInfoEmail(PeriodicalVaccinationTempRegisterDTO register, VaccinationHistory vaccinationHistory) throws MessagingException, UnsupportedEncodingException;
 }

@@ -100,26 +100,32 @@ public class ImportExportController {
      */
     @GetMapping("/{id}/exportVaccine")
     public ResponseEntity<?> exportVaccine(@Validated @PathVariable Integer id, @RequestParam("input") Long input) {
-        List<Storage> storageList = storageService.getAllStorage(id);
-        for (Storage storage : storageList) {
-            if (storage.getQuantity() > 0 ) {
-                if (storage.getQuantity() <= input){
-                   input = input - storage.getQuantity();
-                   storage.setQuantity(0L);
-                   storageService.saveStorage(storage);
-                    continue;
-                }
-//                else if (storage.getQuantity() == input){
-//                    input = input - storage.getQuantity();
-//                    storage.setQuantity(0L);
-//                    storageService.saveStorage(storage);
+        Storage storageList = storageService.getStorage(id);
+//        for (Storage storage : storageList) {
+//            if (storage.getQuantity() > 0 ) {
+//                if (storage.getQuantity() <= input){
+//                   input = input - storage.getQuantity();
+//                   storage.setQuantity(0L);
+//                   storageService.saveStorage(storage);
 //                    continue;
 //                }
-                storage.setQuantity(storage.getQuantity() - input);
-                storageService.saveStorage(storage);
-            }
+////                else if (storage.getQuantity() == input){
+////                    input = input - storage.getQuantity();
+////                    storage.setQuantity(0L);
+////                    storageService.saveStorage(storage);
+////                    continue;
+////                }
+//                storage.setQuantity(storage.getQuantity() - input);
+//                storageService.saveStorage(storage);
+//            }
+//        }
+        if (storageList.getQuantity() < input){
+            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+        }else {
+            storageList.setQuantity(storageList.getQuantity() - input);
+            storageService.saveStorage(storageList);
+            return new ResponseEntity<Void>(HttpStatus.OK);
         }
-        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     /**
